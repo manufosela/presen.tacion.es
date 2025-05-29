@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentación</title>
+    <!-- Importar fuente Lato -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+    <style>
+        :root {
+            --heading1-color: #DF006E;
+            --heading2-color: #9B004D;
+            --heading3-color: #6B0035;
+            --heading-fontsize: 32px;
+        }
+        body {
+            font-family: 'Lato', sans-serif;
+        }
+        .reveal {
+            font-family: 'Lato', sans-serif;
+        }
+        .reveal h1 {
+            color: var(--heading1-color) !important;
+            font-size: var(--heading-fontsize) !important;
+        }
+        .reveal h2 {
+            color: var(--heading2-color) !important;
+            font-size: calc(var(--heading-fontsize) * 0.9) !important;
+        }
+        .reveal h3 {
+            color: var(--heading3-color) !important;
+            font-size: calc(var(--heading-fontsize) * 0.8) !important;
+        }
+        
+        /* Sobrescribir la variable --color de Pico CSS */
+        :root {
+            --color: var(--custom-color, #0078D7) !important;
+        }
+
+        .reveal .controls {
+            right: 50px !important;
+        }
+    </style>
+    <!-- Cargar Pico CSS después de nuestras variables -->
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
+</head>
+<body>
+    <div id="loading" class="loading">Cargando presentación...</div>
+    <div class="reveal">
+        <div class="slides" id="slides-container">
+            <!-- Las diapositivas se cargarán dinámicamente -->
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script type="module">
+        import RevealMarkdown from 'https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/markdown/markdown.esm.js';
+        import RevealNotes from 'https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/notes/notes.esm.js';
+
+        // ==================== CONSTANTS ====================
+        const SELECTORS = {
+            LOADING: '#loading',
+            SLIDES_CONTAINER: '.slides',
+            REVEAL: '.reveal'
+        };
+
+        const DEFAULT_COLORS = {
+            h1: '#DF006E',
+            h2: '#0078D7', 
+            h3: '#000035'
+        };
+
+        const DEFAULT_THEME = 'white';
+        const DEFAULT_FONT_SIZE = '16px';
+
+        // ==================== UTILITY FUNCTIONS ====================
+        
+        /**
+         * Obtiene el parámetro de presentación de la URL
+         */
+        function getPresentationName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('presentacion');
+        }
+
+        /**
+         * Actualiza el título de la página con el nombre de la presentación
+         */
+        function updatePageTitle(presentationName) {
+            const title = presentationName.split('/').pop().replace(/-/g, ' ').toUpperCase();
+            document.title = title;
+        }
+
+        /**
+         * Muestra u oculta el elemento de carga
+         */
+        function toggleLoading(show = true) {
+            const loadingElement = document.getElementById('loading');
+            if (loadingElement) {
+                loadingElement.style.display = show ? 'block' : 'none';
+            }
+        }
+
+        /**
+         * Muestra un mensaje de error en la presentación
+         */
+        function showError(message) {
+            const revealElement = document.querySelector(SELECTORS.REVEAL);
+            if (revealElement) {
+                revealElement.innerHTML = `
+                    <div class="error-message">
+                        <h2>Error</h2>
+                        <p>${message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // ==================== METADATA PROCESSING ====================
+
+        /**
+         * Extrae metadatos YAML del contenido markdown
+         */
+        function extractMetadata(content) {
+            if (!content.startsWith('---')) {
+                return [{}, content];
+            }
+
+            const metadataEnd = content.indexOf('---', 3);
+            if (metadataEnd === -1) {
+                return [{}, content];
+            }
+
+            const metadataText = content.substring(3, metadataEnd);
+            const markdownContent = content.substring(metadataEnd + 3);
+            
+            return [parseYamlMetadata(metadataText), markdownContent];
+        }
+
+        /**
+         * Parsea el texto YAML a objeto
+         */
+        function parseYamlMetadata(yamlText) {
+            const metadata = {};
+            const lines = yamlText.split('\n');
+            let currentSection = null;
+            
+            for (const line of lines) {
+                const trimmedLine = line.trim();
+                if (!trimmedLine) continue;
+                
+                if (!line.startsWith(' ')) {
+                    const [key, ...valueParts] = trimmedLine.split(':');
+                    const value = valueParts.join(':').trim();
+                    
+                    if (!value) {
+                        currentSection = key.trim();
+                        metadata[currentSection] = {};
+                    } else {
+                        const cleanValue = cleanYamlValue(value);
+                        metadata[key.trim()] = cleanValue;
+                    }
+                } else if (currentSection) {
+                    const [key, ...valueParts] = trimmedLine.split(':');
+                    const value = valueParts.join(':').trim();
+                    const cleanValue = cleanYamlValue(value);
+                    metadata[currentSection][key.trim()] = cleanValue;
+                }
+            }
+            
+            return metadata;
+        }
+
+        /**
+         * Limpia valores YAML eliminando comentarios y comillas
+         */
+        function cleanYamlValue(value) {
+            return value.split('#')[0].trim().replace(/"/g, '');
+        }
+
+        // ==================== CSS STYLING ====================
+
+        /**
+         * Aplica variables CSS basadas en metadatos
+         */
+        function applyCSSVariables(metadata) {
+            applyColorVariables(metadata.colors);
+            applyFontVariables(metadata.fonts);
+            applyBaseFontSize(metadata.fontSize);
+        }
+
+        /**
+         * Aplica variables de color
+         */
+        function applyColorVariables(colors) {
+            if (!colors) return;
+
+            const colorMappings = {
+                'color': ['--custom-color', '--r-main-color', '--r-link-color', '--r-link-color-hover', '--r-selection-background-color'],
+                'main-color': ['--r-main-secondary-color'],
+                'background': ['--r-background-color'],
+                'text-color': ['--r-main-text-color'],
+                'heading1-color': ['--heading1-color'],
+                'heading2-color': ['--heading2-color'],
+                'heading3-color': ['--heading3-color']
+            };
+
+            Object.entries(colorMappings).forEach(([colorKey, cssVars]) => {
+                if (colors[colorKey]) {
+                    cssVars.forEach(cssVar => {
+                        document.documentElement.style.setProperty(cssVar, colors[colorKey]);
+                    });
+                }
+            });
+        }
+
+        /**
+         * Aplica variables de fuente
+         */
+        function applyFontVariables(fonts) {
+            if (fonts?.['heading-fontsize']) {
+                document.documentElement.style.setProperty('--heading-fontsize', fonts['heading-fontsize']);
+            }
+        }
+
+        /**
+         * Aplica el tamaño de fuente base
+         */
+        function applyBaseFontSize(fontSize) {
+            if (fontSize) {
+                document.body.style.fontSize = fontSize;
+                const reveal = document.querySelector(SELECTORS.REVEAL);
+                if (reveal) {
+                    reveal.style.fontSize = fontSize;
+                }
+            }
+        }
+
+        // ==================== BACKGROUND HANDLING ====================
+
+        /**
+         * Configura el fondo de la presentación
+         */
+        async function setupBackground(presentationName, metadata) {
+            await applyBackgroundColor(metadata.colors?.background);
+            await applyBackgroundImage(presentationName);
+            toggleLoading(false);
+        }
+
+        /**
+         * Aplica color de fondo si está definido
+         */
+        async function applyBackgroundColor(backgroundColor) {
+            if (!backgroundColor) return;
+
+            document.documentElement.style.setProperty('--r-background-color', backgroundColor);
+            document.querySelector(SELECTORS.REVEAL).style.backgroundColor = backgroundColor;
+            document.body.style.backgroundColor = backgroundColor;
+        }
+
+        /**
+         * Aplica imagen de fondo si existe
+         */
+        async function applyBackgroundImage(presentationName) {
+            try {
+                const templateUrl = `/${presentationName}/template.webp`;
+                const response = await fetch(templateUrl);
+                
+                if (response.ok) {
+                    createBackgroundImageStyles(templateUrl);
+                }
+            } catch (error) {
+                console.warn('No se pudo cargar la imagen de fondo:', error);
+            }
+        }
+
+        /**
+         * Crea estilos para la imagen de fondo
+         */
+        function createBackgroundImageStyles(imageUrl) {
+            const style = document.createElement('style');
+            style.textContent = `
+                .reveal {
+                    background-image: url('${imageUrl}') !important;
+                    background-size: contain !important;
+                    background-position: center !important;
+                    background-repeat: no-repeat !important;
+                }
+                .reveal .slides {
+                    background: transparent !important;
+                }
+                .reveal .slides section {
+                    background: transparent !important;
+                }
+                .reveal .viewport {
+                    width: 100vw !important;
+                    height: 100vh !important;
+                    overflow: hidden !important;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // ==================== THEME LOADING ====================
+
+        /**
+         * Carga el tema CSS de Reveal.js
+         */
+        async function loadTheme(themeName = DEFAULT_THEME) {
+            return new Promise((resolve) => {
+                const themeLink = document.createElement('link');
+                themeLink.rel = 'stylesheet';
+                themeLink.href = `https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/${themeName}.css`;
+                themeLink.onload = resolve;
+                document.head.appendChild(themeLink);
+            });
+        }
+
+        // ==================== REVEAL.JS CONFIGURATION ====================
+
+        /**
+         * Crea la configuración para Reveal.js
+         */
+        function createRevealConfig(metadata) {
+            return {
+                ...metadata,
+                hash: true,
+                slideNumber: true,
+                controls: true,
+                progress: true,
+                center: true,
+                transition: 'slide',
+                theme: metadata.theme || DEFAULT_THEME,
+                backgroundTransition: 'none',
+                plugins: [RevealMarkdown, RevealNotes],
+                markdown: {
+                    smartypants: true,
+                    gfm: true
+                }
+            };
+        }
+
+        /**
+         * Configura los estilos de encabezados después de la inicialización
+         */
+        function setupHeadingStyles(metadata) {
+            const colors = getHeadingColors(metadata);
+            const fontSize = metadata.fonts?.['heading-fontsize'] || DEFAULT_FONT_SIZE;
+            
+            createHeadingStyles(colors, fontSize);
+            applyHeadingStyles(colors, fontSize);
+        }
+
+        /**
+         * Obtiene los colores de encabezados con fallbacks
+         */
+        function getHeadingColors(metadata) {
+            return {
+                h1: metadata.colors?.['heading1-color'] || metadata.colors?.['main-color'] || DEFAULT_COLORS.h1,
+                h2: metadata.colors?.['heading2-color'] || DEFAULT_COLORS.h2,
+                h3: metadata.colors?.['heading3-color'] || DEFAULT_COLORS.h3
+            };
+        }
+
+        /**
+         * Crea estilos CSS para los encabezados
+         */
+        function createHeadingStyles(colors, fontSize) {
+            const style = document.createElement('style');
+            style.textContent = `
+                .reveal .slides section h1,
+                .reveal .slides section h2,
+                .reveal .slides section h3 {
+                    font-size: ${fontSize} !important;
+                }
+                .reveal .slides section h2 {
+                    font-size: calc(${fontSize} * 0.85) !important;
+                }
+                .reveal .slides section h3 {
+                    font-size: calc(${fontSize} * 0.7) !important;
+                }
+                .reveal .slides section h1 {
+                    color: ${colors.h1} !important;
+                }
+                .reveal .slides section h2 {
+                    color: ${colors.h2} !important;
+                }
+                .reveal .slides section h3 {
+                    color: ${colors.h3} !important;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        /**
+         * Aplica estilos directamente a elementos existentes
+         */
+        function applyHeadingStyles(colors, fontSize) {
+            const headings = document.querySelectorAll('.reveal .slides section h1, .reveal .slides section h2, .reveal .slides section h3');
+            headings.forEach(heading => {
+                const level = heading.tagName[1];
+                const color = colors[`h${level}`];
+                const size = level === '1' ? fontSize : 
+                           level === '2' ? `calc(${fontSize} * 0.85)` : 
+                           `calc(${fontSize} * 0.7)`;
+                
+                heading.style.setProperty('color', color, 'important');
+                heading.style.setProperty('font-size', size, 'important');
+            });
+        }
+
+        // ==================== SLIDE PROCESSING ====================
+
+        /**
+         * Procesa el contenido markdown y crea las diapositivas
+         */
+        function processSlides(markdownContent, presentationName) {
+            const slidesContainer = document.querySelector(SELECTORS.SLIDES_CONTAINER);
+            if (!slidesContainer) {
+                throw new Error('No se encontró el contenedor de diapositivas');
+            }
+
+            const slides = splitIntoSlides(markdownContent);
+            slides.forEach(slideContent => {
+                const slideElement = createSlideElement(slideContent, presentationName);
+                slidesContainer.appendChild(slideElement);
+            });
+        }
+
+        /**
+         * Divide el contenido en diapositivas individuales
+         */
+        function splitIntoSlides(content) {
+            return content.split('<!-- SLIDE -->').filter(slide => slide.trim());
+        }
+
+        /**
+         * Crea un elemento de diapositiva
+         */
+        function createSlideElement(slideContent, presentationName) {
+            const { mainContent, notes } = extractSlideContent(slideContent);
+            const htmlContent = processMarkdownContent(mainContent, presentationName);
+            
+            const section = document.createElement('section');
+            
+            // Añadir contenido principal
+            const mainDiv = document.createElement('div');
+            mainDiv.innerHTML = htmlContent;
+            section.appendChild(mainDiv);
+            
+            // Añadir notas si existen
+            if (notes) {
+                section.appendChild(createNotesElement(notes));
+            }
+            
+            return section;
+        }
+
+        /**
+         * Extrae contenido principal y notas de una diapositiva
+         */
+        function extractSlideContent(slideContent) {
+            const notesMatch = slideContent.match(/<!-- NOTES -->([\s\S]*?)(?=<!-- SLIDE -->|$)/);
+            
+            if (notesMatch) {
+                return {
+                    mainContent: slideContent.split('<!-- NOTES -->')[0].trim(),
+                    notes: notesMatch[1].trim()
+                };
+            }
+            
+            return { mainContent: slideContent, notes: '' };
+        }
+
+        /**
+         * Procesa el contenido markdown de una diapositiva
+         */
+        function processMarkdownContent(content, presentationName) {
+            let htmlContent = marked.parse(content);
+            
+            htmlContent = processColumns(htmlContent);
+            htmlContent = processGrids(htmlContent);
+            htmlContent = processImagePaths(htmlContent, presentationName);
+            
+            return htmlContent;
+        }
+
+        /**
+         * Procesa formato de columnas
+         */
+        function processColumns(htmlContent) {
+            return htmlContent.replace(/\$COLUMNS\$(.*?)\$END\$/gs, (match, columnsContent) => {
+                const columns = columnsContent.split('$COL$').filter(col => col.trim());
+                return `<div class="columns">
+                    ${columns.map(col => `<div data-markdown>${col.trim()}</div>`).join('\n')}
+                </div>`;
+            });
+        }
+
+        /**
+         * Procesa formato de grids
+         */
+        function processGrids(htmlContent) {
+            return htmlContent.replace(/\$GRID\$(.*?)\$END\$/gs, (match, gridContent) => {
+                const rows = gridContent.split('$ROW$')
+                    .map(row => row.trim())
+                    .filter(row => row);
+
+                const processedRows = rows.map(row => {
+                    const cells = row.split('$CELL$')
+                        .map(cell => cell.trim())
+                        .filter(cell => cell);
+
+                    return `<div class="grid-row">
+${cells.map(cell => `<div class="grid-cell" data-markdown>${cell}</div>`).join('\n')}
+</div>`;
+                });
+
+                return `<div class="grid-container">
+${processedRows.join('\n')}
+</div>`;
+            });
+        }
+
+        /**
+         * Procesa rutas de imágenes
+         */
+        function processImagePaths(htmlContent, presentationName) {
+            return htmlContent
+                .replace(/src="images\//g, `src="/${presentationName}/images/`)
+                .replace(/src='images\//g, `src='/${presentationName}/images/`);
+        }
+
+        /**
+         * Crea elemento de notas para Speaker Notes
+         */
+        function createNotesElement(notes) {
+            const aside = document.createElement('aside');
+            aside.setAttribute('class', 'notes');
+            aside.setAttribute('data-markdown', '');
+            
+            const notesTemplate = document.createElement('script');
+            notesTemplate.type = 'text/template';
+            notesTemplate.textContent = notes;
+            aside.appendChild(notesTemplate);
+            
+            return aside;
+        }
+
+        /**
+         * Procesa markdown en elementos especiales después de la inicialización
+         */
+        function processSpecialElements() {
+            processGridCells();
+            processColumnCells();
+        }
+
+        /**
+         * Procesa markdown en celdas de grid
+         */
+        function processGridCells() {
+            const gridCells = document.querySelectorAll('.grid-cell[data-markdown]');
+            gridCells.forEach(cell => {
+                const content = cell.textContent;
+                cell.innerHTML = marked.parse(content);
+            });
+        }
+
+        /**
+         * Procesa markdown en celdas de columnas
+         */
+        function processColumnCells() {
+            const columnCells = document.querySelectorAll('.columns div[data-markdown]');
+            columnCells.forEach(cell => {
+                const content = cell.textContent;
+                cell.innerHTML = marked.parse(content);
+            });
+        }
+
+        // ==================== MAIN PRESENTATION LOADER ====================
+
+        /**
+         * Carga y configura la presentación completa
+         */
+        async function loadPresentation(presentationName) {
+            try {
+                toggleLoading(true);
+                
+                // Actualizar título de la página
+                updatePageTitle(presentationName);
+                
+                // Cargar contenido
+                const content = await fetchPresentationContent(presentationName);
+                const [metadata, markdownContent] = extractMetadata(content);
+                
+                // Aplicar configuración
+                applyCSSVariables(metadata);
+                await setupBackground(presentationName, metadata);
+                await loadTheme(metadata.theme);
+                
+                // Configurar Reveal.js
+                const revealConfig = createRevealConfig(metadata);
+                const deck = new Reveal(revealConfig);
+                
+                // Procesar diapositivas
+                processSlides(markdownContent, presentationName);
+                
+                // Configurar eventos y finalizar
+                setupRevealEvents(deck, metadata);
+                await deck.initialize();
+                
+                // Procesar elementos especiales
+                processSpecialElements();
+                
+            } catch (error) {
+                console.error('Error al cargar la presentación:', error);
+                showError(`Error al cargar la presentación: ${error.message}`);
+            }
+        }
+
+        /**
+         * Obtiene el contenido de la presentación desde el servidor
+         */
+        async function fetchPresentationContent(presentationName) {
+            const response = await fetch(`/${presentationName}/contenidos.md`);
+            if (!response.ok) {
+                throw new Error('No se pudo cargar el contenido de la presentación');
+            }
+            return await response.text();
+        }
+
+        /**
+         * Configura eventos de Reveal.js
+         */
+        function setupRevealEvents(deck, metadata) {
+            deck.addEventListener('ready', () => {
+                setTimeout(() => setupHeadingStyles(metadata), 100);
+            });
+        }
+
+        // ==================== APPLICATION ENTRY POINT ====================
+
+        /**
+         * Inicializa la aplicación
+         */
+        function initializeApp() {
+            const presentationName = getPresentationName();
+            
+            if (presentationName) {
+                console.log('Cargando presentación:', presentationName);
+                loadPresentation(presentationName);
+            } else {
+                showError('No se especificó ninguna presentación');
+            }
+        }
+
+        // Inicializar la aplicación
+        initializeApp();
+    </script>
+</body>
+</html>

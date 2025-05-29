@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liderazgo Afectivo</title>
+    <link rel="stylesheet" href="../lib/reveal.js/node_modules/reveal.js/dist/reset.css">
+    <link rel="stylesheet" href="../lib/reveal.js/node_modules/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../lib/reveal.js/node_modules/reveal.js/dist/theme/black.css">
+    <script src="../lib/reveal.js/node_modules/reveal.js/dist/reveal.js"></script>
+    <script src="../lib/reveal.js/node_modules/reveal.js/plugin/notes/notes.js"></script>
+    <style>
+      .reveal section img { max-width: 80%; height: auto; margin: 20px auto; }
+      .reveal section:first-of-type img {
+        max-height: 60vh; /* Ajusta al 60% del alto de la ventana */
+        width: auto;
+        max-width: none;
+        margin: 10px auto;
+      }
+      .reveal section h2 { color: #DF006E; }
+      .reveal section p { font-size: 1.5em; }
+      .reveal aside.notes {
+        display: none;
+      }
+      .grid-2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        align-items: center;
+        justify-items: center;
+        margin: 20px auto;
+      }
+      .grid-2 img {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        object-fit: contain;
+      }
+      .grid-4 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 20px;
+        align-items: center;
+        justify-items: center;
+        margin: 20px auto;
+        position: relative;
+      }
+      .grid-4 img {
+        width: 100%;
+        max-height: 200px;
+        object-fit: contain;
+      }
+      .front-center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+      }
+      .front-center img {
+        max-width: 200px;
+        height: auto;
+        margin: 0;
+      }
+      .click {
+        background-color: #DF006E;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: inline-block;
+        margin: 0 5px;
+      }
+      #titulo-libro {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(20deg);
+        font-size: 2.5em;
+        color: #DF006E;
+        text-align: center;
+        z-index: 2;
+        white-space: nowrap;
+      }
+      @keyframes zoomInRotated {
+        from {
+          transform: translate(-50%, -50%) rotate(20deg) scale(5);
+          opacity: 0;
+        }
+        to {
+          transform: translate(-50%, -50%) rotate(20deg) scale(1);
+          opacity: 1;
+        }
+      }
+      .fragment.zoom-in-rotated {
+        opacity: 0;
+      }
+      .fragment.zoom-in-rotated.visible {
+        opacity: 1;
+        animation: zoomInRotated 1s ease-out;
+      }
+
+      @keyframes zoomFromViewer {
+        from {
+          transform: scale(5);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      .fragment.zoom-from-viewer {
+        opacity: 0;
+      }
+      .fragment.zoom-from-viewer.visible {
+        opacity: 1;
+        animation: zoomFromViewer 1s ease-out;
+      }
+      .text-with-border {
+        text-shadow: 
+          -1px -1px 0 #000,
+          1px -1px 0 #000,
+          -1px 1px 0 #000,
+          1px 1px 0 #000;
+      }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section data-transition="zoom">
+                <h2>Liderazgo Afectivo</h2>
+                <img src="images/portada-libro2.jpg" alt="Portada del libro Liderazgo Afectivo">
+                <p class="fragment zoom-from-viewer text-with-border" style="position:relative; top:-37rem; color:yellow;">Transformando organizaciones a través de conexiones humanas</p>
+                <aside class="notes">
+                    Leo a menudo, en libros, blogs, escucho en podcast, que se necesita mucho liderazgo.<br>
+                    Yo mismo lo digo. Hace falta liderazgo. Hacen falta personas que lideren, que aporten liderazgo.<br>
+                </aside>
+            </section>
+
+            <section>
+                <h2>Gracias</h2>
+                <img src="images/commit-conf.jpg" style="height: 60vh;" alt="Commit Conf">
+            </section>
+
+            <section>
+                <img src="images/sponsors.png" style="height: 60vh;" alt="Sponsor">
+            </section>
+
+            <section data-transition="convex">
+                <h2>¿Qué es liderazgo?</h2>
+                <p class="fragment fade-in">¿Qué te imaginas cuando escuchas la palabra "liderazgo"?</p>
+                <aside class="notes">
+                    ¿Pero qué es liderazgo?<br>
+                    Si digo que hacen falta personas que aporten patatas. Todo el mundo tiene en la cabeza lo que es una patata.<br>
+                    Si digo que hacen falta personas que aporten conocimiento en alguna materia.<br>
+                    Todo el mundo sabe lo que es el conocimiento, aunque sea un concepto abstracto.<br>
+                    Pero si digo que hacen falta personas que aporten liderazgo, que lideren<br>
+                    ¿Qué se imaginan? ¿Alguien que encabece un movimiento?¿Alguien que mande?¿Alguien que guíe y nos diga por dónde ir?
+                </aside>
+            </section>
+
+            <section data-transition="concave">
+                <h2>La confusión del liderazgo</h2>
+                <h4 data-change="Liderazgo ≠ Dirigir ≠ Gestionar ≠ Mandar" data-change-delay="6000">Liderazgo = Dirigir = Gestionar = Mandar</h4>
+                <img src="images/lider_rae.png" style="max-width:120%; height: auto;" alt="Liderazgo afectivo R.A.E.">
+                <aside class="notes">
+                    Quitando la acepción deportiva, la RAE dice que líder es:<br>
+                    Persona que dirige o conduce un partido político, un grupo social u otra colectividad.<br>
+                    Es decir, normalmente se asocia, se confunde, liderazgo con dirigir o gestionar. O distorsionando al máximo el concepto: con mandar.<br>  
+                    Sí. El ansia de poder. De tener una posición privilegiada frente a otras personas. Y que acaba derivando en abuso e impunidad.
+                </aside>
+            </section>
+
+            <section data-transition="fade">
+                <h2>Me pregunto...</h2>
+                <p>¿Por qué lo llaman liderazgo cuando quieren decir <u style="color:#DF006E;">dirigir</u> o <u style="color:#DF006E;">gestionar</u>?</p>
+                <p class="fragment fade-in">¿Por qué lo llaman <u style="color:#DF006E;">amor</u> cuando quieren decir <u style="color:#DF006E;">sexo</u>?</p>
+                <aside class="notes">
+                    Para intentar explicarlo hago una analogía.
+                    ¿Porqué lo llaman amor cuando quieren decir sexo?<br>
+                    Porque el amor atrae, seduce, porque es duradero. Se prolonga en el tiempo.<br>
+                    El sexo es puntual y dura...lo que dura... dura.<br>
+                    Y porque es común que cuando hay amor, por ejemplo en una relación de pareja, también hay sexo.<br>
+                    Pero sabemos que puede haber sexo sin amor.<br>
+                    Y puede haber amor sin sexo. Y por su puesto puede haber amor y sexo.
+                    ¿De qué depende? Del tipo de relación que sea.<br>
+                </aside>
+            </section>
+
+            <section data-transition="zoom">
+                <h2>El poder del liderazgo</h2>
+                <p>El liderazgo seduce más que<br>la mera gestión</p>
+                <aside class="notes">
+                    Así que. ¿Por qué lo llaman liderazgo cuando quieren decir dirigir o gestionar? Porque seduce más.
+                    Si te digo ¿Quiero ser el jefe? Produce rechazo.<br>
+                    Si te digo ¿Quiero liderar? Ahí ya te capta.<br>
+                    Si te lo vende bien, consigues tu objetivo.
+                </aside>
+            </section>
+
+            <section data-transition="convex">
+                <h2>Ser vs Hacer</h2>
+                <p>La gestión tiene que ver con el hacer</p>
+                <p class="fragment fade-in">El liderazgo tiene que ver con el ser</p>
+                <aside class="notes">
+                    Por eso mismo puede haber gestión sin liderazgo.<br>
+                    Y puede haber liderazgo sin gestión. Y el ideal es gestión y liderazgo.<br>
+                    Por eso hay que entender bien qué es el liderazgo.<br>
+                    Y no confundirlo con falso liderazgo.<br>
+                    Y igual que no debemos confundir un falso amor, si es lo que buscamos.<br>
+                    Y es lícito querer dirigir, mandar, gestionar, sin liderar.<br>
+                    Conseguirás si tienes una posición privilegiada, nada más.<br>
+                    Y como digo, el liderazgo tiene más que ver con el ser.<br>
+                    Y entender que el "ser" es lo que te lleva al "hacer" con propósito.<br>
+                    Y uno hace por lo que es. Y tal y cómo seas es lo que te lleva a hacer, a la acción.<br>  
+                    Hacer sin ser está vacío. Como el sexo sin amor. ¿Válido? Sí. ¿Hueco? También.<br>
+                    Puede que a ti te satisfaga, pero solo lo hará en el corto plazo.
+                </aside>
+            </section>
+
+            <section>
+                <h2>Definición de Liderazgo</h2>
+                <span>
+                  <span class="fragment fade-in">Es <span style="color:#DF006E;">la fuerza</span></span><span class="fragment fade-in" style="color:#DF006E;">, la energía</span>
+                  <span class="fragment fade-in" style="color:#DF006E;">, el alma</span>
+                  <span class="fragment fade-in">que mantiene la cohesión y la unidad de un grupo de personas en el tiempo, más allá de los intereses transaccionales.
+                  </span>
+                </p>
+                <aside class="notes">
+                    Por eso, antes de definir el liderazgo afectivo, yo me pregunto primero: 
+                    ¿Qué es el liderazgo?
+                    Para mí es la fuerza invisible que mantiene la cohesión, la unidad, de un grupo de personas en el tiempo, más allá de los intereses transaccionales.<br>
+                </aside>
+            </section>
+
+            <section>
+                <h2>Tipos de Fuerza Liderando</h2>
+                <ul>
+                    <li class="fragment fade-in">Miedo (autoritario)</li>
+                    <li class="fragment fade-in">Colaboración (democrático)</li>
+                    <li class="fragment fade-in">Empatía (humanista)</li>
+                    <li class="fragment fade-in">Afecto (afectivo)</li>
+                </ul>
+                <aside class="notes">
+                    Y esa fuerza que surge puede ser el miedo en un "liderazgo" autoritario. Puede ser la colaboración en un liderazgo democratico. Puede ser la empatía en un liderazgo humanista. Y es el afecto en un liderazgo afectivo. Para mí la fuerza más poderosa. El afecto. El amor.
+                </aside>
+            </section>
+
+            <section>
+                <h2>Liderazgo Afectivo</h2>
+                <p>Es esa fuerza, energia, alma que <span style="color:#DF006E;">genera relación, implicación, responsabilidad, cuidado.</span></p>
+                <aside class="notes">
+                    Y esa fuerza, energia, alma que genera relación, implicación, responsabilidad, cuidado.
+                    Y que parte de quién lidera y se propaga a todas las personas que forman parte del grupo.
+                </aside>
+            </section>
+
+            <section>
+                <h2>El Liderazgo genera Liderazgo</h2>
+                <p class="fragment fade-in">La misión de un líder es crear más líderes</p>
+                <p class="fragment fade-in" style="text-decoration: line-through; position: relative; top: -11.5rem;">La misión de un líder es crear más líderes</p>
+                <p class="fragment fade-in" style="position: relative; top: -11.5rem;">Una consecuencia de un buen liderazgo es que se genera más liderazgo</p>
+
+                <aside class="notes">
+                  Hay quién dice que la misión de un líder es crear más líderes.<br>
+                  Yo creo que se malinterpreta.<br> 
+                  No es la misión. Es una consecuencia. Ocurre. Pero no tengo que hacer nada mas que liderar.<br>
+                  Cuando se lidera se generan más líderes. No "tiene qué", sino que ocurre.<br>
+                  Por eso el liderazgo es también una fuerza que genera más liderazgo.<br>
+                  Y cuando se hace desde el afecto, es una consecuencia inmediata.
+                </aside>
+            </section>
+
+            <section>
+                <h2>Liderazgo Compartido</h2>
+                <p class="fragment fade-in">El equipazgo: liderar en equipo</p>
+                <aside class="notes">
+                    Y fijaros que hablo de un liderazgo que parte de una o varias personas<br>
+                    ¿Por qué? Porque el liderazgo puede y debe ser compartido entre varias personas.<br>
+                    Lo que yo defino como equipazgo.<br>
+                    Liderar en soledad es más duro y es más triste, aunque a veces inevitable.<br>
+                    Pero insisto que no hablo de dirigir o ser responsable, que a pesar de que suele ir unido muchas veces,<br>
+                    no es imprescindible para liderar, se puede liderar sin dirigir.<br>
+                    Pero si lideras influyes.
+                </aside>
+            </section>
+
+            <section>
+                <h2>¿Cómo Surge el Liderazgo Afectivo?</h2>
+                <ul>
+                    <li class="fragment fade-in">Servicio a los demás</li>
+                    <li class="fragment fade-in">Confiando en los demás</li>
+                    <li class="fragment fade-in">Delegando en los demás</li>
+                    <li class="fragment fade-in">Capacidad de mirar "más allá"</li>
+                </ul>
+                <aside class="notes">
+                    ¿Y cómo surge esa "fuerza"? ¿Qué la genera?<br>
+                    Y recordar que hablo de liderazgo, no de ser el jefe.<br>
+                    Pues la forma más frecuente, surge del servicio a los demás.<br>
+                    Surge de confiar en otras personas.<br>
+                    Surge de la capacidad de mirar "más allá".<br>
+                    Es decir, ver entre líneas.<br>
+                    Y todo esto "da ejemplo", que contagia y que hace que quien lidera influya en los demás.
+                </aside>
+            </section>
+
+            <section>
+                <h2>Tarea principal del<br> Líder Afectivo</h2>
+                <p class="fragment fade-in">Dedicar tiempo y atención a los demás</p>
+                <p class="fragment fade-in">...que genera relaciones</p>
+                <p class="fragment fade-in">..que generan afecto</p>
+                <aside class="notes">
+                    ¿Y a qué se dedican las persona que lideran desde un liderazgo afectivo?<br>
+                    Las tareas principales son dedicar tiempo y atención a las personas del equipo.<br>
+                    Generando relaciones, entregando confianza, haciendo que te importen, generando afecto.<br>
+                    Todo esto multiplica el bienestar de las personas del grupo,<br>
+                    de la empresa y aumenta la efectividad del trabajo, mejora los resultados.<br>
+                    Pero todo sintiendo afecto por las personas del equipo.<br>(ejemplo del padre/madre)
+                    Y unido a esto se dirige el equipo, se toman decisiones que buscan el propósito,<br>
+                    que buscan mejorar resultados, pero teniendo en cuenta el lado emocional de cada persona e implicandote con ella.
+                </aside>
+            </section>
+
+            <section>
+                <h2 data-change="OJO-CUIDAO!">DISCLAIMER</h2>
+                <p>No olvidar</p>
+                <ul>
+                    <li class="fragment fade-in">Que hay que cumplir con los objetivos</li>
+                    <li class="fragment fade-in">Que hay que marcar limites, crear marcos</li>
+                    <li class="fragment fade-in">Que hay que hacer seguimiento</li>
+                </ul>
+                <p class="fragment fade-in">Recuerda: Diriges<p/>
+                <aside class="notes">
+                    PERO IMPORTANTE: No olvidar que diriges, que tienes que cumplir con los objetivos, que tienes que hacer que todo funcione.<br>
+                    NO SE TRATA DE BUENISMO. Debes marcar limites, crear marcos, hacer seguimiento, llamar la atención cuando corresponda...<br>
+                </aside>
+            </section>
+                
+            <section>
+                <h2>La Importancia de las Emociones</h2>
+                <blockquote>
+                    "Es irracional que un directivo asuma que las personas que dirige puedan ser dirigidas sin tener en cuenta su lado emocional"
+                    <footer>- Neal M. Ashkanasy, 2004</footer>
+                </blockquote>
+                <aside class="notes">
+                    Y recojo la cita de Neal M. Ashkanasy, (académico australiano reconocido por su trabajo en emociones en el lugar de trabajo)<br>
+                    "Es irracional que un directivo asuma que las personas que dirige puedan ser dirigidas sin tener en cuenta su lado emocional" Neal M. Ashkanasy 2004.<br>
+                    Pero para poder hacer esto, tu enfoque liderando, debe ser afectivo. No hay otra forma. No se puede hacer de forma racional.
+                </aside>
+            </section>
+
+            <section>
+                <h2 style="font-size:2rem;">Profundidad relacional en el liderazgo afectivo</h2>
+                <img src="images/liderazgo_afectivo_circulos.png" style="height: 70vh;" alt="Círculos concéntricos del liderazgo">
+                <aside class="notes">
+                    La profundidad de las relaciones de quienes lideran yo lo visualizo en círculos concéntricos: 
+                    - Comunidad / Cultura: Es el entorno inicial, lo que te atrae o rechaza antes de profundizar.<br>
+                    - Comportamientos: Es cómo actuamos en ese entorno, lo que se ve primero de cada persona.<br>
+                    - Interacciones Sociales: Son los momentos de contacto que permiten generar confianza o desconfianza.<br>
+                    - Relaciones: Surgen cuando las interacciones se sostienen en el tiempo con un mínimo de afecto o propósito.<br>
+                    - Emociones: Empiezan a aparecer con más fuerza cuando las relaciones se consolidan.<br>
+                    - Afectos: Son vínculos emocionales más estables que pueden incluir cariño, respeto profundo, admiración.<br>
+                    - Sentimientos: Lo más duradero y profundo, que define la percepción emocional de largo plazo hacia las personas o el entorno.<br>
+
+                    Un lider afectivo intenta abarcar todos los círculos, aunque es probable que se quede en el de las emociones
+                    Y como podemos ver por el tamaño,<br>
+                    los que caben en el circulo mas interior, son menos que los que caben en el circulo mas exterior.<br>
+                    Es decir, es imposible que un lider afectivo tenga esa relación de Emociones con todos los que lo rodean.<br>
+                    Pero si tu generas afecto con 10 personas del equipo y estas a su vez lo hacen con otras 10, estarás generando afecto con 100 personas.
+                </aside>
+            </section>
+
+            <section>
+                <h2>Los Valores de una Empresa</h2>
+                <ul>
+                  <li class="fragment fade-in">Valor Económico</li>
+                  <li class="fragment fade-in">Valor Intelectual</li>
+                  <li class="fragment fade-in">Valor Emocional</li>
+                </ul>
+                <aside class="notes">
+                    Los valores de una empresa son:<br>
+                    - Valor Económico<br>
+                    - Valor Intelectual<br>
+                    - Valor Emocional<br>
+                    Normalmente las empresas se centran en el valor económico e intelectual,<br>
+                    Y se olvidan o descuidan el valor emocional.
+                </aside>
+            </section>
+
+            <section>
+                <h2>El Valor Emocional</h2>
+                <p class="fragment fade-in">Lo que permite a una organización acometer la incertidumbre</p>
+                <aside class="notes">
+                    Porque lo que permite a una organización/empresa acometer<br>
+                    La incertidumbre,<br>
+                    La complejidad<br>
+                    Y los problemas que surgen<br>
+                    A parte de su valor económico e intelectual, es su valor emocional.<br>
+                    Creo que cuando se cuida el valor emocional, es cuando un equipo se vuelve anti-fragil.<br>
+                    (definido por Nicholas Taleb)<br>
+                    Y no se dan cuenta de ello o lo hacen tarde.<br>
+                    Sin este valor emocional los daños, las consecuencias pueden ser irreparables e irreversibles.<br> 
+                    Y el valor emocional solo se genera mediante un liderazgo afectivo, consciente o inconscientemente,<br> 
+                    e influye directamente en un incremento y consolidación del capital intelectual.<br>
+                    Todo esto además influye en el capital humano, cultural, reputacional, de marca y económico.<br>
+                    El liderazgo afectivo busca cuidar los 3 capitales de una empresa.
+                </aside>
+            </section>
+
+            <section>
+                <h2>Beneficios del Liderazgo Afectivo</h2>
+                <ul>
+                    <li class="fragment fade-in">Aumenta la participación</li>
+                    <li class="fragment fade-in">Mejora la cohesión</li>
+                    <li class="fragment fade-in">Enfatiza misión, visión y valores</li>
+                    <li class="fragment fade-in">Refuerza la cultura</li>
+                </ul>
+                <aside class="notes">
+                    El liderazgo afectivo aumenta la participación y la cohesión de las personas del equipo,<br>
+                    independientemente del número de personas que lo compongan.<br>
+                    Enfatiza la misión, visión y valores de la empresa.<br>
+                    Refuerza la cultura y le da consistencia más allá de lo que diga su lema, su eslógan o su web.
+                </aside>
+            </section>
+
+            <section>
+                <h2>Selección de Personas del equipo</h2>
+                <p>¿Debemos solo contratar a las personas que nos encajen?</p>
+                <aside class="notes">
+                    Normalmente lo que hacemos en un proceso de selección es buscar y seleccionar personas que,<br>
+                    no solo encajen en el perfil técnico, sino que también encajen en cultura y valores,<br>
+                    descartando personas o seleccionando los que creemos que encajan mejor.<br>
+                    Es decir, buscamos a las personas que creemos "van a dar menos problemas"<br>
+                    Ejemplo: me gusta javascript, no typescript.
+                </aside>
+            </section>
+
+            <section>
+              <blockquote>Lo más importante es contratar a las personas correctas y situarlas en el lugar adecuado - Jim Collins</blockquote>
+               <aside class="notes">
+                Añadia que las personas correctas en el lugar adecuado no hace falta vigilarlas ni motivarlas.<br>
+
+              </aside>
+            </section>
+  
+            <section>
+              <blockquote>Además es importante contratar con mente abierta y elegir (algunas) personas con las que tengas diferencias</blockquote>
+              <blockquote class="fragment fade-in">Lo realmente importante es llegar a conocer a las personas que contratas y generar vínculo y afecto con todas ellas, o casi</blockquote>
+              <aside class="notes">
+                De esta manera serán las correctas y encontrarán el lugar adecuado y no hará falta motivarlas ni vigilarlas.
+              </aside>
+            </section>
+
+            <section>
+                <h2>El Afecto es un Poder Transformador</h2>
+                <p>Reduce la "coraza" artificial</p>
+                <p class="fragment fade-in">Rescata personas "descartadas"</p>
+                <aside class="notes">
+                    Desde un liderazgo afectivo, esta premisa de vigilar y motivar no es una necesidad,<br>
+                    porque el afecto es una fuerza transformadora.<br>
+                    He visto que personas "descartadas" por esa falta de encaje,<br>
+                    al verse aceptadas y sentir que sentía afecto por ellas, cambiaban y parecían otras.<br>
+                    Creo que las personas nos comportamos y tomamos actitudes, para defendernos del entorno,<br>
+                    de las personas que tienen poder hacia nosotros por su posición.<br>
+                    El afecto reduce "esa coraza" artificial de comportamientos y actitudes.<br>
+                    Y no digo que sea eficaz al 100%, es difícil y depende de más factores,<br>
+                    pero que se rescatan más personas validas para el equipo, es un hecho.<br>
+                    Os invito a comprobarlo como hice yo.<br>
+                    Y a veces es tan sencillo como hablar con alguién sin prejuzgarla, bajandote de tu pedestal.
+                </aside>
+            </section>
+
+            <section>
+                <h2>Jerarquía Invertida</h2>
+                <img src="images/piramide_invertida_liderazgo.png" style="height: 60vh; position: relative; top: -4rem;" alt="Jerarquía invertida del liderazgo afectivo">
+                <aside class="notes">
+                    ¿Cómo ejercer un liderazgo afectivo?<br>
+                    Bueno. No es trivial. Hay varios factores a tener en cuenta y que sintetizo y cuento en mi libro (cuña publicitaria ;)<br>
+                    La mejor manera que he encontrado para ejercer un liderazgo afectivo es mediante una organización de jerarquía invertida.<br>
+                    Y sí, digo jerarquía. No es incompatible con afecto, aunque pueda parecerlo.<br>
+                    Porque hablo de una jerarquía de responsabilidad que ejerce servicio y delegación. <br>
+                    Quien ejerce un liderazgo afectivo puede tener responsabilidad, tener rol de dirección, <br>
+                    pero esa responsabilidad y capacidad de dirigir no es para ordenar y mandar, <br>
+                    es para servir a las personas que van a trabajar para conseguir los objetivos de los que eres responsable. <br>
+                    Se trata de delegar en personas en las que has generado afecto. <br>
+                    Son personas que están por encima de tí en la pirámide porque tienen menos responsabilidades <br>
+                    y eres tú la persona responsable última. <br>
+                    Y es cierto que en situaciones críticas o donde no se lleguen a acuerdos, <br>
+                    es tu responsabilidad tomar la decisión y explicarla y pedir confianza. <br>
+                    Sabemos que en muchas ocasiones no hay decisiones 100% correctas o buenas y que satisfagan a todos.<br>
+                    Normalmente desde la dirección nos enfrentamos a dilemas, los cuales no tienen una solución correcta o buena para todos.<br>
+                    Pero hay que tomarlas. Desde el afecto es por un lado más sencillo, <br>
+                    porque vas a tener en cuenta al mayor número de personas sin tener que pensar, <br>
+                    no solo tienes en cuenta partes materiales o de objetivo.<br>
+                    Y por otro te va a importar que haya personas afectadas por tu decisión. <br>
+                    El afecto hará que las acompañes e intentes buscar más alternativas o paliar en alguna medida las consecuencias.
+                </aside>
+            </section>
+
+            <section>
+                <h2>El Liderazgo Femenino</h2>
+                <p class="fragment fade-in">Necesitamos más líderes femeninas</p>
+                <p>Afectivo o no.</p>
+                <h3>Mas Liderazgos y dirección fememninas</h3>
+                <aside class="notes">
+                    Creemos que el liderazgo solo lo ejercen grandes hombres,<br>
+                    y sí digo hombres porque es lo que nos imaginamos, porque es lo único que reflejamos,<br>
+                    al menos en nuestra sociedad. No solemos nombrar a mujeres como grandes líderes.<br>
+                    Y es un doble error.<br>
+                    Primero porque liderar no significa montar una empresa que triunfe. <br>
+                    Ni hacer un gran descubrimiento. Qué puede coincidir, sí. Que normalmente coincide, sí. <br>
+                    Pero no seamos ignorantes. Se puede liderar sin salir en los medios, en las redes sociales. <br>
+                    Será alguien importante para quienes lidere, aunque no para el resto del mundo.<br>
+                    Segundo, porque las mejores líderes son mujeres, desde mi concepción de liderazgo, de liderazgo afectivo. <br>
+                    Son ellas las que son capaces de liderar con afecto, con servicio y con autoridad. <br>
+                    Si no que se lo digan a la zapatilla de mi madre XD<br>
+                    En serio. Son ellas las que mejor lideran y como digo, normalmente desde el anonimato y desde la humildad.<br>
+                    Y por ende, las peores mujeres líderes que he conocido son las que han intentado liderar imitando <br>
+                    el liderazgo "testorenil", probablemente porque era la única manera de liderar o se las comían.
+                </aside>
+            </section>
+
+            <section>
+                <h2>Conclusión</h2>
+                <p>Lideremos desde el afecto</p>
+                <p>Solo desde el afecto, podemos transformar</p>
+                <p data-change="El mundo">Organizaciones</p>
+                <aside class="notes">
+                    Por tanto, dejemos de fijarnos solamente en esos "grandes líderes" porque realmente de ellos poco podemos aprender y poco podemos imitar. Ni siquiera creo que puedan servir de inspiración, porque cuando veo que suelen ser déspotas, dudo si realmente han llegado donde han llegado liderando o machacando a quien se ponía por delante.
+                    El liderazgo afectivo no se centra en lo material sino en lo emocional, para conseguir los objetivos.
+                    Lideremos desde el afecto.
+                </aside>
+            </section>
+
+            <section>
+                <h2>Grancias</h2>
+                <img src="images/grancias.png" style="height: 60vh;" alt="Grancias">
+            </section>
+
+            <section>
+                <h2>¿Preguntas?</h2>
+                <img src="images/manufosela.png" style="height: 40vh" alt="manufosela">
+                <p>@manufosela - en cualquier red social</p>
+                <p>manufosela.es</p>
+            </section>
+        </div>
+    </div>
+
+    <script src="../lib/reveal.js/dist/reveal.js"></script>
+    <script>
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'slide',
+        showNotes: false,
+        autoSlide: 0,
+        autoSlideStoppable: true,
+        autoAnimate: false,
+        autoAnimateEasing: 'ease',
+        autoAnimateDuration: 1.0,
+        autoAnimateUnmatched: true,
+        plugins: [ RevealNotes ],
+        notes: {
+          showNotes: false,
+          showSlideNumber: false,
+          showSpeakerNotes: false
+        }
+      }).then(() => {
+        console.log('Reveal.js inicializado');
+        
+        // Función para manejar el cambio de texto
+        const handleTextChange = (element) => {
+          console.log('Elemento encontrado:', element);
+          if (!element.classList.contains('changed')) {
+            const originalText = element.textContent;
+            const newText = element.getAttribute('data-change');
+            const delay = element.getAttribute('data-change-delay') || 3000; // Usa el delay personalizado o 3000ms por defecto
+            console.log('Delay:', delay);
+
+            // Primero mostramos el texto original
+            element.textContent = originalText;
+            element.classList.add('changed');
+            
+            // Después de un tiempo, cambiamos al nuevo texto
+            setTimeout(() => {
+              element.textContent = newText;
+              element.style.color = 'yellow';
+            }, parseInt(delay));
+          }
+        };
+
+        // Escuchar el evento slidechanged
+        Reveal.on('slidechanged', event => {
+          console.log('Cambio de diapositiva');
+          const currentSlide = event.currentSlide;
+          const elementWithChange = currentSlide.querySelector('[data-change]');
+          
+          if (elementWithChange) {
+            console.log('Elemento con data-change encontrado en la diapositiva actual');
+            handleTextChange(elementWithChange);
+          }
+        });
+
+        // También escuchar clics en la diapositiva actual
+        document.querySelector('.reveal').addEventListener('click', event => {
+          console.log('Clic detectado');
+          const element = event.target.closest('[data-change]');
+          if (element) {
+            console.log('Elemento con data-change clickeado');
+            handleTextChange(element);
+          }
+        });
+      });
+    </script>
+</body>
+</html> 
