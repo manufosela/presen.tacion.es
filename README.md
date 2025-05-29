@@ -105,15 +105,10 @@ Las imágenes deben colocarse en el directorio `images/` de la presentación y r
 ### Requisitos
 
 - Python 3.x
-- Node.js y npm
 
 ### Instalación
 
 1. Clonar el repositorio
-2. Instalar dependencias:
-```bash
-npm install
-```
 
 ### Ejecución en Desarrollo
 
