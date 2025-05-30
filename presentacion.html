@@ -278,8 +278,7 @@
          */
         async function applyBackgroundImage(presentationName) {
             try {
-                const basePath = getBasePath();
-                const templateUrl = `${basePath}${presentationName}/template.webp`;
+                const templateUrl = `https://raw.githubusercontent.com/manufosela/presen.tacion.es/main/${presentationName}/template.webp`;
                 const response = await fetch(templateUrl);
                 
                 if (response.ok) {
@@ -542,10 +541,9 @@ ${processedRows.join('\n')}
          * Procesa rutas de imágenes
          */
         function processImagePaths(htmlContent, presentationName) {
-            const basePath = getBasePath();
             return htmlContent
-                .replace(/src="images\//g, `src="${basePath}${presentationName}/images/`)
-                .replace(/src='images\//g, `src='${basePath}${presentationName}/images/`);
+                .replace(/src="images\//g, `src="https://raw.githubusercontent.com/manufosela/presen.tacion.es/main/${presentationName}/images/`)
+                .replace(/src='images\//g, `src='https://raw.githubusercontent.com/manufosela/presen.tacion.es/main/${presentationName}/images/`);
         }
 
         /**
@@ -639,8 +637,7 @@ ${processedRows.join('\n')}
          * Obtiene el contenido de la presentación desde el servidor
          */
         async function fetchPresentationContent(presentationName) {
-            const basePath = getBasePath();
-            const url = `${basePath}${presentationName}/contenidos.md`;
+            const url = `https://raw.githubusercontent.com/manufosela/presen.tacion.es/main/${presentationName}/contenidos.md`;
             console.log('Intentando cargar:', url);
             const response = await fetch(url);
             if (!response.ok) {
