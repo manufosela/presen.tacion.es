@@ -534,8 +534,8 @@ ${processedRows.join('\n')}
          */
         function processImagePaths(htmlContent, presentationName) {
             return htmlContent
-                .replace(/src="images\//g, `src="/${presentationName}/images/`)
-                .replace(/src='images\//g, `src='/${presentationName}/images/`);
+                .replace(/src="images\//g, `src="${presentationName}/images/`)
+                .replace(/src='images\//g, `src='${presentationName}/images/`);
         }
 
         /**
