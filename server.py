@@ -32,7 +32,18 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler):
             return
 
         # Para cualquier otra ruta, intentar servir el archivo directamente
-        self.serve_file(path.lstrip('/'))
+        # Primero intentamos con la ruta completa
+        if os.path.exists(path.lstrip('/')):
+            self.serve_file(path.lstrip('/'))
+            return
+
+        # Si no existe, intentamos con la ruta relativa al directorio actual
+        if os.path.exists(os.path.join(os.getcwd(), path.lstrip('/'))):
+            self.serve_file(os.path.join(os.getcwd(), path.lstrip('/')))
+            return
+
+        # Si no se encuentra el archivo, devolver 404
+        self.send_error(404, "File not found")
 
     def serve_file(self, filepath):
         try:
@@ -54,6 +65,8 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler):
                     self.send_header('Content-type', 'image/png')
                 elif filepath.endswith('.jpg') or filepath.endswith('.jpeg'):
                     self.send_header('Content-type', 'image/jpeg')
+                elif filepath.endswith('.svg'):
+                    self.send_header('Content-type', 'image/svg+xml')
                 else:
                     self.send_header('Content-type', 'application/octet-stream')
                 
