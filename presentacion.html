@@ -91,10 +91,15 @@
          * Obtiene la ruta base para los recursos
          */
         function getBasePath() {
-            // Si estamos en GitHub Pages, la ruta base incluye el nombre del repositorio
+            // Si estamos en GitHub Pages con dominio personalizado, no necesitamos ruta base
+            if (window.location.hostname === 'presen.tacion.es') {
+                return '/';
+            }
+            // Si estamos en GitHub Pages sin dominio personalizado
             if (window.location.hostname === 'manufosela.github.io') {
                 return '/presen.tacion.es/';
             }
+            // Desarrollo local
             return '/';
         }
 
