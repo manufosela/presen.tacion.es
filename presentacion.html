@@ -248,6 +248,15 @@
                 if (reveal) {
                     reveal.style.fontSize = fontSize;
                 }
+                // Aplicar a los encabezados
+                const headings = document.querySelectorAll('.reveal .slides section h1, .reveal .slides section h2, .reveal .slides section h3');
+                headings.forEach(heading => {
+                    const level = heading.tagName[1];
+                    const size = level === '1' ? fontSize : 
+                               level === '2' ? `calc(${fontSize} * 0.85)` : 
+                               `calc(${fontSize} * 0.7)`;
+                    heading.style.setProperty('font-size', size, 'important');
+                });
             }
         }
 
@@ -278,11 +287,24 @@
          */
         async function applyBackgroundImage(presentationName) {
             try {
-                const templateUrl = `https://raw.githubusercontent.com/manufosela/presen.tacion.es/main/${presentationName}/template.webp`;
-                const response = await fetch(templateUrl);
+                let templateUrl;
                 
-                if (response.ok) {
-                    createBackgroundImageStyles(templateUrl);
+                // Si es una presentación local
+                if (presentationName.startsWith('local_')) {
+                    const content = sessionStorage.getItem(`${presentationName}/template.webp`);
+                    if (content) {
+                        templateUrl = `data:image/webp;base64,${btoa(content)}`;
+                    }
+                } else {
+                    // Si es una presentación remota
+                    templateUrl = `https://raw.githubusercontent.com/manufosela/presen.tacion.es/main/${presentationName}/template.webp`;
+                }
+
+                if (templateUrl) {
+                    const response = await fetch(templateUrl);
+                    if (response.ok) {
+                        createBackgroundImageStyles(templateUrl);
+                    }
                 }
             } catch (error) {
                 console.warn('No se pudo cargar la imagen de fondo:', error);
@@ -360,10 +382,11 @@
          */
         function setupHeadingStyles(metadata) {
             const colors = getHeadingColors(metadata);
-            const fontSize = metadata.fonts?.['heading-fontsize'] || DEFAULT_FONT_SIZE;
+            const fontSize = metadata.fontSize || DEFAULT_FONT_SIZE;
+            const headingFontSize = metadata.fonts?.['heading-fontsize'] || '3rem';
             
-            createHeadingStyles(colors, fontSize);
-            applyHeadingStyles(colors, fontSize);
+            createHeadingStyles(colors, fontSize, headingFontSize);
+            applyHeadingStyles(colors, fontSize, headingFontSize);
         }
 
         /**
@@ -380,27 +403,22 @@
         /**
          * Crea estilos CSS para los encabezados
          */
-        function createHeadingStyles(colors, fontSize) {
+        function createHeadingStyles(colors, fontSize, headingFontSize) {
             const style = document.createElement('style');
             style.textContent = `
-                .reveal .slides section h1,
-                .reveal .slides section h2,
-                .reveal .slides section h3 {
+                .reveal .slides section {
                     font-size: ${fontSize} !important;
                 }
-                .reveal .slides section h2 {
-                    font-size: calc(${fontSize} * 0.85) !important;
-                }
-                .reveal .slides section h3 {
-                    font-size: calc(${fontSize} * 0.7) !important;
-                }
                 .reveal .slides section h1 {
+                    font-size: ${headingFontSize} !important;
                     color: ${colors.h1} !important;
                 }
                 .reveal .slides section h2 {
+                    font-size: calc(${headingFontSize} * 0.85) !important;
                     color: ${colors.h2} !important;
                 }
                 .reveal .slides section h3 {
+                    font-size: calc(${headingFontSize} * 0.7) !important;
                     color: ${colors.h3} !important;
                 }
             `;
@@ -410,14 +428,21 @@
         /**
          * Aplica estilos directamente a elementos existentes
          */
-        function applyHeadingStyles(colors, fontSize) {
+        function applyHeadingStyles(colors, fontSize, headingFontSize) {
+            // Aplicar tamaño base a las secciones
+            const sections = document.querySelectorAll('.reveal .slides section');
+            sections.forEach(section => {
+                section.style.setProperty('font-size', fontSize, 'important');
+            });
+
+            // Aplicar tamaños a los encabezados
             const headings = document.querySelectorAll('.reveal .slides section h1, .reveal .slides section h2, .reveal .slides section h3');
             headings.forEach(heading => {
                 const level = heading.tagName[1];
                 const color = colors[`h${level}`];
-                const size = level === '1' ? fontSize : 
-                           level === '2' ? `calc(${fontSize} * 0.85)` : 
-                           `calc(${fontSize} * 0.7)`;
+                const size = level === '1' ? headingFontSize : 
+                           level === '2' ? `calc(${headingFontSize} * 0.85)` : 
+                           `calc(${headingFontSize} * 0.7)`;
                 
                 heading.style.setProperty('color', color, 'important');
                 heading.style.setProperty('font-size', size, 'important');
@@ -541,9 +566,29 @@ ${processedRows.join('\n')}
          * Procesa rutas de imágenes
          */
         function processImagePaths(htmlContent, presentationName) {
+            // Si es una presentación local
+            if (presentationName.startsWith('local_')) {
+                return htmlContent
+                    .replace(/src="images\/([^"]+)"/g, (match, filename) => {
+                        const content = sessionStorage.getItem(`${presentationName}/images/${filename}`);
+                        if (content) {
+                            return `src="data:image/webp;base64,${btoa(content)}"`;
+                        }
+                        return match;
+                    })
+                    .replace(/src='images\/([^']+)'/g, (match, filename) => {
+                        const content = sessionStorage.getItem(`${presentationName}/images/${filename}`);
+                        if (content) {
+                            return `src='data:image/webp;base64,${btoa(content)}'`;
+                        }
+                        return match;
+                    });
+            }
+
+            // Si es una presentación remota
             return htmlContent
                 .replace(/src="images\//g, `src="https://raw.githubusercontent.com/manufosela/presen.tacion.es/main/${presentationName}/images/`)
-                .replace(/src='images\//g, `src='https://raw.githubusercontent.com/manufosela/presen.tacion.es/main/${presentationName}/images/`);
+                .replace(/src='images\//g, `src='https://raw.githubusercontent.com/manufosela/presen.tacion.es/main/${presentationName}/images/'`);
         }
 
         /**
@@ -637,6 +682,16 @@ ${processedRows.join('\n')}
          * Obtiene el contenido de la presentación desde el servidor
          */
         async function fetchPresentationContent(presentationName) {
+            // Si es una presentación local
+            if (presentationName.startsWith('local_')) {
+                const content = sessionStorage.getItem(`${presentationName}/contenidos.md`);
+                if (!content) {
+                    throw new Error('No se pudo cargar el contenido de la presentación local');
+                }
+                return content;
+            }
+
+            // Si es una presentación remota
             const url = `https://raw.githubusercontent.com/manufosela/presen.tacion.es/main/${presentationName}/contenidos.md`;
             console.log('Intentando cargar:', url);
             const response = await fetch(url);
@@ -652,7 +707,24 @@ ${processedRows.join('\n')}
          */
         function setupRevealEvents(deck, metadata) {
             deck.addEventListener('ready', () => {
-                setTimeout(() => setupHeadingStyles(metadata), 100);
+                setTimeout(() => {
+                    setupHeadingStyles(metadata);
+                    // Aplicar estilos nuevamente después de un breve retraso
+                    setTimeout(() => {
+                        const fontSize = metadata.fontSize || DEFAULT_FONT_SIZE;
+                        const headingFontSize = metadata.fonts?.['heading-fontsize'] || '3rem';
+                        const colors = getHeadingColors(metadata);
+                        applyHeadingStyles(colors, fontSize, headingFontSize);
+                    }, 100);
+                }, 100);
+            });
+
+            // Aplicar estilos cuando cambia la diapositiva
+            deck.addEventListener('slidechanged', () => {
+                const fontSize = metadata.fontSize || DEFAULT_FONT_SIZE;
+                const headingFontSize = metadata.fonts?.['heading-fontsize'] || '3rem';
+                const colors = getHeadingColors(metadata);
+                applyHeadingStyles(colors, fontSize, headingFontSize);
             });
         }
 
