@@ -88,6 +88,17 @@
         }
 
         /**
+         * Obtiene la ruta base para los recursos
+         */
+        function getBasePath() {
+            // Si estamos en GitHub Pages, la ruta base incluye el nombre del repositorio
+            if (window.location.hostname === 'manufosela.github.io') {
+                return '/presen.tacion.es/';
+            }
+            return '/';
+        }
+
+        /**
          * Actualiza el título de la página con el nombre de la presentación
          */
         function updatePageTitle(presentationName) {
@@ -270,7 +281,8 @@
          */
         async function applyBackgroundImage(presentationName) {
             try {
-                const templateUrl = `/${presentationName}/template.webp`;
+                const basePath = getBasePath();
+                const templateUrl = `${basePath}${presentationName}/template.webp`;
                 const response = await fetch(templateUrl);
                 
                 if (response.ok) {
@@ -533,9 +545,10 @@ ${processedRows.join('\n')}
          * Procesa rutas de imágenes
          */
         function processImagePaths(htmlContent, presentationName) {
+            const basePath = getBasePath();
             return htmlContent
-                .replace(/src="images\//g, `src="${presentationName}/images/`)
-                .replace(/src='images\//g, `src='${presentationName}/images/`);
+                .replace(/src="images\//g, `src="${basePath}${presentationName}/images/`)
+                .replace(/src='images\//g, `src='${basePath}${presentationName}/images/`);
         }
 
         /**
@@ -629,7 +642,8 @@ ${processedRows.join('\n')}
          * Obtiene el contenido de la presentación desde el servidor
          */
         async function fetchPresentationContent(presentationName) {
-            const response = await fetch(`/${presentationName}/contenidos.md`);
+            const basePath = getBasePath();
+            const response = await fetch(`${basePath}${presentationName}/contenidos.md`);
             if (!response.ok) {
                 throw new Error('No se pudo cargar el contenido de la presentación');
             }
