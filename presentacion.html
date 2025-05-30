@@ -7,6 +7,8 @@
     <!-- Importar fuente Lato -->
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+    <!-- Cargar Pico CSS primero -->
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
     <style>
         :root {
             --heading1-color: #DF006E;
@@ -42,8 +44,6 @@
             right: 50px !important;
         }
     </style>
-    <!-- Cargar Pico CSS después de nuestras variables -->
-    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
 </head>
 <body>
     <div id="loading" class="loading">Cargando presentación...</div>
@@ -232,6 +232,9 @@
          */
         function applyBaseFontSize(fontSize) {
             if (fontSize) {
+                // Aplicar a la variable CSS de Pico
+                document.documentElement.style.setProperty('--font-size', fontSize);
+                // Aplicar al body y reveal como respaldo
                 document.body.style.fontSize = fontSize;
                 const reveal = document.querySelector(SELECTORS.REVEAL);
                 if (reveal) {
