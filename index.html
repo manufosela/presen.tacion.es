@@ -5,13 +5,79 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Presentaciones</title>
   <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
+  <style>
+    .local-presentation {
+      margin-top: 2rem;
+      padding: 1rem;
+      border: 1px solid var(--primary);
+      border-radius: 0.5rem;
+    }
+    .local-presentation h2 {
+      margin-top: 0;
+    }
+  </style>
 </head>
 <body>
   <main class="container">
     <h1>Presentaciones</h1>
-    <ul>
+    
+    <div class="local-presentation">
+      <h2>Cargar Presentación Local</h2>
+      <form id="localForm">
+        <label for="localFolder">
+          Selecciona la carpeta de la presentación
+          <input type="file" id="localFolder" webkitdirectory directory multiple>
+        </label>
+        <button type="submit">Cargar Presentación</button>
+      </form>
+    </div>
+    
+    <h2>Presentaciones Disponibles</h2>
+    <ul id="presentationsList">
       <li><a href="presentacion.html?presentacion=mi-presentacion">mi-presentacion</a></li>
     </ul>
   </main>
+  
+  <script>
+    // Manejar el formulario de carga local
+    document.getElementById("localForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const files = document.getElementById("localFolder").files;
+      
+      if (files.length === 0) {
+        alert("Por favor, selecciona una carpeta");
+        return;
+      }
+      
+      // Obtener el nombre de la carpeta seleccionada
+      const basePath = files[0].webkitRelativePath.split("/")[0];
+      
+      // Verificar si existe contenidos.md
+      let hasContents = false;
+      for (const file of files) {
+        if (file.name === "contenidos.md") {
+          hasContents = true;
+          break;
+        }
+      }
+      
+      if (!hasContents) {
+        alert("La carpeta seleccionada no contiene un archivo contenidos.md");
+        return;
+      }
+      
+      // Guardar los archivos en sessionStorage
+      for (const file of files) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          sessionStorage.setItem(`local_${file.webkitRelativePath}`, e.target.result);
+        };
+        reader.readAsText(file);
+      }
+      
+      // Redirigir a la presentación
+      window.location.href = `presentacion.html?presentacion=local_${basePath}`;
+    });
+  </script>
 </body>
 </html>
