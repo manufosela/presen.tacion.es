@@ -22,13 +22,17 @@ theme: "white" # Tema de Reveal.js
 <!-- markdownlint-disable -->
 # presen.tacion.es
 
-Bienvenidos a la documentación de presentaciones basadas en markdown y reveal.js
+Bienvenidos a la documentación de presentaciones basadas en:
+
+**Markdown** y **Reveal.js**
 
 <!-- NOTES -->
 
 En esta presentación te mostraré como usar presen.tacion.es para crear facilmente presentaciones.
 
 <!-- SLIDE -->
+
+## Herramientas usadas
 
 - Markdown => Lenguaje de marcado ligero
 - Reveal.js => Libreria JS para presentaciones
