@@ -363,27 +363,42 @@
           if (presentationName) {
             let imageUrl;
             if (presentationName.startsWith("local_")) {
-              // Para presentaciones locales, obtener la imagen del sessionStorage
-              const basePath = presentationName.replace("local_", "");
-              const imageContent = sessionStorage.getItem(
-                `local_${basePath}/template.webp`
-              );
-              console.log(
-                "Buscando imagen en:",
-                `local_${basePath}/template.webp`
-              );
-              console.log("imageContent:", imageContent);
-
-              if (imageContent) {
-                // La imagen ya está en formato data URL
-                imageUrl = imageContent;
+              // En desarrollo, ignora sessionStorage y haz fetch real
+              if (
+                location.hostname === "localhost" ||
+                location.hostname === "127.0.0.1"
+              ) {
+                const mdPath = `${presentationName.replace(
+                  "local_",
+                  ""
+                )}/contenidos.md`;
+                const response = await fetch(mdPath + "?t=" + Date.now(), {
+                  cache: "no-store",
+                });
+                if (!response.ok)
+                  throw new Error(
+                    "No se pudo cargar el contenido de la presentación local"
+                  );
+                const text = await response.text();
+                const [metadata, markdownContent] = extractMetadata(text);
+                imageUrl = metadata.colors?.background;
               }
+              // Producción: usa sessionStorage
+              const content = sessionStorage.getItem(
+                `${presentationName}/contenidos.md`
+              );
+              if (!content) {
+                throw new Error(
+                  "No se pudo cargar el contenido de la presentación local"
+                );
+              }
+              const [metadata, markdownContent] = extractMetadata(content);
+              imageUrl = metadata.colors?.background;
             } else {
               // Para presentaciones remotas, usar la URL completa
               imageUrl = `https://raw.githubusercontent.com/manufosela/presen.tacion.es/main/${presentationName}/template.webp`;
             }
 
-            console.log("imageUrl final:", imageUrl);
             if (imageUrl) {
               const img = new Image();
               img.onload = () => {
@@ -877,8 +892,26 @@ ${processedRows.join("\n")}
        * Obtiene el contenido de la presentación desde el servidor
        */
       async function fetchPresentationContent(presentationName) {
-        // Si es una presentación local
         if (presentationName.startsWith("local_")) {
+          // En desarrollo, ignora sessionStorage y haz fetch real
+          if (
+            location.hostname === "localhost" ||
+            location.hostname === "127.0.0.1"
+          ) {
+            const mdPath = `${presentationName.replace(
+              "local_",
+              ""
+            )}/contenidos.md`;
+            const response = await fetch(mdPath + "?t=" + Date.now(), {
+              cache: "no-store",
+            });
+            if (!response.ok)
+              throw new Error(
+                "No se pudo cargar el contenido de la presentación local"
+              );
+            return await response.text();
+          }
+          // Producción: usa sessionStorage
           const content = sessionStorage.getItem(
             `${presentationName}/contenidos.md`
           );
@@ -891,9 +924,15 @@ ${processedRows.join("\n")}
         }
 
         // Si es una presentación remota
-        const url = `https://raw.githubusercontent.com/manufosela/presen.tacion.es/main/${presentationName}/contenidos.md`;
+        let mdPath = `${presentationName}/contenidos.md`;
+        if (presentationName.startsWith("local_")) {
+          mdPath = `${presentationName.replace("local_", "")}/contenidos.md`;
+        }
+        const url = `https://raw.githubusercontent.com/manufosela/presen.tacion.es/main/${mdPath}`;
         console.log("Intentando cargar:", url);
-        const response = await fetch(url);
+        const response = await fetch(url + "?t=" + Date.now(), {
+          cache: "no-store",
+        });
         if (!response.ok) {
           console.error("Error al cargar:", url, "Status:", response.status);
           throw new Error("No se pudo cargar el contenido de la presentación");
@@ -947,6 +986,45 @@ ${processedRows.join("\n")}
 
       // Inicializar la aplicación
       initializeApp();
+    </script>
+    <script>
+      // Recarga automática solo en desarrollo (localhost)
+      if (
+        location.hostname === "localhost" ||
+        location.hostname === "127.0.0.1"
+      ) {
+        let lastMdContent = null;
+        let presentationName = null;
+        // Extrae el nombre de la presentación de la URL
+        function getPresentationName() {
+          const urlParams = new URLSearchParams(window.location.search);
+          return urlParams.get("presentacion");
+        }
+        async function checkMdUpdate() {
+          try {
+            if (!presentationName) {
+              presentationName = getPresentationName();
+            }
+            if (!presentationName) return;
+            let mdPath = `${presentationName}/contenidos.md`;
+            if (presentationName.startsWith("local_")) {
+              mdPath = `${presentationName.replace(
+                "local_",
+                ""
+              )}/contenidos.md`;
+            }
+            const res = await fetch(mdPath, { cache: "no-store" });
+            const text = await res.text();
+            if (lastMdContent !== null && lastMdContent !== text) {
+              location.reload();
+            }
+            lastMdContent = text;
+          } catch (e) {
+            // Silenciar errores si el archivo no existe
+          }
+        }
+        setInterval(checkMdUpdate, 2000);
+      }
     </script>
   </body>
 </html>
