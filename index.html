@@ -105,9 +105,22 @@
       for (const file of files) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          sessionStorage.setItem(`local_${file.webkitRelativePath}`, e.target.result);
+          // Guardar la ruta relativa completa como clave
+          const relativePath = file.webkitRelativePath;
+          // Si es una imagen, usar readAsDataURL, si no, usar readAsText
+          if (file.type.startsWith("image/")) {
+            sessionStorage.setItem(`local_${relativePath}`, e.target.result);
+          } else {
+            sessionStorage.setItem(`local_${relativePath}`, e.target.result);
+          }
+          console.log("Guardado en sessionStorage:", `local_${relativePath}`);
         };
-        reader.readAsText(file);
+        // Usar readAsDataURL para imágenes y readAsText para el resto
+        if (file.type.startsWith("image/")) {
+          reader.readAsDataURL(file);
+        } else {
+          reader.readAsText(file);
+        }
       }
       
       // Redirigir a la presentación

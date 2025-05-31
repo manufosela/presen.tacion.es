@@ -287,23 +287,53 @@
          */
         async function applyBackgroundImage(presentationName) {
             try {
-                let templateUrl;
-                
-                // Si es una presentación local
-                if (presentationName.startsWith('local_')) {
-                    const content = sessionStorage.getItem(`${presentationName}/template.webp`);
-                    if (content) {
-                        templateUrl = `data:image/webp;base64,${btoa(content)}`;
+                if (presentationName) {
+                    let imageUrl;
+                    if (presentationName.startsWith('local_')) {
+                        // Para presentaciones locales, obtener la imagen del sessionStorage
+                        const basePath = presentationName.replace('local_', '');
+                        const imageContent = sessionStorage.getItem(`local_${basePath}/template.webp`);
+                        console.log('Buscando imagen en:', `local_${basePath}/template.webp`);
+                        console.log('imageContent:', imageContent);
+                        
+                        if (imageContent) {
+                            // La imagen ya está en formato data URL
+                            imageUrl = imageContent;
+                        }
+                    } else {
+                        // Para presentaciones remotas, usar la URL completa
+                        imageUrl = `https://raw.githubusercontent.com/manufosela/presen.tacion.es/main/${presentationName}/template.webp`;
                     }
-                } else {
-                    // Si es una presentación remota
-                    templateUrl = `https://raw.githubusercontent.com/manufosela/presen.tacion.es/main/${presentationName}/template.webp`;
-                }
 
-                if (templateUrl) {
-                    const response = await fetch(templateUrl);
-                    if (response.ok) {
-                        createBackgroundImageStyles(templateUrl);
+                    console.log('imageUrl final:', imageUrl);
+                    if (imageUrl) {
+                        const img = new Image();
+                        img.onload = () => {
+                            // Aplicar al body
+                            document.body.style.backgroundImage = `url('${imageUrl}')`;
+                            document.body.style.backgroundSize = 'cover';
+                            document.body.style.backgroundPosition = 'center';
+                            document.body.style.backgroundRepeat = 'no-repeat';
+                            
+                            // Aplicar al contenedor de slides
+                            const reveal = document.querySelector('.reveal');
+                            if (reveal) {
+                                reveal.style.backgroundImage = `url('${imageUrl}')`;
+                                reveal.style.backgroundSize = 'cover';
+                                reveal.style.backgroundPosition = 'center';
+                                reveal.style.backgroundRepeat = 'no-repeat';
+                            }
+                            
+                            // Asegurar que el contenedor de slides sea transparente
+                            const slides = document.querySelector('.slides');
+                            if (slides) {
+                                slides.style.backgroundColor = 'transparent';
+                            }
+                        };
+                        img.onerror = () => {
+                            console.warn('No se pudo cargar la imagen de fondo');
+                        };
+                        img.src = imageUrl;
                     }
                 }
             } catch (error) {
