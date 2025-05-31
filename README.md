@@ -188,3 +188,46 @@ $END$
 <!-- NOTES -->
 Notas sobre las columnas
 ``` 
+
+## Desarrollo avanzado: recarga automática y servidor de desarrollo
+
+Para facilitar el desarrollo y ver los cambios en tiempo real al editar el archivo `contenidos.md`, el proyecto incluye un **servidor de desarrollo** con recarga automática.
+
+### ¿Qué hace el servidor de desarrollo?
+- Sirve los archivos estáticos sin caché (siempre verás la última versión de cada archivo).
+- Detecta cambios en el archivo `contenidos.md` y recarga automáticamente la página en el navegador.
+- En modo desarrollo, la app ignora el `sessionStorage` y siempre lee el `.md` real del disco.
+
+### ¿Cómo usarlo?
+
+1. **Lanza el servidor de desarrollo:**
+   ```bash
+   ./startdev.sh
+   ```
+   Este script ejecuta `generate.py` y luego inicia el servidor de desarrollo en el puerto 8000.
+
+2. **Abre la presentación en el navegador:**
+   - Accede a: `http://localhost:8000/presentacion.html?presentacion=local_mi-presentacion`
+   - (Cambia `mi-presentacion` por el nombre de tu carpeta de presentación)
+
+3. **Edita el archivo `contenidos.md`**
+   - Cada vez que guardes cambios, la página se recargará automáticamente y verás el contenido actualizado.
+
+### Diferencias con el modo producción
+- **Desarrollo:**
+  - El navegador siempre lee el `.md` real del disco.
+  - No se usa `sessionStorage` para el contenido local.
+  - El servidor fuerza cabeceras para evitar cualquier caché.
+  - Recarga automática al detectar cambios.
+- **Producción:**
+  - El contenido local se puede cargar desde `sessionStorage` para mayor rendimiento.
+  - El servidor puede usar caché.
+
+### Requisitos adicionales para desarrollo
+- Python 3.x
+- No necesitas instalar nada más: el servidor de desarrollo está incluido en el repositorio.
+
+### Flujo recomendado para desarrollo
+1. Edita tu `contenidos.md` en la carpeta de la presentación.
+2. Deja abierto el navegador en `http://localhost:8000/presentacion.html?presentacion=local_mi-presentacion`.
+3. Cada vez que guardes, verás los cambios reflejados al instante.
