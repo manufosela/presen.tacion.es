@@ -32,9 +32,13 @@
       }
       body {
         font-family: "Lato", sans-serif;
+        min-height: 100vh;
+        min-width: 100vw;
       }
       .reveal {
         font-family: "Lato", sans-serif;
+        min-height: 100vh;
+        min-width: 100vw;
       }
       .reveal h1 {
         color: var(--heading1-color) !important;
@@ -47,6 +51,10 @@
       .reveal h3 {
         color: var(--heading3-color) !important;
         font-size: calc(var(--heading-fontsize) * 0.8) !important;
+      }
+      .reveal .slides,
+      .reveal .slides section {
+        background: transparent !important;
       }
 
       /* Sobrescribir la variable --color de Pico CSS */
@@ -202,6 +210,40 @@
       }
 
       /**
+       * Elimina comentarios YAML pero preserva # en valores (como colores hexadecimales)
+       */
+      function removeYamlComment(value) {
+        if (!value.includes("#")) return value;
+
+        // Si el valor está entre comillas, busca el # fuera de las comillas
+        if (
+          (value.startsWith('"') && value.includes('"', 1)) ||
+          (value.startsWith("'") && value.includes("'", 1))
+        ) {
+          const quoteChar = value[0];
+          const endQuoteIndex = value.indexOf(quoteChar, 1);
+          if (endQuoteIndex !== -1) {
+            const quotedValue = value.substring(0, endQuoteIndex + 1);
+            const afterQuote = value.substring(endQuoteIndex + 1);
+            const commentIndex = afterQuote.indexOf("#");
+            if (commentIndex !== -1) {
+              return quotedValue.trim();
+            }
+          }
+          return value;
+        }
+
+        // Para valores sin comillas, busca # precedido por espacio (comentario)
+        const spaceHashIndex = value.indexOf(" #");
+        if (spaceHashIndex !== -1) {
+          return value.substring(0, spaceHashIndex).trim();
+        }
+
+        // Si # está al inicio o no precedido por espacio, probablemente es parte del valor
+        return value;
+      }
+
+      /**
        * Parsea el texto YAML a objeto
        */
       function parseYamlMetadata(yamlText) {
@@ -210,25 +252,39 @@
         let currentSection = null;
 
         for (const line of lines) {
+          if (!line.trim()) continue;
+
+          // Detecta indentación
+          const indentMatch = line.match(/^(\s*)/);
+          const indent = indentMatch ? indentMatch[1].length : 0;
           const trimmedLine = line.trim();
-          if (!trimmedLine) continue;
 
-          if (!line.startsWith(" ")) {
-            const [key, ...valueParts] = trimmedLine.split(":");
-            const value = valueParts.join(":").trim();
+          // Ignora líneas que no contienen ':'
+          const colonIndex = trimmedLine.indexOf(":");
+          if (colonIndex === -1) continue;
 
+          const key = trimmedLine.slice(0, colonIndex).trim();
+          let value = trimmedLine.slice(colonIndex + 1).trim();
+
+          // Elimina comentarios (pero preserva # en valores como colores)
+          value = removeYamlComment(value);
+
+          if (indent === 0) {
+            // Línea de nivel superior
             if (!value) {
-              currentSection = key.trim();
+              // Es una sección (objeto anidado)
+              currentSection = key;
               metadata[currentSection] = {};
             } else {
-              const cleanValue = cleanYamlValue(value);
-              metadata[key.trim()] = cleanValue;
+              // Es un valor directo
+              metadata[key] = cleanYamlValue(value);
+              currentSection = null;
             }
-          } else if (currentSection) {
-            const [key, ...valueParts] = trimmedLine.split(":");
-            const value = valueParts.join(":").trim();
-            const cleanValue = cleanYamlValue(value);
-            metadata[currentSection][key.trim()] = cleanValue;
+          } else if (indent > 0 && currentSection) {
+            // Línea anidada dentro de una sección
+            if (value) {
+              metadata[currentSection][key] = cleanYamlValue(value);
+            }
           }
         }
 
@@ -236,10 +292,41 @@
       }
 
       /**
-       * Limpia valores YAML eliminando comentarios y comillas
+       * Limpia y convierte valores YAML a tipos JavaScript apropiados
        */
       function cleanYamlValue(value) {
-        return value.split("#")[0].trim().replace(/"/g, "");
+        if (!value) return "";
+
+        // Elimina comillas al inicio y final
+        if (
+          (value.startsWith('"') && value.endsWith('"')) ||
+          (value.startsWith("'") && value.endsWith("'"))
+        ) {
+          return value.slice(1, -1);
+        }
+
+        // Convierte booleanos
+        if (value === "true") return true;
+        if (value === "false") return false;
+
+        // Convierte números
+        if (!isNaN(value) && !isNaN(parseFloat(value))) {
+          return parseFloat(value);
+        }
+
+        return value;
+      }
+
+      // Función para extraer y parsear el frontmatter YAML de un archivo markdown
+      function parseFrontmatter(markdownContent) {
+        const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---/;
+        const match = markdownContent.match(frontmatterRegex);
+
+        if (match && match[1]) {
+          return parseYamlMetadata(match[1]);
+        }
+
+        return {};
       }
 
       // ==================== CSS STYLING ====================
@@ -259,6 +346,9 @@
       function applyColorVariables(colors) {
         if (!colors) return;
 
+        // DEPURACIÓN: Mostrar los colores que se van a aplicar
+        console.log("applyColorVariables colors:", colors);
+
         const colorMappings = {
           color: [
             "--custom-color",
@@ -271,6 +361,7 @@
           background: ["--r-background-color"],
           "text-color": ["--r-main-text-color"],
           "heading1-color": ["--heading1-color"],
+          "heading-color": ["--heading1-color"],
           "heading2-color": ["--heading2-color"],
           "heading3-color": ["--heading3-color"],
         };
@@ -363,37 +454,15 @@
           if (presentationName) {
             let imageUrl;
             if (presentationName.startsWith("local_")) {
-              // En desarrollo, ignora sessionStorage y haz fetch real
-              if (
-                location.hostname === "localhost" ||
-                location.hostname === "127.0.0.1"
-              ) {
-                const mdPath = `${presentationName.replace(
-                  "local_",
-                  ""
-                )}/contenidos.md`;
-                const response = await fetch(mdPath + "?t=" + Date.now(), {
-                  cache: "no-store",
-                });
-                if (!response.ok)
-                  throw new Error(
-                    "No se pudo cargar el contenido de la presentación local"
-                  );
-                const text = await response.text();
-                const [metadata, markdownContent] = extractMetadata(text);
-                imageUrl = metadata.colors?.background;
-              }
-              // Producción: usa sessionStorage
-              const content = sessionStorage.getItem(
-                `${presentationName}/contenidos.md`
+              // Para presentaciones locales, obtener la imagen del sessionStorage
+              const basePath = presentationName.replace("local_", "");
+              const imageContent = sessionStorage.getItem(
+                `local_${basePath}/template.webp`
               );
-              if (!content) {
-                throw new Error(
-                  "No se pudo cargar el contenido de la presentación local"
-                );
+              if (imageContent) {
+                // La imagen ya está en formato data URL
+                imageUrl = imageContent;
               }
-              const [metadata, markdownContent] = extractMetadata(content);
-              imageUrl = metadata.colors?.background;
             } else {
               // Para presentaciones remotas, usar la URL completa
               imageUrl = `https://raw.githubusercontent.com/manufosela/presen.tacion.es/main/${presentationName}/template.webp`;
@@ -402,26 +471,32 @@
             if (imageUrl) {
               const img = new Image();
               img.onload = () => {
-                // Aplicar al body
+                // Aplica el color de fondo primero (ya hecho en applyBackgroundColor)
+                // Aplica la imagen de fondo encima, ajustada a la vista
                 document.body.style.backgroundImage = `url('${imageUrl}')`;
                 document.body.style.backgroundSize = "cover";
                 document.body.style.backgroundPosition = "center";
                 document.body.style.backgroundRepeat = "no-repeat";
+                document.body.style.backgroundAttachment = "fixed";
 
-                // Aplicar al contenedor de slides
                 const reveal = document.querySelector(".reveal");
                 if (reveal) {
                   reveal.style.backgroundImage = `url('${imageUrl}')`;
                   reveal.style.backgroundSize = "cover";
                   reveal.style.backgroundPosition = "center";
                   reveal.style.backgroundRepeat = "no-repeat";
+                  reveal.style.backgroundAttachment = "fixed";
                 }
 
-                // Asegurar que el contenedor de slides sea transparente
+                // Asegura que el contenedor de slides y las secciones sean transparentes
                 const slides = document.querySelector(".slides");
                 if (slides) {
-                  slides.style.backgroundColor = "transparent";
+                  slides.style.background = "transparent";
                 }
+                const sections = document.querySelectorAll(".slides section");
+                sections.forEach((section) => {
+                  section.style.background = "transparent";
+                });
               };
               img.onerror = () => {
                 console.warn("No se pudo cargar la imagen de fondo");
@@ -863,6 +938,9 @@ ${processedRows.join("\n")}
           // Cargar contenido
           const content = await fetchPresentationContent(presentationName);
           const [metadata, markdownContent] = extractMetadata(content);
+
+          // DEPURACIÓN: Mostrar metadatos leídos del YAML
+          console.log("metadata:", metadata);
 
           // Aplicar configuración
           applyCSSVariables(metadata);
