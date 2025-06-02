@@ -93,6 +93,7 @@ Notas para el presentador...
 #### Comentarios Especiales
 
 - `<!--  SLIDE  -->`: Marca el inicio de una nueva diapositiva
+- `<!--  SUBSLIDE  -->`: Marca el inicio de una nueva subdiapositiva
 - `<!--  NOTES  -->`: Marca el inicio de las notas del presentador (solo visibles en la vista del presentador)
 
 <!-- SLIDE -->
@@ -102,12 +103,12 @@ Notas para el presentador...
 Para crear columnas en una diapositiva:
 
 ```markdown
-$COLUMNS$
-$COL$
+＄COLUMNS＄
+＄COL＄
 Contenido de la primera columna
-$COL$
+＄COL＄
 Contenido de la segunda columna
-$END$
+＄END＄
 ```
 <!-- SLIDE -->
 
@@ -116,18 +117,18 @@ $END$
 Para crear una cuadrícula:
 
 ```markdown
-$GRID$
-$ROW$
-$CELL$
+＄GRID＄
+＄ROW＄
+＄CELL＄
 Contenido de la celda 1
-$CELL$
+＄CELL＄
 Contenido de la celda 2
-$ROW$
-$CELL$
+＄ROW＄
+＄CELL＄
 Contenido de la celda 3
-$CELL$
+＄CELL＄
 Contenido de la celda 4
-$END$
+＄END＄
 ```
 
 <!-- SLIDE -->
@@ -187,6 +188,8 @@ Para acceder a la vista del presentador (con notas):
 ## Temas Disponibles
 
 Reveal.js incluye varios temas que puedes usar en la configuración:
+$COLUMNS$
+$COL$
 - white (por defecto)
 - black
 - league
@@ -195,6 +198,7 @@ Reveal.js incluye varios temas que puedes usar en la configuración:
 - night
 - serif
 - simple
+$COL$
 - solarized
 - blood
 - moon
@@ -202,6 +206,7 @@ Reveal.js incluye varios temas que puedes usar en la configuración:
 - monokai
 - contrast
 - custom
+$END$
 
 Puedes ver una vista previa de todos los temas en la [documentación oficial de Reveal.js](https://revealjs.com/themes/).
 
@@ -218,7 +223,7 @@ Para facilitar el desarrollo y ver los cambios en tiempo real al editar el archi
 - Detecta cambios en el archivo `contenidos.md` y recarga automáticamente la página en el navegador.
 - En modo desarrollo, la app ignora el `sessionStorage` y siempre lee el `.md` real del disco.
 
-<!--  SLIDE  -->
+<!-- SLIDE -->
 
 ### ¿Cómo usarlo?
 
@@ -228,18 +233,18 @@ Para facilitar el desarrollo y ver los cambios en tiempo real al editar el archi
    ```
    Este script ejecuta `generate.py` y luego inicia el servidor de desarrollo en el puerto 8000.
 
-<!--  SLIDE  -->
+<!-- SLIDE -->
 
 2. **Abre la presentación en el navegador:**
    - Accede a: `http://localhost:8000/presentacion.html?presentacion=local_mi-presentacion`
    - (Cambia `mi-presentacion` por el nombre de tu carpeta de presentación)
 
-<!--  SLIDE  -->
+<!-- SLIDE -->
 
 3. **Edita el archivo `contenidos.md`**
    - Cada vez que guardes cambios, la página se recargará automáticamente y verás el contenido actualizado.
 
-<!--  SLIDE  -->
+<!-- SLIDE -->
 
 ### Diferencias con el modo producción
 - **Desarrollo:**
@@ -251,20 +256,20 @@ Para facilitar el desarrollo y ver los cambios en tiempo real al editar el archi
   - El contenido local se puede cargar desde `sessionStorage` para mayor rendimiento.
   - El servidor puede usar caché.
 
-<!--  SLIDE  -->
+<!-- SLIDE -->
 
 ### Requisitos adicionales para desarrollo
 - Python 3.x
 - No necesitas instalar nada más: el servidor de desarrollo está incluido en el repositorio.
 
-<!--  SLIDE  -->
+<!-- SLIDE -->
 
 ### Flujo recomendado para desarrollo
 1. Edita tu `contenidos.md` en la carpeta de la presentación.
 2. Deja abierto el navegador en `http://localhost:8000/presentacion.html?presentacion=local_mi-presentacion`.
 3. Cada vez que guardes, verás los cambios reflejados al instante.
 
-<!--  SLIDE  -->
+<!-- SLIDE -->
 
 ## FIN de README
 
