@@ -75,6 +75,9 @@ Esta definición técnica de refactoring será la base para entender cómo aplic
 
 <!-- SLIDE -->
 
+<!-- IFRAME: https://encuest.app/results/?id=-O_8VkOuSJcK44X4jwEi -->
+
+<!-- NOTES -->
 **"La cultura no es lo que dices, es lo que toleras"**  
 — Reed Hastings
 
@@ -87,7 +90,7 @@ Esta definición técnica de refactoring será la base para entender cómo aplic
 **"La cultura es lo que empleados hacen cuando tú no estás ahí para decirles qué hacer"**  
 — Ben Horowitz
 
-<!-- NOTES -->
+
 Estas citas de líderes tecnológicos nos dan diferentes perspectivas sobre qué realmente constituye la cultura empresarial.
 
 <!-- SUBSLIDE -->
