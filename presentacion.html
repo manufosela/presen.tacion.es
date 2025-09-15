@@ -88,6 +88,30 @@
         --color: var(--custom-color, #0078d7) !important;
       }
 
+      /* Sobrescribir estilos de Reveal.js para iframes de pantalla completa */
+      .reveal iframe.fullscreen-iframe {
+        max-width: 80vw;
+        max-height: 83vh;
+        width: 100vw !important;
+        height: 100vh !important;
+        border: none !important;
+        display: block !important;
+        padding: 0;
+        margin: 0;
+      }
+
+      /* Asegurar que la slide contenedora ocupe toda la pantalla */
+      .reveal .slides section.iframe-slide {
+        top: 0px !important;
+        display: flex !important;
+        margin: 0 !important;
+        font-size: 32px !important;
+        padding: 0 !important;
+        text-align: left !important;
+        justify-content: flex-start !important;
+        align-items: flex-start !important;
+      }
+
       .reveal .controls {
         right: 50px !important;
       }
@@ -1016,7 +1040,11 @@
        * Crea un elemento de diapositiva
        */
       function createSlideElement(slideContent, presentationName) {
-        const { mainContent, notes, backgroundImage } = extractSlideContent(slideContent);
+        const { mainContent, notes, backgroundImage, iframeUrl } = extractSlideContent(slideContent);
+
+        if (iframeUrl) {
+          console.log(`📋 Creando slide IFRAME: ${iframeUrl}`);
+        }
         const htmlContent = processMarkdownContent(
           mainContent,
           presentationName
@@ -1050,10 +1078,56 @@
           console.log(`🖼️ Aplicando imagen de fondo: ${backgroundImage}`);
         }
 
-        // Añadir contenido principal
-        const mainDiv = document.createElement("div");
-        mainDiv.innerHTML = htmlContent;
-        section.appendChild(mainDiv);
+        // Si hay iframe, crear slide especial para iframe
+        if (iframeUrl) {
+          // Añadir clase especial a la sección para iframes
+          section.classList.add("iframe-slide");
+          console.log(`🔧 Creando slide para iframe: ${iframeUrl}`);
+
+          // Crear iframe que ocupe todo el viewport
+          const iframe = document.createElement("iframe");
+          iframe.src = iframeUrl;
+          iframe.className = "fullscreen-iframe"; // Añadir clase CSS específica
+          iframe.id = `iframe-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`; // ID único
+          iframe.setAttribute("allowfullscreen", "true");
+          iframe.setAttribute("loading", "eager");
+
+          // Debug: eventos para verificar qué pasa
+          iframe.onload = () => {
+            console.log(`✅ Iframe cargado exitosamente: ${iframeUrl}`);
+          };
+          iframe.onerror = (e) => {
+            console.error(`❌ Error cargando iframe: ${iframeUrl}`, e);
+          };
+
+          // Probar sin sandbox primero
+          // iframe.setAttribute("sandbox", "allow-scripts allow-same-origin allow-forms allow-popups allow-presentation");
+
+          section.appendChild(iframe);
+
+          // Si hay contenido adicional, añadirlo como overlay opcional
+          if (mainContent.trim()) {
+            const overlayDiv = document.createElement("div");
+            overlayDiv.innerHTML = htmlContent;
+            overlayDiv.style.position = "absolute";
+            overlayDiv.style.top = "10px";
+            overlayDiv.style.left = "10px";
+            overlayDiv.style.background = "rgba(0,0,0,0.7)";
+            overlayDiv.style.color = "white";
+            overlayDiv.style.padding = "10px";
+            overlayDiv.style.borderRadius = "5px";
+            overlayDiv.style.zIndex = "2";
+            overlayDiv.style.maxWidth = "300px";
+            section.appendChild(overlayDiv);
+          }
+
+          console.log(`🖼️ Iframe añadido: ${iframeUrl}`);
+        } else {
+          // Añadir contenido principal normal
+          const mainDiv = document.createElement("div");
+          mainDiv.innerHTML = htmlContent;
+          section.appendChild(mainDiv);
+        }
 
         // Añadir notas si existen
         if (notes) {
@@ -1071,6 +1145,14 @@
         const backgroundMatch = slideContent.match(/<!-- BACKGROUND: ([^\s]+) -->/);
         const backgroundImage = backgroundMatch ? backgroundMatch[1] : null;
 
+        // Buscar iframe (permite URLs con parámetros)
+        const iframeMatch = slideContent.match(/<!-- IFRAME: (.+?) -->/);
+        const iframeUrl = iframeMatch ? iframeMatch[1].trim() : null;
+
+        if (iframeUrl) {
+          console.log(`🔍 Iframe detectado: ${iframeUrl}`);
+        }
+
         // Buscar notas
         const notesMatch = slideContent.match(
           /<!-- NOTES -->([\s\S]*?)(?=<!-- SLIDE -->|$)/
@@ -1082,6 +1164,9 @@
         // Remover comentarios especiales del contenido principal
         if (backgroundMatch) {
           mainContent = mainContent.replace(/<!-- BACKGROUND: [^\s]+ -->/, "").trim();
+        }
+        if (iframeMatch) {
+          mainContent = mainContent.replace(/<!-- IFRAME: .+? -->/, "").trim();
         }
 
         if (notesMatch) {
@@ -1095,7 +1180,8 @@
         return {
           mainContent: mainContent,
           notes: notes,
-          backgroundImage: backgroundImage
+          backgroundImage: backgroundImage,
+          iframeUrl: iframeUrl
         };
       }
 
@@ -1352,14 +1438,28 @@ ${processedRows.join("\n")}
       /**
        * Obtiene el contenido de la presentación desde el servidor
        */
+      function findMarkdownFileInStorage(presentationName) {
+        if (presentationName.startsWith("local_")) {
+          const basePath = presentationName.replace("local_", "");
+          // Buscar cualquier archivo .md en sessionStorage
+          for (let i = 0; i < sessionStorage.length; i++) {
+            const key = sessionStorage.key(i);
+            if (key.startsWith(`local_${basePath}/`) && key.endsWith('.md')) {
+              return key.replace(`local_${basePath}/`, '');
+            }
+          }
+        }
+        return 'contenidos.md'; // fallback
+      }
+
       async function fetchPresentationContent(presentationName) {
         if (presentationName.startsWith("local_")) {
+          const basePath = presentationName.replace("local_", "");
+          const mdFileName = findMarkdownFileInStorage(presentationName);
+
           // En entorno de desarrollo local, cargar directamente del filesystem
           if (isRunningLocally()) {
-            const mdPath = `${presentationName.replace(
-              "local_",
-              ""
-            )}/contenidos.md`;
+            const mdPath = `${basePath}/${mdFileName}`;
             const response = await fetch(mdPath + "?t=" + Date.now(), {
               cache: "no-store",
             });
@@ -1371,7 +1471,7 @@ ${processedRows.join("\n")}
           }
           // Producción (GitHub Pages): usa sessionStorage
           const content = sessionStorage.getItem(
-            `${presentationName}/contenidos.md`
+            `local_${basePath}/${mdFileName}`
           );
           if (!content) {
             throw new Error(

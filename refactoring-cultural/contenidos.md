@@ -17,7 +17,7 @@ fonts:
   main-font: "Lato, sans-serif"
   heading-font: "Lato, sans-serif"
   heading-fontsize: "4.2rem"
-theme: "white"              # Tema de Reveal.js
+theme: "solarized"              # Tema de Reveal.js white, moon, blood, league, black. night, sky , serif, solarized, simple
 transition: "fade"          # Transición entre slides (desvanecimiento)
 transitionSpeed: "slow"     # Velocidad: default, fast, slow
 ---
@@ -36,31 +36,17 @@ Esta presentación explica el concepto de "refactoring cultural", una alternativ
 
 <!-- SLIDE -->
 
-## ¿Cuántas personas sois desarrolladoras o habéis desarrollado SW alguna vez?
-
-$COLUMNS$
-$COL$
-#### SÍ
-$COL$
-#### NO
-$END$
+<!-- IFRAME: https://encuest.app/qr/?id=-O_8VkOuSJcK44X4jwEi -->
 
 <!-- NOTES -->
-Esta pregunta interactiva nos ayuda a contextualizar la audiencia y ver cuántos pueden relacionar los conceptos de programación con la gestión cultural.
+Pagina del QR
 
 <!-- SLIDE -->
 
-## ¿Cuántas personas conocen el concepto de "refactorizar"?
-
-$COLUMNS$
-$COL$
-#### SÍ
-$COL$
-#### NO
-$END$
+<!-- IFRAME: https://encuest.app/results/?id=-O_8VkOuSJcK44X4jwEi -->
 
 <!-- NOTES -->
-El refactoring es un concepto clave en desarrollo de software que vamos a aplicar al ámbito organizacional.
+Pagina de los resultados (que muestra la pregunta)
 
 <!-- SLIDE -->
 
