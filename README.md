@@ -64,99 +64,55 @@ Notas para el presentador...
 - `<!-- SLIDE -->`: Marca el inicio de una nueva diapositiva
 - `<!-- SUBSLIDE -->`: Marca el inicio de una subdiapositiva (navegación vertical)
 - `<!-- NOTES -->`: Marca el inicio de las notas del presentador (solo visibles en la vista del presentador)
-- `<!-- CLASS: nombre-clase -->`: Aplica una clase CSS personalizada a la diapositiva
+- `<!-- BACKGROUND: ruta-imagen -->`: Aplica una imagen de fondo específica a la diapositiva
 
-#### Clases CSS Personalizadas
+#### Imágenes de Fondo por Slide
 
-Puedes aplicar estilos visuales personalizados a tus diapositivas usando el comentario `<!-- CLASS: nombre-clase -->`. El sistema incluye varias clases predefinidas:
+Puedes aplicar imágenes de fondo específicas a cada diapositiva usando el comentario `<!-- BACKGROUND: ruta-imagen -->`. Esto te permite tener diferentes fondos para diferentes slides dentro de la misma presentación.
 
-##### Clases Disponibles
+##### Sintaxis y Ejemplos
 
-**`title-slide`** - Slide de título principal:
+**Imagen de fondo básica:**
 ```markdown
 <!-- SLIDE -->
-<!-- CLASS: title-slide -->
+<!-- BACKGROUND: images/fondo-slide1.webp -->
 
-# Título Principal
+# Título con Fondo Personalizado
 
-Subtítulo o descripción
+Contenido de la slide...
 ```
-- Gradiente de fondo con colores principales
-- Texto blanco con sombras
-- Diseño centrado que ocupa toda la pantalla
-- Ideal para portadas y títulos de sección
 
-**`quote-slide`** - Frases destacadas:
+**Imagen de fondo con contenido:**
 ```markdown
 <!-- SLIDE -->
-<!-- CLASS: quote-slide -->
+<!-- BACKGROUND: images/fondo-inspirador.webp -->
 
-## Frase Importante
+## Frase Motivacional
 
-**El texto más relevante de tu presentación**
-
-Detalles adicionales...
+**Con un fondo visual impactante**
 ```
-- Recuadro central horizontal con fondo del color principal
-- Texto blanco con sombras
-- Bordes redondeados y efecto de sombra
-- Perfecto para citas, frases clave y mensajes importantes
 
-**`question-slide`** - Preguntas interactivas:
+**Diferentes fondos para diferentes tipos de contenido:**
 ```markdown
 <!-- SLIDE -->
-<!-- CLASS: question-slide -->
-
-## ¿Pregunta para la audiencia?
-
-$COLUMNS$
-$COL$
-### OPCIÓN A
-$COL$
-### OPCIÓN B
-$END$
-```
-- Fondo gris que ocupa toda la pantalla
-- Texto blanco con contraste
-- Ideal para encuestas, preguntas interactivas y votaciones
-
-**`content-slide`** - Contenido estándar:
-```markdown
-<!-- SLIDE -->
-<!-- CLASS: content-slide -->
-
-## Título de Contenido
-
-- Lista de elementos
-- Más información
-- Detalles adicionales
-```
-- Diseño estándar con acentos de color
-- Bordes y líneas de énfasis en color principal
-- Para contenido normal y listas
-
-##### Ejemplo Completo
-
-```markdown
----
-colors:
-  main-color: "#E91E63"      # Rosa vibrante
-  heading-color: "#E91E63"   # Color de títulos
-  question-bg: "#999999"     # Gris para preguntas
-  quote-bg: "#E91E63"        # Color para frases
----
-
-<!-- SLIDE -->
-<!-- CLASS: title-slide -->
+<!-- BACKGROUND: images/portada.webp -->
 
 # Mi Presentación
 
-Una presentación con estilo
+Portada con imagen específica
 
 <!-- SLIDE -->
-<!-- CLASS: question-slide -->
+<!-- BACKGROUND: images/fondo-contenido.webp -->
 
-## ¿Qué prefieres?
+## Contenido Principal
+
+- Punto 1
+- Punto 2
+
+<!-- SLIDE -->
+<!-- BACKGROUND: images/fondo-pregunta.webp -->
+
+## ¿Cuál prefieres?
 
 $COLUMNS$
 $COL$
@@ -164,23 +120,31 @@ $COL$
 $COL$
 ### OPCIÓN B
 $END$
-
-<!-- SLIDE -->
-<!-- CLASS: quote-slide -->
-
-## Mensaje Clave
-
-**Esta es la idea más importante de la presentación**
-
-<!-- SLIDE -->
-<!-- CLASS: content-slide -->
-
-## Contenido Detallado
-
-- Punto importante 1
-- Punto importante 2
-- Conclusiones
 ```
+
+##### Organización de Imágenes
+
+**Estructura recomendada:**
+```
+mi-presentacion/
+├── contenidos.md
+├── template.webp          # Fondo global (opcional)
+└── images/
+    ├── portada.webp        # Fondo para slide título
+    ├── fondo-contenido.webp # Fondo para slides de contenido
+    ├── fondo-pregunta.webp  # Fondo para slides de preguntas
+    ├── fondo-conclusion.webp # Fondo para slide final
+    ├── logo.webp           # Imágenes dentro del contenido
+    └── grafico.webp
+```
+
+##### Notas Importantes
+
+- **Precedencia**: Las imágenes de fondo por slide tienen prioridad sobre `template.webp`
+- **Formatos soportados**: `.webp`, `.png`, `.jpg`, `.jpeg`
+- **Rendimiento**: Las imágenes se cargan automáticamente según el entorno (local/GitHub Pages)
+- **Tamaño recomendado**: 1920x1080 o proporción 16:9 para mejor visualización
+- **Optimización**: Usa formato `.webp` para mejor compresión sin pérdida de calidad
 
 #### Formato de Columnas
 
@@ -356,74 +320,22 @@ Para facilitar el desarrollo y ver los cambios en tiempo real al editar el archi
 
 ## Guía de Diseño Visual
 
-### Mejores Prácticas para Clases CSS
+### Consejos de diseño:
 
-#### Cuándo usar cada clase:
-
-- **`title-slide`**:
-  - Slide de portada principal
-  - Inicio de nuevas secciones importantes
-  - Máximo 1-2 por presentación
-
-- **`quote-slide`**:
-  - Frases memorable o citas importantes
-  - Mensajes clave que quieres destacar
-  - Reflexiones o conclusiones importantes
-  - Ideal para crear impacto visual
-
-- **`question-slide`**:
-  - Preguntas interactivas a la audiencia
-  - Encuestas rápidas o votaciones
-  - Momentos de participación
-  - Preguntas retóricas importantes
-
-- **`content-slide`**:
-  - Contenido explicativo estándar
-  - Listas y puntos detallados
-  - Información de apoyo
-  - Slides de transición
-
-#### Consejos de diseño:
-
-1. **Mantener consistencia**: Usa el mismo tipo de clase para contenido similar
-2. **Crear ritmo visual**: Alterna entre diferentes tipos de slides para mantener el interés
-3. **Menos es más**: No abuses de las `quote-slide`, resérvalas para momentos clave
-4. **Colores coherentes**: Asegúrate de que los colores en la metadata combinen bien
-5. **Texto legible**: Las `question-slide` y `quote-slide` funcionan mejor con poco texto
-
-#### Ejemplo de flujo visual efectivo:
-
-```markdown
-<!-- Portada -->
-<!-- CLASS: title-slide -->
-
-<!-- Contenido introductorio -->
-<!-- CLASS: content-slide -->
-
-<!-- Pregunta interactiva -->
-<!-- CLASS: question-slide -->
-
-<!-- Más contenido -->
-<!-- CLASS: content-slide -->
-
-<!-- Mensaje clave -->
-<!-- CLASS: quote-slide -->
-
-<!-- Cierre -->
-<!-- CLASS: title-slide -->
-```
+1. **Colores coherentes**: Asegúrate de que los colores en la metadata combinen bien
+2. **Imágenes de fondo efectivas**:
+   - Usa imágenes con suficiente contraste para que el texto sea legible
+   - Considera oscurecer o desenfocar imágenes muy detalladas
+   - Mantén consistencia visual entre slides relacionadas
+   - Usa `template.webp` para fondo global e imágenes específicas solo cuando añadan valor
 
 ### Personalización Avanzada
 
-Si necesitas estilos completamente personalizados, puedes:
+Si necesitas estilos personalizados, puedes definir colores en la metadata:
 
-1. **Definir colores personalizados** en la metadata:
-   ```yaml
-   colors:
-     custom-bg: "#Tu-Color"
-     custom-text: "#Otro-Color"
-   ```
-
-2. **Crear nuevas clases CSS** editando `presentacion.html` (requiere conocimientos técnicos)
-
-3. **Combinar con elementos markdown** como negritas, cursivas y listas para mayor variedad visual
+```yaml
+colors:
+  main-color: "#Tu-Color"
+  background: "#Tu-Fondo"
+  heading-color: "#Tu-Color-Títulos"
+```

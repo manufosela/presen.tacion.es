@@ -6,7 +6,7 @@ colors:
   background: "#FFFFFF"      # Color de fondo
   heading-color: "#E91E63"   # Color de títulos principales
   heading2-color: "#E91E63"  # Color de subtítulos (rosa más oscuro)
-  heading3-color: "#AD1457"  # Color de títulos terciarios (rosa intenso)
+  heading3-color: "#FFFFFF"  # Color de títulos terciarios (rosa intenso)
   accent-color: "#FF4081"    # Color de acentos (rosa claro)
   text-color: "#212121"      # Color del texto (casi negro)
   light-gray: "#F5F5F5"      # Gris claro
@@ -16,12 +16,15 @@ colors:
 fonts:
   main-font: "Lato, sans-serif"
   heading-font: "Lato, sans-serif"
-  heading-fontsize: "3.2rem"
+  heading-fontsize: "4.2rem"
 theme: "white"              # Tema de Reveal.js
+transition: "fade"          # Transición entre slides (desvanecimiento)
+transitionSpeed: "slow"     # Velocidad: default, fast, slow
 ---
 
+
 <!-- SLIDE -->
-<!-- CLASS: title-slide -->
+<!-- BACKGROUND: images/fondo2.png -->
 <!-- markdownlint-disable -->
 
 # Refactorizar la cultura
@@ -32,28 +35,28 @@ Una nueva forma de abordar el cambio organizacional
 Esta presentación explica el concepto de "refactoring cultural", una alternativa más sostenible y efectiva que las transformaciones radicales tradicionales.
 
 <!-- SLIDE -->
-<!-- CLASS: question-slide -->
 
 ## ¿Cuántas personas sois desarrolladoras o habéis desarrollado SW alguna vez?
 
 $COLUMNS$
 $COL$
-### SÍ
+#### SÍ
 $COL$
-### NO
+#### NO
 $END$
 
 <!-- NOTES -->
-Esta pregunta interactiva nos ayuda a contextualizar la audiencia y ver cuántos pueden relacionar los conceptos de programación con la gestión cultural.<!-- SLIDE -->
-<!-- CLASS: question-slide -->
+Esta pregunta interactiva nos ayuda a contextualizar la audiencia y ver cuántos pueden relacionar los conceptos de programación con la gestión cultural.
+
+<!-- SLIDE -->
 
 ## ¿Cuántas personas conocen el concepto de "refactorizar"?
 
 $COLUMNS$
 $COL$
-### SÍ
+#### SÍ
 $COL$
-### NO
+#### NO
 $END$
 
 <!-- NOTES -->
@@ -64,6 +67,11 @@ El refactoring es un concepto clave en desarrollo de software que vamos a aplica
 ## Refactorizar
 
 **Reorganizar o reestructurar el código existente sin cambiar su comportamiento externo.**
+
+<!-- NOTES -->
+Esta definición técnica de refactoring será la base para entender cómo aplicarlo a la cultura empresarial. La clave es mantener el "comportamiento externo" mientras mejoramos internamente.
+
+<!-- SUBSLIDE -->
 
 Pretende mejorar la calidad, es decir, que sea:
 - Más legible
@@ -76,8 +84,10 @@ Pretende mejorar la calidad, es decir, que sea:
 Esta definición técnica de refactoring será la base para entender cómo aplicarlo a la cultura empresarial. La clave es mantener el "comportamiento externo" mientras mejoramos internamente.
 
 <!-- SLIDE -->
+<!-- BACKGROUND: images/fondo1.png -->
+### ¿Qué es la cultura?
 
-## ¿Qué es la cultura?
+<!-- SLIDE -->
 
 **"La cultura no es lo que dices, es lo que toleras"**  
 — Reed Hastings
@@ -95,7 +105,6 @@ Esta definición técnica de refactoring será la base para entender cómo aplic
 Estas citas de líderes tecnológicos nos dan diferentes perspectivas sobre qué realmente constituye la cultura empresarial.
 
 <!-- SUBSLIDE -->
-<!-- CLASS: quote-slide -->
 
 ### Para mí la cultura empresarial es...
 
@@ -147,7 +156,6 @@ Lo más común es hacerlo **a la vez**.
 La organización y la cultura van de la mano. Cambiar solo una de ellas sin la otra suele generar más problemas.
 
 <!-- SUBSLIDE -->
-<!-- CLASS: quote-slide -->
 
 ### ¿Y por qué hacer un refactoring y no una transformación?
 
@@ -159,7 +167,6 @@ Porque **la base, los fundamentos de la empresa funcionan**. Además el riesgo e
 Las transformaciones radicales tienen un riesgo mayor de pérdida de talento y conocimiento acumulado.
 
 <!-- SLIDE -->
-<!-- CLASS: quote-slide -->
 
 ## En la mayoría de los casos es mejor un refactoring
 
@@ -209,7 +216,6 @@ Esta es una experiencia muy común en desarrollo de software que ilustra perfect
 Los "cadáveres" se refieren tanto a proyectos fallidos como a personas que dejan la empresa durante transformaciones mal gestionadas.
 
 <!-- SLIDE -->
-<!-- CLASS: quote-slide -->
 
 ## La cultura no se cambia con palabras
 
@@ -223,7 +229,6 @@ Como el ejemplo clásico: **futbolines y fruta gratis**. Eso no crea Cultura.
 Los beneficios superficiales no crean cultura real. La cultura se crea con comportamientos consistentes del liderazgo.
 
 <!-- SUBSLIDE -->
-<!-- CLASS: quote-slide -->
 
 ### La cultura es como una tormenta
 
@@ -401,7 +406,6 @@ Esta analogía con el código refactorizado captura perfectamente la sensación 
 Esta fórmula simple pero poderosa resume todo el enfoque del refactoring cultural.
 
 <!-- SLIDE -->
-<!-- CLASS: quote-slide -->
 
 ## Reflexión final
 
