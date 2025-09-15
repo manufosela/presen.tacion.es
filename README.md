@@ -25,7 +25,7 @@ fontSize: "30px"
 colors:
   color: "#0078D7"           # Color general para enlaces y elementos interactivos
   main-color: "#DF006E"      # Color principal
-  background: "#333333"      # Color de fondo
+  background: "#FFFFFF"      # Color de fondo
   heading-color: "#DF006E"   # Color de títulos principales
   heading2-color: "#0078D7"  # Color de subtítulos
   heading3-color: "#000035"  # Color de títulos terciarios
@@ -33,9 +33,13 @@ colors:
   text-color: "#4A4A4A"      # Color del texto
   light-gray: "#F5F5F5"      # Gris claro
   dark-gray: "#333333"       # Gris oscuro
+  # Colores para clases CSS personalizadas
+  quote-bg: "#DF006E"        # Fondo para slides de frases (quote-slide)
+  question-bg: "#999999"     # Fondo para slides de preguntas (question-slide)
 fonts:
   main-font: "Lato, sans-serif"
   heading-font: "Lato, sans-serif"
+  heading-fontsize: "3rem"   # Tamaño de títulos principales
 theme: "white"              # Tema de Reveal.js (white, black, league, beige, sky, night, serif, simple, solarized)
 ---
 ```
@@ -58,7 +62,125 @@ Notas para el presentador...
 #### Comentarios Especiales
 
 - `<!-- SLIDE -->`: Marca el inicio de una nueva diapositiva
+- `<!-- SUBSLIDE -->`: Marca el inicio de una subdiapositiva (navegación vertical)
 - `<!-- NOTES -->`: Marca el inicio de las notas del presentador (solo visibles en la vista del presentador)
+- `<!-- CLASS: nombre-clase -->`: Aplica una clase CSS personalizada a la diapositiva
+
+#### Clases CSS Personalizadas
+
+Puedes aplicar estilos visuales personalizados a tus diapositivas usando el comentario `<!-- CLASS: nombre-clase -->`. El sistema incluye varias clases predefinidas:
+
+##### Clases Disponibles
+
+**`title-slide`** - Slide de título principal:
+```markdown
+<!-- SLIDE -->
+<!-- CLASS: title-slide -->
+
+# Título Principal
+
+Subtítulo o descripción
+```
+- Gradiente de fondo con colores principales
+- Texto blanco con sombras
+- Diseño centrado que ocupa toda la pantalla
+- Ideal para portadas y títulos de sección
+
+**`quote-slide`** - Frases destacadas:
+```markdown
+<!-- SLIDE -->
+<!-- CLASS: quote-slide -->
+
+## Frase Importante
+
+**El texto más relevante de tu presentación**
+
+Detalles adicionales...
+```
+- Recuadro central horizontal con fondo del color principal
+- Texto blanco con sombras
+- Bordes redondeados y efecto de sombra
+- Perfecto para citas, frases clave y mensajes importantes
+
+**`question-slide`** - Preguntas interactivas:
+```markdown
+<!-- SLIDE -->
+<!-- CLASS: question-slide -->
+
+## ¿Pregunta para la audiencia?
+
+$COLUMNS$
+$COL$
+### OPCIÓN A
+$COL$
+### OPCIÓN B
+$END$
+```
+- Fondo gris que ocupa toda la pantalla
+- Texto blanco con contraste
+- Ideal para encuestas, preguntas interactivas y votaciones
+
+**`content-slide`** - Contenido estándar:
+```markdown
+<!-- SLIDE -->
+<!-- CLASS: content-slide -->
+
+## Título de Contenido
+
+- Lista de elementos
+- Más información
+- Detalles adicionales
+```
+- Diseño estándar con acentos de color
+- Bordes y líneas de énfasis en color principal
+- Para contenido normal y listas
+
+##### Ejemplo Completo
+
+```markdown
+---
+colors:
+  main-color: "#E91E63"      # Rosa vibrante
+  heading-color: "#E91E63"   # Color de títulos
+  question-bg: "#999999"     # Gris para preguntas
+  quote-bg: "#E91E63"        # Color para frases
+---
+
+<!-- SLIDE -->
+<!-- CLASS: title-slide -->
+
+# Mi Presentación
+
+Una presentación con estilo
+
+<!-- SLIDE -->
+<!-- CLASS: question-slide -->
+
+## ¿Qué prefieres?
+
+$COLUMNS$
+$COL$
+### OPCIÓN A
+$COL$
+### OPCIÓN B
+$END$
+
+<!-- SLIDE -->
+<!-- CLASS: quote-slide -->
+
+## Mensaje Clave
+
+**Esta es la idea más importante de la presentación**
+
+<!-- SLIDE -->
+<!-- CLASS: content-slide -->
+
+## Contenido Detallado
+
+- Punto importante 1
+- Punto importante 2
+- Conclusiones
+```
 
 #### Formato de Columnas
 
@@ -231,3 +353,77 @@ Para facilitar el desarrollo y ver los cambios en tiempo real al editar el archi
 1. Edita tu `contenidos.md` en la carpeta de la presentación.
 2. Deja abierto el navegador en `http://localhost:8000/presentacion.html?presentacion=local_mi-presentacion`.
 3. Cada vez que guardes, verás los cambios reflejados al instante.
+
+## Guía de Diseño Visual
+
+### Mejores Prácticas para Clases CSS
+
+#### Cuándo usar cada clase:
+
+- **`title-slide`**:
+  - Slide de portada principal
+  - Inicio de nuevas secciones importantes
+  - Máximo 1-2 por presentación
+
+- **`quote-slide`**:
+  - Frases memorable o citas importantes
+  - Mensajes clave que quieres destacar
+  - Reflexiones o conclusiones importantes
+  - Ideal para crear impacto visual
+
+- **`question-slide`**:
+  - Preguntas interactivas a la audiencia
+  - Encuestas rápidas o votaciones
+  - Momentos de participación
+  - Preguntas retóricas importantes
+
+- **`content-slide`**:
+  - Contenido explicativo estándar
+  - Listas y puntos detallados
+  - Información de apoyo
+  - Slides de transición
+
+#### Consejos de diseño:
+
+1. **Mantener consistencia**: Usa el mismo tipo de clase para contenido similar
+2. **Crear ritmo visual**: Alterna entre diferentes tipos de slides para mantener el interés
+3. **Menos es más**: No abuses de las `quote-slide`, resérvalas para momentos clave
+4. **Colores coherentes**: Asegúrate de que los colores en la metadata combinen bien
+5. **Texto legible**: Las `question-slide` y `quote-slide` funcionan mejor con poco texto
+
+#### Ejemplo de flujo visual efectivo:
+
+```markdown
+<!-- Portada -->
+<!-- CLASS: title-slide -->
+
+<!-- Contenido introductorio -->
+<!-- CLASS: content-slide -->
+
+<!-- Pregunta interactiva -->
+<!-- CLASS: question-slide -->
+
+<!-- Más contenido -->
+<!-- CLASS: content-slide -->
+
+<!-- Mensaje clave -->
+<!-- CLASS: quote-slide -->
+
+<!-- Cierre -->
+<!-- CLASS: title-slide -->
+```
+
+### Personalización Avanzada
+
+Si necesitas estilos completamente personalizados, puedes:
+
+1. **Definir colores personalizados** en la metadata:
+   ```yaml
+   colors:
+     custom-bg: "#Tu-Color"
+     custom-text: "#Otro-Color"
+   ```
+
+2. **Crear nuevas clases CSS** editando `presentacion.html` (requiere conocimientos técnicos)
+
+3. **Combinar con elementos markdown** como negritas, cursivas y listas para mayor variedad visual

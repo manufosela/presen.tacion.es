@@ -1,24 +1,27 @@
 ---
-fontSize: "30px"
+fontSize: "32px"
 colors:
-  color: "#0078D7"           # Color general para enlaces y elementos interactivos
-  main-color: "#2D5A87"      # Color principal (azul corporativo)
+  color: "#E91E63"           # Color general para enlaces y elementos interactivos
+  main-color: "#E91E63"      # Color principal (rosa vibrante)
   background: "#FFFFFF"      # Color de fondo
-  heading-color: "#2D5A87"   # Color de títulos principales
-  heading2-color: "#0078D7"  # Color de subtítulos
-  heading3-color: "#1B4F72"  # Color de títulos terciarios
-  accent-color: "#FF6B35"    # Color de acentos (naranja)
-  text-color: "#2C3E50"      # Color del texto
-  light-gray: "#F8F9FA"      # Gris claro
-  dark-gray: "#34495E"       # Gris oscuro
+  heading-color: "#E91E63"   # Color de títulos principales
+  heading2-color: "#E91E63"  # Color de subtítulos (rosa más oscuro)
+  heading3-color: "#AD1457"  # Color de títulos terciarios (rosa intenso)
+  accent-color: "#FF4081"    # Color de acentos (rosa claro)
+  text-color: "#212121"      # Color del texto (casi negro)
+  light-gray: "#F5F5F5"      # Gris claro
+  dark-gray: "#999999"       # Gris medio para slides secundarias
+  quote-bg: "#E91E63"        # Fondo para frases destacadas
+  question-bg: "#999999"     # Fondo para preguntas
 fonts:
   main-font: "Lato, sans-serif"
   heading-font: "Lato, sans-serif"
-  heading-fontsize: "3rem"
+  heading-fontsize: "3.2rem"
 theme: "white"              # Tema de Reveal.js
 ---
 
 <!-- SLIDE -->
+<!-- CLASS: title-slide -->
 <!-- markdownlint-disable -->
 
 # Refactorizar la cultura
@@ -29,26 +32,28 @@ Una nueva forma de abordar el cambio organizacional
 Esta presentación explica el concepto de "refactoring cultural", una alternativa más sostenible y efectiva que las transformaciones radicales tradicionales.
 
 <!-- SLIDE -->
+<!-- CLASS: question-slide -->
 
 ## ¿Cuántas personas sois desarrolladoras o habéis desarrollado SW alguna vez?
 
 $COLUMNS$
 $COL$
-SÍ
+### SÍ
 $COL$
-NO
+### NO
 $END$
 
 <!-- NOTES -->
 Esta pregunta interactiva nos ayuda a contextualizar la audiencia y ver cuántos pueden relacionar los conceptos de programación con la gestión cultural.<!-- SLIDE -->
+<!-- CLASS: question-slide -->
 
 ## ¿Cuántas personas conocen el concepto de "refactorizar"?
 
 $COLUMNS$
 $COL$
-SÍ
+### SÍ
 $COL$
-NO
+### NO
 $END$
 
 <!-- NOTES -->
@@ -90,6 +95,7 @@ Esta definición técnica de refactoring será la base para entender cómo aplic
 Estas citas de líderes tecnológicos nos dan diferentes perspectivas sobre qué realmente constituye la cultura empresarial.
 
 <!-- SUBSLIDE -->
+<!-- CLASS: quote-slide -->
 
 ### Para mí la cultura empresarial es...
 
@@ -141,6 +147,7 @@ Lo más común es hacerlo **a la vez**.
 La organización y la cultura van de la mano. Cambiar solo una de ellas sin la otra suele generar más problemas.
 
 <!-- SUBSLIDE -->
+<!-- CLASS: quote-slide -->
 
 ### ¿Y por qué hacer un refactoring y no una transformación?
 
@@ -152,6 +159,7 @@ Porque **la base, los fundamentos de la empresa funcionan**. Además el riesgo e
 Las transformaciones radicales tienen un riesgo mayor de pérdida de talento y conocimiento acumulado.
 
 <!-- SLIDE -->
+<!-- CLASS: quote-slide -->
 
 ## En la mayoría de los casos es mejor un refactoring
 
@@ -201,6 +209,7 @@ Esta es una experiencia muy común en desarrollo de software que ilustra perfect
 Los "cadáveres" se refieren tanto a proyectos fallidos como a personas que dejan la empresa durante transformaciones mal gestionadas.
 
 <!-- SLIDE -->
+<!-- CLASS: quote-slide -->
 
 ## La cultura no se cambia con palabras
 
@@ -214,6 +223,7 @@ Como el ejemplo clásico: **futbolines y fruta gratis**. Eso no crea Cultura.
 Los beneficios superficiales no crean cultura real. La cultura se crea con comportamientos consistentes del liderazgo.
 
 <!-- SUBSLIDE -->
+<!-- CLASS: quote-slide -->
 
 ### La cultura es como una tormenta
 
@@ -391,6 +401,7 @@ Esta analogía con el código refactorizado captura perfectamente la sensación 
 Esta fórmula simple pero poderosa resume todo el enfoque del refactoring cultural.
 
 <!-- SLIDE -->
+<!-- CLASS: quote-slide -->
 
 ## Reflexión final
 
