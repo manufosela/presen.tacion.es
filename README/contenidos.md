@@ -16,6 +16,8 @@ fonts:
   heading-font: "Lato, sans-serif"
   heading-fontsize: "3rem"
 theme: "white" # Tema de Reveal.js
+transition: "fade" # Transición entre slides
+transitionSpeed: "default" # Velocidad de transición
 ---
 
 <!-- SLIDE -->
@@ -61,7 +63,9 @@ colors:
 fonts:
   main-font: "Lato, sans-serif"
   heading-font: "Lato, sans-serif"
-theme: "white"              # Tema de Reveal.js (white, black, league, beige, sky, night, serif, simple, solarized)
+theme: "white"              # Tema de Reveal.js
+transition: "fade"          # Transición entre slides
+transitionSpeed: "default"  # Velocidad de transición
 ---
 ```
 
@@ -92,9 +96,10 @@ Notas para el presentador...
 
 #### Comentarios Especiales
 
-- `<!--  SLIDE  -->`: Marca el inicio de una nueva diapositiva
-- `<!--  SUBSLIDE  -->`: Marca el inicio de una nueva subdiapositiva
-- `<!--  NOTES  -->`: Marca el inicio de las notas del presentador (solo visibles en la vista del presentador)
+- `<!-- SLIDE -->`: Marca el inicio de una nueva diapositiva
+- `<!-- SUBSLIDE -->`: Marca el inicio de una nueva subdiapositiva
+- `<!-- NOTES -->`: Marca el inicio de las notas del presentador (solo visibles en la vista del presentador)
+- `<!-- BACKGROUND: ruta-imagen -->`: Aplica una imagen de fondo específica a la diapositiva
 
 <!-- SLIDE -->
 
@@ -209,6 +214,59 @@ $COL$
 $END$
 
 Puedes ver una vista previa de todos los temas en la [documentación oficial de Reveal.js](https://revealjs.com/themes/).
+
+<!-- SLIDE -->
+
+## Transiciones
+
+Puedes configurar transiciones suaves entre slides:
+
+```yaml
+transition: "fade"          # Tipo de transición
+transitionSpeed: "slow"     # Velocidad de transición
+```
+
+<!-- SLIDE -->
+
+### Tipos de transiciones
+
+$COLUMNS$
+$COL$
+- **`none`** - Sin transición
+- **`fade`** - Desvanecimiento
+- **`slide`** - Deslizamiento
+$COL$
+- **`zoom`** - Efecto zoom
+- **`cube`** - Efecto cubo 3D
+- **`page`** - Efecto página
+$END$
+
+**Velocidades:** `slow`, `default`, `fast`
+
+<!-- SLIDE -->
+
+### Navegación para transiciones
+
+**Para ver las transiciones usar:**
+- **← → (flechas)** o **Espacio**
+- **↑ ↓** para subslides
+- **Esc** para vista general
+- **F** pantalla completa
+- **S** vista presentador
+
+⚠️ **No usar scroll del ratón**
+
+<!-- SLIDE -->
+
+## GitHub Pages
+
+El sistema funciona directamente en GitHub Pages:
+
+1. **Sube tu repositorio a GitHub**
+2. **Configura Pages:** Settings → Pages → Branch main
+3. **Accede:** `https://usuario.github.io/repo/`
+
+✅ Hosting gratuito • ✅ HTTPS • ✅ No servidor Python
 
 <!-- SLIDE -->
 
