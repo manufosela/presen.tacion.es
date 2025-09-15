@@ -33,14 +33,13 @@ colors:
   text-color: "#4A4A4A"      # Color del texto
   light-gray: "#F5F5F5"      # Gris claro
   dark-gray: "#333333"       # Gris oscuro
-  # Colores para clases CSS personalizadas
-  quote-bg: "#DF006E"        # Fondo para slides de frases (quote-slide)
-  question-bg: "#999999"     # Fondo para slides de preguntas (question-slide)
 fonts:
   main-font: "Lato, sans-serif"
   heading-font: "Lato, sans-serif"
   heading-fontsize: "3rem"   # Tamaño de títulos principales
-theme: "white"              # Tema de Reveal.js (white, black, league, beige, sky, night, serif, simple, solarized)
+theme: "white"              # Tema de Reveal.js
+transition: "fade"          # Transición entre slides
+transitionSpeed: "default"  # Velocidad de transición
 ---
 ```
 
@@ -210,11 +209,43 @@ Este script:
 
 2. Abrir la URL mostrada en el navegador (ejemplo: `http://localhost:3000`)
 
+### Despliegue en GitHub Pages
+
+El sistema está diseñado para funcionar directamente en GitHub Pages:
+
+1. **Sube tu repositorio a GitHub**
+2. **Configura GitHub Pages:**
+   - Ve a Settings → Pages
+   - Selecciona "Deploy from a branch"
+   - Elige la rama `main` y carpeta `/ (root)`
+3. **Accede a tu presentación:**
+   - URL: `https://tu-usuario.github.io/tu-repositorio/`
+   - Presentación específica: `https://tu-usuario.github.io/tu-repositorio/presentacion.html?presentacion=nombre-carpeta`
+
+**Ventajas de GitHub Pages:**
+- ✅ Hosting gratuito
+- ✅ HTTPS automático
+- ✅ No requiere servidor Python
+- ✅ Actualizaciones automáticas con cada push
+
 ### Vista del Presentador
 
 Para acceder a la vista del presentador (con notas):
 1. Presiona `S` durante la presentación
 2. Se abrirá una nueva ventana con las notas del presentador
+
+### Navegación de la Presentación
+
+**Controles básicos:**
+- **← → (flechas)** o **Espacio**: Navegar entre slides principales
+- **↑ ↓ (flechas)**: Navegar entre subslides verticales
+- **Esc**: Vista general de todas las slides
+- **F**: Pantalla completa
+- **S**: Vista del presentador
+- **B**: Pantalla en negro
+- **O**: Vista de esquema
+
+**Importante:** Para que las transiciones funcionen correctamente, usa los controles de Reveal.js (flechas, espacio) en lugar del scroll del ratón.
 
 ## Temas Disponibles
 
@@ -237,6 +268,40 @@ Reveal.js incluye varios temas que puedes usar en la configuración:
 
 Puedes ver una vista previa de todos los temas en la [documentación oficial de Reveal.js](https://revealjs.com/themes/).
 
+## Transiciones
+
+Puedes configurar transiciones suaves entre slides usando los metadatos YAML:
+
+```yaml
+transition: "fade"          # Tipo de transición
+transitionSpeed: "slow"     # Velocidad de transición
+```
+
+### Tipos de transiciones disponibles:
+
+- **`none`** - Sin transición (cambio inmediato)
+- **`fade`** - Desvanecimiento suave (recomendado)
+- **`slide`** - Deslizamiento horizontal (por defecto)
+- **`zoom`** - Efecto de zoom hacia adentro/afuera
+- **`cube`** - Efecto cubo 3D (si está disponible)
+- **`page`** - Efecto de página
+
+### Velocidades disponibles:
+
+- **`slow`** - Transición lenta
+- **`default`** - Velocidad estándar
+- **`fast`** - Transición rápida
+
+### Navegación para ver transiciones:
+
+Las transiciones solo funcionan al usar la navegación nativa de Reveal.js:
+- **Teclas de flecha** (← → ↑ ↓)
+- **Barra espaciadora**
+- **Controles de navegación** en pantalla
+- **Presiona `Esc`** para vista general de todas las slides
+
+**Nota:** Las transiciones NO funcionan con scroll del ratón o PageUp/PageDown.
+
 ## Ejemplo de Presentación
 
 ```markdown
@@ -249,6 +314,8 @@ colors:
   heading2-color: "#0078D7"
   heading3-color: "#000035"
 theme: "white"
+transition: "fade"
+transitionSpeed: "default"
 ---
 
 <!-- SLIDE -->
