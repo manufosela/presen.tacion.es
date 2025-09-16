@@ -121,6 +121,12 @@ El concepto de "deuda cultural" es paralelo a la deuda técnica: compromisos que
 - Cambio de mentalidad de **primar los beneficios**
 - **Resistencias a cambios** que son necesarios por ese crecimiento
 - Puede faltar **ownership**
+- Pueden haberse generado malas prácticas 
+
+<!-- NOTES -->
+Por ejemplo, hay un "apreton", vamos a hacer horas de más para sacarlo. Bien.
+Esto genera deuda cultural. Hay que acometerlo cuanto antes, detectar causas y poner remedio. No puede repetirse. No puede instaurarse.
+O la cultura se irá deteriorando.
 
 <!-- SUBSLIDE -->
 
@@ -150,10 +156,10 @@ La organización y la cultura van de la mano. Cambiar solo una de ellas sin la o
 
 Porque **la base, los fundamentos de la empresa funcionan**. Además el riesgo es controlado y cuentas con el talento de la empresa.
 
-**Bajo mi punto de vista, en la mayoría de los casos es mejor un refactoring.**
-
 <!-- NOTES -->
 Las transformaciones radicales tienen un riesgo mayor de pérdida de talento y conocimiento acumulado.
+La transformación es pasar de oruga a mariposa.
+El refactoring es renovar la casa, manteniendo la estructura.
 
 <!-- SLIDE -->
 
@@ -173,7 +179,8 @@ Esta analogía ilustra perfectamente el desafío: mantener la operación mientra
 
 ### El problema de las transformaciones
 
-Lo que ocurre es que cuando hay un cambio en la dirección de la empresa o de un departamento, se hace una **transformación**. Cambios radicales. Ruptura con lo anterior.
+Lo que ocurre es que cuando hay un cambio en la dirección de la empresa o de un departamento, se hace una **transformación**.
+Cambios radicales. Ruptura con lo anterior.
 
 Pero que acaba provocando igualmente **deuda cultural y organizacional**.
 
