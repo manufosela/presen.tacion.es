@@ -115,7 +115,7 @@ El concepto de "deuda cultural" es paralelo a la deuda técnica: compromisos que
 
 <!-- SUBSLIDE -->
 
-### Síntomas de la deuda cultural
+# Síntomas de la deuda cultural
 
 - Se pueden haber creado **silos**
 - Cambio de mentalidad de **primar los beneficios**
@@ -130,7 +130,7 @@ O la cultura se irá deteriorando.
 
 <!-- SUBSLIDE -->
 
-### Y ya más serios...
+## Y ya más serios...
 
 - Se haya generado una **cultura del miedo**
 - Haya proliferado el **micromanagement**
@@ -411,3 +411,9 @@ Esta fórmula simple pero poderosa resume todo el enfoque del refactoring cultur
 
 <!-- NOTES -->
 El mensaje final enfatiza que el liderazgo cultural es sobre cultivar, no imponer. Es un proceso humano que requiere empatía genuina.
+
+<!-- SLIDE -->
+
+## GRANCIAS
+
+![Grancias](images/grancias.png)
