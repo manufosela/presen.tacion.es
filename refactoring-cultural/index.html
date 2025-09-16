@@ -12,7 +12,7 @@
     />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/solarized.css"
+      href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/blood.css"
     />
 
     <!-- Highlight.js para código -->
@@ -29,9 +29,9 @@
         --background-color: #ffffff;
         --heading1-color: #e91e63;
         --heading2-color: #e91e63;
-        --heading3-color: #ffffff;
+        --heading3-color: #f1f1f1;
         --accent-color: #ff4081;
-        --text-color: #212121;
+        --text-color: #f1f1f1;
         --light-gray: #f5f5f5;
         --dark-gray: #999999;
       }
@@ -124,7 +124,16 @@
     </style>
   </head>
   <body>
-    <div class="reveal">
+    <div
+      class="reveal"
+      style="
+        background-image: url('images/template.webp');
+        background-size: 100% auto;
+        background-position: top left;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      "
+    >
       <div class="slides">
         <section
           data-background-image="images/fondo2.png"
@@ -133,7 +142,7 @@
         >
           <p><!-- markdownlint-disable --></p>
           <h1>Refactorizar la cultura</h1>
-          <p>Una nueva forma de abordar el cambio organizacional</p>
+          <p style="color:#e91e63">Una nueva forma de abordar el cambio organizacional</p>
           <aside class="notes">
             <p>
               Esta presentación explica el concepto de "refactoring cultural",
@@ -157,6 +166,11 @@
             allowfullscreen
             title="Resultados de la encuesta"
           ></iframe>
+          <aside class="notes">
+            Vamos a hacer una encuesta.
+            Primero, cuantos sois o habeis sido developers.
+            Segundo, cuantos conocen el concepto de refactoring.
+          </aside>
         </section>
         <section>
           <section>
@@ -210,6 +224,11 @@
               allowfullscreen
               title="Resultados de la encuesta"
             ></iframe>
+            <aside class="notes">
+              <p>
+                Vamos a hacer otra encuesta
+              </p>
+            </aside>
           </section>
           <section data-transition="convex">
             <h2>Para mí la cultura empresarial es...</h2>
@@ -224,35 +243,68 @@
           </section>
         </section>
         <section>
-          <section>
-            <h2>La "Deuda Cultural"</h2>
+            <section>
+                <h2>La "Deuda Técnica"</h2>
+            </section>
+            <section data-transition="convex">
+                <p>
+                    Normalmente cuando el codigo crece, va a aumentando el tiempo que se lleva desarrollando, 
+                    se genera una "deuda técnica", producida por:
+                    <ul>
+                    <li>Prisas</li>
+                    <li>Presión</li>
+                    <li>Equipo poco experimentado</li>
+                    <li>Cambios de requerimientos</li>
+                    <li>Sin documentacion</li>
+                    <li>Rotación del equipo</li>
+                    </ul>
+                </p>
+                <aside class="notes">
+                    <p>
+                    Es decir, hay situaciones que generan deuda técnica. Y a veces, se genera de manera consciente.
+                    Pero siempre, la idea es "agarla"cuanto antes.
+                    Por que si se llama deuda, es porque hay que pagarla, no para deberla eternamente.
+                    </p>
+                </aside>
+            </section>
+        </section>
+        <section>
+            <section data-transition="convex">
+                <h2>La "Deuda Cultural"</h2>
+                <aside class="notes">
+                    Igualmente, en las empresas, aunque exista una cultura, se puede generar deuda cultural.
+                </aside>
+            </section>
+            <section data-transition="convex">
             <p>
               Normalmente cuando la empresa pasa de <strong>10 a 50</strong> o a
               <strong>100</strong> en poco tiempo, se genera
               <strong>"deuda cultural"</strong>
             </p>
+            </section>
+            <section data-transition="convex">
             <p>¿Esto qué significa? ¿Que la cultura ya no vale?</p>
+            <h3>¡Claro que no!</h3>
             <aside class="notes">
               <p>
-                El concepto de "deuda cultural" es paralelo a la deuda técnica:
-                compromisos que hacemos por velocidad que después requieren ser
-                refactorizados.
+                El concepto de "deuda cultural" se produce por las mismas causas que la deuda técnica.
+                Que haya deuda cultural, no significa que la cultura ya no valga o que haya que cambiarla.
               </p>
             </aside>
-          </section>
+            </section>
           <section data-transition="convex">
             <h1>Síntomas de la deuda cultural</h1>
             <ul>
               <li>Se pueden haber creado <strong>silos</strong></li>
               <li>
-                Cambio de mentalidad de <strong>primar los beneficios</strong>
-              </li>
-              <li>
                 <strong>Resistencias a cambios</strong> que son necesarios por
                 ese crecimiento
               </li>
               <li>Puede faltar <strong>ownership</strong></li>
-              <li>Pueden haberse generado malas prácticas</li>
+              <li>Pueden haberse generado malas prácticas/costumbres</li>
+              <li>
+                Cambio de mentalidad de <strong>primar los beneficios</strong>
+              </li>
             </ul>
             <aside class="notes">
               <p>
@@ -285,6 +337,34 @@
         <section>
           <section>
             <h2>Refactoring vs Transformación</h2>
+          </section>
+          <section data-transition="convex">
+            <h3>¿Y por qué hacer un refactoring y no una transformación?</h3>
+            <aside class="notes">
+                Bueno, al final es un tema de nombres. De como llamarlo.
+                Para mi como developer, me resulta mas amigable entender refactoring que transformación.
+                Me resulta menos "violento"
+            </aside>
+        </section>
+        <section data-transition="convex">
+            <p>
+              Con un refactoring entiendo que
+              <strong>la base, los fundamentos de la empresa funcionan</strong> solo hay que mejorarlo<br>
+              Además el riesgo es controlado.
+            </p>
+            <aside class="notes">
+              <p>
+                Las transformaciones radicales tienen un riesgo mayor de pérdida
+                de talento y conocimiento acumulado.
+              </p>
+              <p>La transformación es pasar de oruga a mariposa.</p>
+              <p>
+                El refactoring es renovar la casa, manteniendo la estructura.
+              </p>
+            </aside>
+          </section>
+
+          <section data-transition="convex">
             <p>
               A veces se comete el error de
               <strong
@@ -300,25 +380,6 @@
               </p>
             </aside>
           </section>
-          <section data-transition="convex">
-            <h3>¿Y por qué hacer un refactoring y no una transformación?</h3>
-            <p>
-              Porque
-              <strong>la base, los fundamentos de la empresa funcionan</strong>.
-              Además el riesgo es controlado y cuentas con el talento de la
-              empresa.
-            </p>
-            <aside class="notes">
-              <p>
-                Las transformaciones radicales tienen un riesgo mayor de pérdida
-                de talento y conocimiento acumulado.
-              </p>
-              <p>La transformación es pasar de oruga a mariposa.</p>
-              <p>
-                El refactoring es renovar la casa, manteniendo la estructura.
-              </p>
-            </aside>
-          </section>
         </section>
         <section>
           <section>
@@ -326,13 +387,17 @@
             <p>Aunque sea más complicado.</p>
             <h3>Es difícil...</h3>
             <p><strong>... pero no imposible</strong></p>
+          </section>
+          <section data-transition="convex">
             <p>
               Es como
-              <strong
-                >cambiar una rueda de un coche mientras este está en
+              <strong>cambiar una rueda de un coche mientras este está en
                 marcha</strong
               >. Es difícil, pero no imposible.
             </p>
+          </section>
+          <section data-transition="convex">
+            <img src="images/imagen1.png" alt="rueda" />
             <aside class="notes">
               <p>
                 Esta analogía ilustra perfectamente el desafío: mantener la
@@ -340,8 +405,12 @@
               </p>
             </aside>
           </section>
-          <section data-transition="convex">
+        </section>
+        <section>
+          <section>
             <h3>El problema de las transformaciones</h3>
+          </section>
+          <section data-transition="convex">
             <p>
               Lo que ocurre es que cuando hay un cambio en la dirección de la
               empresa o de un departamento, se hace una
@@ -369,23 +438,28 @@
         <section>
           <section>
             <h2>Analogía con el código</h2>
+            </section>
+            <section>
             <p>
-              En código nos pasa mucho. Una app que lleva
-              <strong>2, 3, 5, 10, 20 años</strong> desarrollándose.
+              En desarrollo de software nos pasa mucho.<br>Una app que lleva
+              <strong>2, 3, 5, 10, 20 años</strong> funcionando y desarrollándose.
             </p>
             <p>
               Alguien decide que hay que
               <strong>tirarla a la basura y rehacerla en 6 meses</strong>.
             </p>
+            </section>
+            <section>
             <p>
-              Pero vamos a ver alma de cántaro. Si se ha tardado en hacer una
-              app 2 años.
+              Pero vamos a ver alma de cántaro.<br>Si se ha tardado en hacer una
+              app 2 años.<br>
               <strong
                 >¿Qué te hace suponer que la vas a hacer mejor en 6
                 meses?</strong
-              >
+              ><br>
               ¿La IA? Buena suerte.
             </p>
+            </section>
             <aside class="notes">
               <p>
                 Esta es una experiencia muy común en desarrollo de software que
@@ -417,20 +491,19 @@
             <h2>La cultura no se cambia con palabras</h2>
             <p>
               <strong
-                >La cultura no se cambia con palabras ni con postureo
-                corporativo</strong
+                >... ni con postureo corporativo</strong
               >
             </p>
             <p><strong>Se cambia con el ejemplo</strong></p>
-            <p>
-              Como el ejemplo clásico:
-              <strong>futbolines y fruta gratis</strong>. Eso no crea Cultura.
-            </p>
             <aside class="notes">
               <p>
                 Los beneficios superficiales no crean cultura real. La cultura
                 se crea con comportamientos consistentes del liderazgo.
-              </p>
+                <p>
+                    Como el ejemplo clásico:
+                    <strong>futbolines y fruta gratis</strong>. Eso no crea Cultura.
+                </p>
+            </p>
             </aside>
           </section>
           <section data-transition="convex">
@@ -443,7 +516,6 @@
             </p>
             <p>
               Si no es así, no cala. No funciona.
-              <strong>Las palabras se las lleva el viento.</strong>
             </p>
             <aside class="notes">
               <p>
@@ -538,19 +610,28 @@
           <section>
             <h2>Refactorizar la cultura</h2>
             <p>
-              Por eso yo hablo de <strong>refactoring cultural</strong>. No se
-              trata de rehacerlo todo. No se trata de cambiar de framework.
+              Por eso yo hablo de <strong>refactoring cultural</strong>.<br>
+              No se trata de rehacerlo todo.<br>
+              No se trata de cambiar de framework.
             </p>
+          </section>
+          <section data-transition="convex">
             <p>
-              Se trata de
-              <strong>ir poco a poco aplicando buenas prácticas</strong>,
-              ciertos patrones, mejorando poco a poco, entendiendo lo que hace
-              cada parte,
-              <strong>involucrando a todas las personas de la empresa</strong>,
-              entendiendo sus puntos de dolor, sus necesidades.
+              Se trata de ir poco a poco:
+              <ul>
+                <li>Aplicando buenas prácticas</li>
+                <li>Aplicando ciertos patrones</li>
+                <li>Mejorando poco a poco</li>
+                <li>Entendiendo lo que hace cada parte</li>
+                <li>Involucrando a todas las personas de la empresa</li>
+                <li>Entendiendo sus puntos de dolor</li>
+                <li>Entendiendo sus necesidades</li>
+              </ul>
             </p>
+          </section>
+          <section data-transition="convex">
             <p>
-              <strong>Proponiendo, no imponiendo.</strong> Intentando satisfacer
+              <strong>Proponiendo, no imponiendo.</strong><br>Intentando satisfacer
               esas necesidades y eliminando esos puntos de dolor.
             </p>
             <aside class="notes">
@@ -563,16 +644,17 @@
           <section data-transition="convex">
             <h3>El éxito depende de la colaboración</h3>
             <p>
-              <strong
-                >El éxito depende más de la colaboración y la coordinación que
-                de los destellos de genialidad individual.</strong
+              <strong>
+                y la coordinación, más que
+                de los destellos de genialidades individuales.</strong
               >
             </p>
+            </section>
+            <section data-transition="convex">
             <p>
               <strong
-                >Alcanzar el fin depende más de los que están que de los que se
-                fichen</strong
-              >, por mucho pedigrí o éxitos pasados traiga en la mochila.
+                >Alcanzar el fin suele depender más de los que están que de los que se fichen</strong>
+              <br>por mucho pedigrí o éxitos pasados traiga en la mochila.
             </p>
             <aside class="notes">
               <p>
@@ -610,13 +692,12 @@
             </ul>
             <p>
               <strong>Entré en enero 2024</strong> y lo primero que comencé a
-              hacer fue "el diagnóstico", pero claro,
-              <strong>a la vez avanzando</strong>.
+              hacer fue "el diagnóstico"</strong>.
             </p>
             <aside class="notes">
               <p>
-                El diagnóstico en paralelo con las primeras mejoras permite
-                ganar credibilidad mientras se entiende la situación real.
+                El diagnostico se hace hablando con las personas, escuchando.<br>
+                El diagnóstico, en paralelo con las primeras mejoras, mientras se entiende la situación real.
               </p>
             </aside>
           </section>
@@ -632,13 +713,13 @@
             </aside>
           </section>
           <section data-transition="convex">
-            <h3>Condiciones Laborales → "Mejorar el entorno de desarrollo"</h3>
+            <h3>Condiciones Laborales → "Mejorar el entorno"</h3>
             <ul>
               <li>
                 <strong>Teletrabajo</strong>: Flexibilidad real, no postureo
               </li>
               <li>
-                <strong>Días extra por antigüedad</strong>: Reconocer la
+                <strong>Días extra de vacaciones por antigüedad</strong>: Reconocer la
                 experiencia
               </li>
               <li>
@@ -665,7 +746,7 @@
                 desarrollo
               </li>
               <li>
-                <strong>Organización técnica</strong>: NAS, correos MS, accesos
+                <strong>Organización técnica</strong>: NAS, correos, accesos
                 estructurados
               </li>
               <li>
@@ -684,8 +765,7 @@
             <h3>Participación y Transparencia → "Code reviews culturales"</h3>
             <ul>
               <li>
-                <strong>Involucrar a todos</strong>: En la definición de
-                proyectos digitales
+                <strong>Involucrar a todos</strong>: En la definición de los cambios
               </li>
               <li>
                 <strong>Escuchar antes de actuar</strong>: Entender el "código"
@@ -704,23 +784,31 @@
           </section>
         </section>
         <section>
-          <h2>Los resultados</h2>
-          <h3>
-            "Como cuando terminas un refactor y el código no solo funciona
-            mejor, sino que da gusto trabajar con él"
-          </h3>
-          <ul>
-            <li>
-              <strong>Eficiencia</strong>: Procesos más fluidos, menos fricción
-            </li>
-            <li>
-              <strong>Engagement</strong>: Las personas se sienten parte del
-              cambio
-            </li>
-            <li>
-              <strong>Estabilidad</strong>: Mejoras sin romper lo que funcionaba
-            </li>
-          </ul>
+          <section>
+            <h2>Los resultados</h2>
+          </section>
+          <section>
+            <h3>
+              "Como cuando terminas un refactor y el código no solo funciona
+              mejor, sino que da gusto trabajar con él"
+            </h3>
+          </section>
+          <section>
+            <ul>
+              <li>
+                <strong>Eficiencia</strong>: Procesos más fluidos, menos
+                fricción
+              </li>
+              <li>
+                <strong>Engagement</strong>: Las personas se sienten parte del
+                cambio
+              </li>
+              <li>
+                <strong>Estabilidad</strong>: Mejoras sin romper lo que
+                funcionaba
+              </li>
+            </ul>
+          </section>
           <aside class="notes">
             <p>
               Esta analogía con el código refactorizado captura perfectamente la
@@ -766,7 +854,38 @@
         </section>
         <section>
           <h2>GRANCIAS</h2>
-          <p><img src="images/grancias.png" alt="grancias" />Grancias</p>
+          <p><img src="images/grancias.png" alt="grancias" /></p>
+          <p>Que es Gracias, pero lo a lo grande</p>
+        </section>
+        <section
+          style="
+            display: flex !important;
+            flex-direction: row;
+            align-items: center;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              justify-content: center;
+              width: 80vw;
+            "
+          >
+            <p>
+              <img src="images/manufosela.png" width="400" alt="manufosela" />
+            </p>
+            <p>
+              <img
+                src="images/liderazgo_afectivo.jpg"
+                width="300"
+                alt="liderazgo_Afectivo"
+              />
+            </p>
+          </div>
+          <p>@manufosela</p>
+          <p>manufosela.es</p>
         </section>
       </div>
     </div>

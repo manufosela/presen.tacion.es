@@ -28,7 +28,8 @@
       body {
         margin: 0;
         padding: 0;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
         line-height: 1.6;
         color: #333;
         background-color: #fff;
@@ -183,7 +184,8 @@
         background-color: #f5c6cb;
         border-radius: 4px;
       }
-      .error-details, .warning-details {
+      .error-details,
+      .warning-details {
         margin: 1rem 0;
         padding: 1rem;
         border-radius: 4px;
@@ -233,7 +235,6 @@
         margin: 0.3rem 0;
         color: #155724;
       }
-
     </style>
   </head>
   <body>
@@ -291,16 +292,21 @@
        */
       function isRunningLocally() {
         const hostname = window.location.hostname;
-        return hostname === 'localhost' || hostname === '127.0.0.1' || hostname.includes('192.168.') || hostname.includes('10.0.');
+        return (
+          hostname === "localhost" ||
+          hostname === "127.0.0.1" ||
+          hostname.includes("192.168.") ||
+          hostname.includes("10.0.")
+        );
       }
 
       /**
        * Construye la URL correcta para cargar contenido según el entorno
        */
-      function buildContentUrl(presentationName, filename = 'contenidos.md') {
+      function buildContentUrl(presentationName, filename = "contenidos.md") {
         const isLocal = isRunningLocally();
-        const cleanName = presentationName.startsWith('local_')
-          ? presentationName.replace('local_', '')
+        const cleanName = presentationName.startsWith("local_")
+          ? presentationName.replace("local_", "")
           : presentationName;
 
         if (isLocal) {
@@ -317,8 +323,8 @@
        */
       function buildImageUrl(presentationName, imagePath) {
         const isLocal = isRunningLocally();
-        const cleanName = presentationName.startsWith('local_')
-          ? presentationName.replace('local_', '')
+        const cleanName = presentationName.startsWith("local_")
+          ? presentationName.replace("local_", "")
           : presentationName;
 
         if (isLocal) {
@@ -363,16 +369,22 @@
         const [metadata, markdownContent] = extractMetadata(content);
 
         if (!markdownContent.trim()) {
-          errors.push("El archivo no contiene contenido markdown después de la metadata YAML.");
+          errors.push(
+            "El archivo no contiene contenido markdown después de la metadata YAML."
+          );
           return { errors, warnings, metadata };
         }
 
         // Validar slides
         const slideMarkers = markdownContent.match(/<!-- SLIDE -->/g);
         if (!slideMarkers || slideMarkers.length === 0) {
-          errors.push("No se encontraron marcadores '<!-- SLIDE -->' en el contenido.");
+          errors.push(
+            "No se encontraron marcadores '<!-- SLIDE -->' en el contenido."
+          );
         } else {
-          console.log(`✓ Encontrados ${slideMarkers.length} marcadores de slide`);
+          console.log(
+            `✓ Encontrados ${slideMarkers.length} marcadores de slide`
+          );
         }
 
         // Validar estructura de columnas y grids
@@ -382,30 +394,41 @@
 
         if (columnStart && columnEnd) {
           if (columnStart.length !== columnEnd.length) {
-            errors.push(`Estructura de columnas desbalanceada: ${columnStart.length} $COLUMNS$ pero ${columnEnd.length} $END$`);
+            errors.push(
+              `Estructura de columnas desbalanceada: ${columnStart.length} $COLUMNS$ pero ${columnEnd.length} $END$`
+            );
           }
         }
 
         if (gridStart && columnEnd) {
           if (gridStart.length > columnEnd.length) {
-            errors.push(`Estructura de grid desbalanceada: ${gridStart.length} $GRID$ pero ${columnEnd.length} $END$`);
+            errors.push(
+              `Estructura de grid desbalanceada: ${gridStart.length} $GRID$ pero ${columnEnd.length} $END$`
+            );
           }
         }
 
         // Validar marcadores huérfanos
         const orphanCols = markdownContent.match(/\$COL\$/g);
-        if (orphanCols && (!columnStart || orphanCols.length > columnStart.length * 3)) {
-          warnings.push(`Posibles marcadores $COL$ huérfanos detectados (${orphanCols?.length || 0} encontrados)`);
+        if (
+          orphanCols &&
+          (!columnStart || orphanCols.length > columnStart.length * 3)
+        ) {
+          warnings.push(
+            `Posibles marcadores $COL$ huérfanos detectados (${
+              orphanCols?.length || 0
+            } encontrados)`
+          );
         }
 
         // Validar imágenes rotas
         const imageRefs = markdownContent.match(/!\[.*?\]\(.*?\)/g);
         if (imageRefs) {
-          imageRefs.forEach(img => {
+          imageRefs.forEach((img) => {
             const match = img.match(/!\[.*?\]\((.*?)\)/);
             if (match && match[1]) {
               const imgPath = match[1];
-              if (!imgPath.startsWith('http') && !imgPath.startsWith('data:')) {
+              if (!imgPath.startsWith("http") && !imgPath.startsWith("data:")) {
                 console.log(`📷 Imagen encontrada: ${imgPath}`);
               }
             }
@@ -413,15 +436,19 @@
         }
 
         // Validar imágenes de fondo personalizadas
-        const backgroundRefs = markdownContent.match(/<!-- BACKGROUND: ([^\s]+) -->/g);
+        const backgroundRefs = markdownContent.match(
+          /<!-- BACKGROUND: ([^\s]+) -->/g
+        );
         if (backgroundRefs) {
-          backgroundRefs.forEach(bg => {
+          backgroundRefs.forEach((bg) => {
             const match = bg.match(/<!-- BACKGROUND: ([^\s]+) -->/);
             if (match && match[1]) {
               const bgPath = match[1];
               console.log(`🖼️ Imagen de fondo encontrada: ${bgPath}`);
-              if (!bgPath.includes('/') && !bgPath.startsWith('http')) {
-                warnings.push(`Imagen de fondo '${bgPath}' debería estar en la carpeta 'images/' para mejor organización`);
+              if (!bgPath.includes("/") && !bgPath.startsWith("http")) {
+                warnings.push(
+                  `Imagen de fondo '${bgPath}' debería estar en la carpeta 'images/' para mejor organización`
+                );
               }
             }
           });
@@ -440,22 +467,40 @@
         // Validar colores si existen
         if (metadata.colors) {
           Object.entries(metadata.colors).forEach(([key, value]) => {
-            if (typeof value === 'string' && value.includes('#')) {
+            if (typeof value === "string" && value.includes("#")) {
               // Validar formato de color hexadecimal
               const colorMatch = value.match(/#[0-9A-Fa-f]{3,6}/);
               if (!colorMatch) {
-                warnings.push(`Color potencialmente inválido en '${key}': ${value}`);
+                warnings.push(
+                  `Color potencialmente inválido en '${key}': ${value}`
+                );
               }
             }
           });
         }
 
         // Validar tema
-        const validThemes = ['white', 'black', 'league', 'beige', 'sky', 'night', 'serif', 'simple', 'solarized', 'blood', 'moon', 'dracula'];
+        const validThemes = [
+          "white",
+          "black",
+          "league",
+          "beige",
+          "sky",
+          "night",
+          "serif",
+          "simple",
+          "solarized",
+          "blood",
+          "moon",
+          "dracula",
+        ];
         if (metadata.theme && !validThemes.includes(metadata.theme)) {
-          warnings.push(`Tema '${metadata.theme}' no reconocido. Temas válidos: ${validThemes.join(', ')}`);
+          warnings.push(
+            `Tema '${
+              metadata.theme
+            }' no reconocido. Temas válidos: ${validThemes.join(", ")}`
+          );
         }
-
 
         return { errors, warnings };
       }
@@ -466,26 +511,31 @@
       function showError(message, details = null) {
         const revealElement = document.querySelector(SELECTORS.REVEAL);
         if (revealElement) {
-          let detailsHtml = '';
+          let detailsHtml = "";
           if (details) {
             if (details.errors && details.errors.length > 0) {
-              detailsHtml += '<div class="error-details"><h3>🚨 Errores críticos:</h3><ul>';
-              details.errors.forEach(error => {
+              detailsHtml +=
+                '<div class="error-details"><h3>🚨 Errores críticos:</h3><ul>';
+              details.errors.forEach((error) => {
                 detailsHtml += `<li class="error-item">${error}</li>`;
               });
-              detailsHtml += '</ul></div>';
+              detailsHtml += "</ul></div>";
             }
 
             if (details.warnings && details.warnings.length > 0) {
-              detailsHtml += '<div class="warning-details"><h3>⚠️ Advertencias:</h3><ul>';
-              details.warnings.forEach(warning => {
+              detailsHtml +=
+                '<div class="warning-details"><h3>⚠️ Advertencias:</h3><ul>';
+              details.warnings.forEach((warning) => {
                 detailsHtml += `<li class="warning-item">${warning}</li>`;
               });
-              detailsHtml += '</ul></div>';
+              detailsHtml += "</ul></div>";
             }
 
             if (details.metadata) {
-              detailsHtml += '<div class="metadata-info"><h3>📋 Metadata encontrada:</h3><pre>' + JSON.stringify(details.metadata, null, 2) + '</pre></div>';
+              detailsHtml +=
+                '<div class="metadata-info"><h3>📋 Metadata encontrada:</h3><pre>' +
+                JSON.stringify(details.metadata, null, 2) +
+                "</pre></div>";
             }
           }
 
@@ -661,7 +711,6 @@
         applyBaseFontSize(metadata.fontSize);
       }
 
-
       /**
        * Aplica variables de color
        */
@@ -787,7 +836,7 @@
               }
             } else {
               // Para presentaciones remotas o locales no cargadas por sessionStorage
-              imageUrl = buildImageUrl(presentationName, 'template.webp');
+              imageUrl = buildImageUrl(presentationName, "template.webp");
             }
 
             if (imageUrl) {
@@ -1040,7 +1089,8 @@
        * Crea un elemento de diapositiva
        */
       function createSlideElement(slideContent, presentationName) {
-        const { mainContent, notes, backgroundImage, iframeUrl } = extractSlideContent(slideContent);
+        const { mainContent, notes, backgroundImage, iframeUrl } =
+          extractSlideContent(slideContent);
 
         if (iframeUrl) {
           console.log(`📋 Creando slide IFRAME: ${iframeUrl}`);
@@ -1071,10 +1121,10 @@
             imageUrl = buildImageUrl(presentationName, backgroundImage);
           }
 
-          section.setAttribute('data-background-image', imageUrl);
-          section.setAttribute('data-background-size', 'cover');
-          section.setAttribute('data-background-position', 'center');
-          section.setAttribute('data-background-repeat', 'no-repeat');
+          section.setAttribute("data-background-image", imageUrl);
+          section.setAttribute("data-background-size", "cover");
+          section.setAttribute("data-background-position", "center");
+          section.setAttribute("data-background-repeat", "no-repeat");
           console.log(`🖼️ Aplicando imagen de fondo: ${backgroundImage}`);
         }
 
@@ -1088,7 +1138,9 @@
           const iframe = document.createElement("iframe");
           iframe.src = iframeUrl;
           iframe.className = "fullscreen-iframe"; // Añadir clase CSS específica
-          iframe.id = `iframe-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`; // ID único
+          iframe.id = `iframe-${Date.now()}-${Math.random()
+            .toString(36)
+            .substr(2, 9)}`; // ID único
           iframe.setAttribute("allowfullscreen", "true");
           iframe.setAttribute("loading", "eager");
 
@@ -1142,7 +1194,9 @@
        */
       function extractSlideContent(slideContent) {
         // Buscar imagen de fondo personalizada
-        const backgroundMatch = slideContent.match(/<!-- BACKGROUND: ([^\s]+) -->/);
+        const backgroundMatch = slideContent.match(
+          /<!-- BACKGROUND: ([^\s]+) -->/
+        );
         const backgroundImage = backgroundMatch ? backgroundMatch[1] : null;
 
         // Buscar iframe (permite URLs con parámetros)
@@ -1163,7 +1217,9 @@
 
         // Remover comentarios especiales del contenido principal
         if (backgroundMatch) {
-          mainContent = mainContent.replace(/<!-- BACKGROUND: [^\s]+ -->/, "").trim();
+          mainContent = mainContent
+            .replace(/<!-- BACKGROUND: [^\s]+ -->/, "")
+            .trim();
         }
         if (iframeMatch) {
           mainContent = mainContent.replace(/<!-- IFRAME: .+? -->/, "").trim();
@@ -1172,7 +1228,9 @@
         if (notesMatch) {
           mainContent = mainContent.split("<!-- NOTES -->")[0].trim();
           if (backgroundMatch) {
-            mainContent = mainContent.replace(/<!-- BACKGROUND: [^\s]+ -->/, "").trim();
+            mainContent = mainContent
+              .replace(/<!-- BACKGROUND: [^\s]+ -->/, "")
+              .trim();
           }
           notes = notesMatch[1].trim();
         }
@@ -1181,7 +1239,7 @@
           mainContent: mainContent,
           notes: notes,
           backgroundImage: backgroundImage,
-          iframeUrl: iframeUrl
+          iframeUrl: iframeUrl,
         };
       }
 
@@ -1287,16 +1345,10 @@ ${processedRows.join("\n")}
         }
 
         // Reemplazar rutas de imágenes según el entorno
-        const imageBasePath = buildImageUrl(presentationName, 'images/');
+        const imageBasePath = buildImageUrl(presentationName, "images/");
         return htmlContent
-          .replace(
-            /src="images\//g,
-            `src="${imageBasePath}`
-          )
-          .replace(
-            /src='images\//g,
-            `src='${imageBasePath}'`
-          );
+          .replace(/src="images\//g, `src="${imageBasePath}`)
+          .replace(/src='images\//g, `src='${imageBasePath}'`);
       }
 
       /**
@@ -1390,8 +1442,8 @@ ${processedRows.join("\n")}
 
           // Aplicar transición después de initialize
           deck.configure({
-            transition: metadata.transition || 'slide',
-            transitionSpeed: metadata.transitionSpeed || 'default'
+            transition: metadata.transition || "slide",
+            transitionSpeed: metadata.transitionSpeed || "default",
           });
 
           // Procesar elementos especiales
@@ -1403,7 +1455,7 @@ ${processedRows.join("\n")}
           let errorDetails = null;
 
           // Si hay contenido disponible, validarlo para dar más información
-          if (typeof content !== 'undefined' && content) {
+          if (typeof content !== "undefined" && content) {
             try {
               const validation = validateMarkdownStructure(content);
               const yamlValidation = validateYamlMetadata(validation.metadata);
@@ -1411,27 +1463,32 @@ ${processedRows.join("\n")}
               errorDetails = {
                 errors: [...validation.errors, ...yamlValidation.errors],
                 warnings: [...validation.warnings, ...yamlValidation.warnings],
-                metadata: validation.metadata
+                metadata: validation.metadata,
               };
 
-              console.log('Validación completa:', errorDetails);
+              console.log("Validación completa:", errorDetails);
 
               if (errorDetails.errors.length === 0) {
                 // Si no hay errores estructurales, el problema es de otro tipo
                 errorDetails.errors.push(`Error técnico: ${error.message}`);
               }
-
             } catch (validationError) {
-              console.error('Error en la validación:', validationError);
+              console.error("Error en la validación:", validationError);
               errorDetails = {
-                errors: [`Error de validación: ${validationError.message}`, `Error original: ${error.message}`],
+                errors: [
+                  `Error de validación: ${validationError.message}`,
+                  `Error original: ${error.message}`,
+                ],
                 warnings: [],
-                metadata: null
+                metadata: null,
               };
             }
           }
 
-          showError(`Error al cargar la presentación: ${error.message}`, errorDetails);
+          showError(
+            `Error al cargar la presentación: ${error.message}`,
+            errorDetails
+          );
         }
       }
 
@@ -1444,12 +1501,12 @@ ${processedRows.join("\n")}
           // Buscar cualquier archivo .md en sessionStorage
           for (let i = 0; i < sessionStorage.length; i++) {
             const key = sessionStorage.key(i);
-            if (key.startsWith(`local_${basePath}/`) && key.endsWith('.md')) {
-              return key.replace(`local_${basePath}/`, '');
+            if (key.startsWith(`local_${basePath}/`) && key.endsWith(".md")) {
+              return key.replace(`local_${basePath}/`, "");
             }
           }
         }
-        return 'contenidos.md'; // fallback
+        return "contenidos.md"; // fallback
       }
 
       async function fetchPresentationContent(presentationName) {
@@ -1483,7 +1540,11 @@ ${processedRows.join("\n")}
 
         // Construir la URL correcta según el entorno
         const url = buildContentUrl(presentationName);
-        console.log("Intentando cargar desde:", isRunningLocally() ? 'LOCAL' : 'GITHUB', url);
+        console.log(
+          "Intentando cargar desde:",
+          isRunningLocally() ? "LOCAL" : "GITHUB",
+          url
+        );
         const response = await fetch(url + "?t=" + Date.now(), {
           cache: "no-store",
         });

@@ -20,6 +20,7 @@ fonts:
 theme: "solarized"              # Tema de Reveal.js white, moon, blood, league, black. night, sky , serif, solarized, simple
 transition: "fade"          # Transición entre slides (desvanecimiento)
 transitionSpeed: "slow"     # Velocidad: default, fast, slow
+background: "images/template.webp"  # Imagen de fondo para toda la presentación
 ---
 
 

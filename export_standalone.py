@@ -29,12 +29,23 @@ def parse_yaml_metadata(content):
 def extract_slides(content):
     """Extrae las slides individuales del contenido markdown"""
     slides = []
-    # Dividir por comentarios SLIDE
+
+    # Dividir por comentarios SLIDE primero
     slide_parts = re.split(r'<!-- SLIDE -->', content)
 
     for part in slide_parts:
         if part.strip():
-            slides.append(part.strip())
+            # Dentro de cada slide, buscar SUBSLIDES
+            subslides = re.split(r'<!-- SUBSLIDE -->', part)
+
+            for i, subslide in enumerate(subslides):
+                if subslide.strip():
+                    # Marcar si es una subslide (para el HTML)
+                    slide_data = {
+                        'content': subslide.strip(),
+                        'is_subslide': i > 0  # La primera no es subslide
+                    }
+                    slides.append(slide_data)
 
     return slides
 
@@ -336,38 +347,73 @@ def generate_standalone_html(presentation_name, output_file=None, embed_images=N
 
     # Procesar cada slide
     processed_slides = []
-    for slide_content in slides:
+    current_section = None  # Para agrupar subslides
+
+    for slide_item in slides:
+        slide_content = slide_item['content']
+        is_subslide = slide_item['is_subslide']
+
         slide_data = extract_slide_components(slide_content)
 
-        # Procesar contenido de la slide
+        # Crear slide HTML
         if slide_data['iframe']:
             # Slide con iframe
-            slide_html = f'<section class="iframe-slide">'
-            slide_html += f'<iframe src="{slide_data["iframe"]}" class="fullscreen-iframe" allowfullscreen></iframe>'
-            slide_html += '</section>'
+            inner_html = f'<section class="iframe-slide">'
+            inner_html += f'<iframe src="{slide_data["iframe"]}" class="fullscreen-iframe" allowfullscreen></iframe>'
+            inner_html += '</section>'
         else:
             # Slide normal
-            slide_html = '<section'
+            inner_html = '<section'
 
             # Añadir imagen de fondo si existe
             if slide_data['background']:
                 bg_data = get_background_image_path(slide_data['background'], presentation_path, embed_images)
-                slide_html += f' data-background-image="{bg_data}" data-background-size="cover" data-background-position="center"'
+                inner_html += f' data-background-image="{bg_data}" data-background-size="cover" data-background-position="center"'
 
-            slide_html += '>'
+            inner_html += '>'
 
             # Procesar contenido
             content_html = process_markdown_content(slide_data['content'], presentation_path, embed_images)
-            slide_html += content_html
+            inner_html += content_html
 
             # Añadir notas si existen
             if slide_data['notes']:
                 notes_html = convert_basic_markdown(slide_data['notes'])
-                slide_html += f'<aside class="notes">{notes_html}</aside>'
+                inner_html += f'<aside class="notes">{notes_html}</aside>'
 
-            slide_html += '</section>'
+            inner_html += '</section>'
 
-        processed_slides.append(slide_html)
+        # Manejar estructura de subslides
+        if not is_subslide:
+            # Es una slide principal - cerrar sección anterior si existe
+            if current_section is not None:
+                current_section['slides'].append('</section>')  # Cerrar sección anterior
+                processed_slides.append(''.join(current_section['slides']))
+
+            # Verificar si la siguiente slide es una subslide
+            has_subslides = False
+            current_index = slides.index(slide_item)
+            if current_index + 1 < len(slides) and slides[current_index + 1]['is_subslide']:
+                has_subslides = True
+
+            if has_subslides:
+                # Crear nueva sección con subslides
+                current_section = {
+                    'slides': ['<section>', inner_html]
+                }
+            else:
+                # Slide independiente
+                processed_slides.append(inner_html)
+                current_section = None
+        else:
+            # Es una subslide - añadir a la sección actual
+            if current_section is not None:
+                current_section['slides'].append(inner_html)
+
+    # Cerrar última sección si queda abierta
+    if current_section is not None:
+        current_section['slides'].append('</section>')
+        processed_slides.append(''.join(current_section['slides']))
 
     # Generar CSS personalizado
     custom_css = generate_css_variables(metadata)
