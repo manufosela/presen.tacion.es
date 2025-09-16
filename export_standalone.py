@@ -70,7 +70,7 @@ def extract_slide_components(slide_content):
         'iframe': iframe_url
     }
 
-def process_markdown_content(content, presentation_path):
+def process_markdown_content(content, presentation_path, embed_images=True):
     """Procesa el contenido markdown a HTML"""
     # Procesar columnas
     content = re.sub(
@@ -92,7 +92,7 @@ def process_markdown_content(content, presentation_path):
     content = convert_basic_markdown(content)
 
     # Procesar imágenes
-    content = process_images(content, presentation_path)
+    content = process_images(content, presentation_path, embed_images)
 
     return content
 
@@ -177,35 +177,40 @@ def convert_basic_markdown(content):
 
     return '\n'.join(processed_lines)
 
-def process_images(content, presentation_path):
-    """Procesa las imágenes, convirtiéndolas a base64"""
+def process_images(content, presentation_path, embed_images=True):
+    """Procesa las imágenes, convirtiéndolas a base64 o usando enlaces relativos"""
     def replace_image(match):
         alt_text = match.group(1)
         img_path = match.group(2)
 
-        # Construir ruta completa
+        # Construir ruta completa para verificar que existe
         full_path = os.path.join(presentation_path, img_path)
 
         if os.path.exists(full_path):
-            try:
-                with open(full_path, 'rb') as img_file:
-                    img_data = img_file.read()
-                    img_base64 = base64.b64encode(img_data).decode('utf-8')
+            if embed_images:
+                # Convertir a base64
+                try:
+                    with open(full_path, 'rb') as img_file:
+                        img_data = img_file.read()
+                        img_base64 = base64.b64encode(img_data).decode('utf-8')
 
-                    # Detectar tipo de imagen
-                    ext = os.path.splitext(img_path)[1].lower()
-                    mime_types = {
-                        '.png': 'image/png',
-                        '.jpg': 'image/jpeg',
-                        '.jpeg': 'image/jpeg',
-                        '.webp': 'image/webp',
-                        '.gif': 'image/gif'
-                    }
-                    mime_type = mime_types.get(ext, 'image/png')
+                        # Detectar tipo de imagen
+                        ext = os.path.splitext(img_path)[1].lower()
+                        mime_types = {
+                            '.png': 'image/png',
+                            '.jpg': 'image/jpeg',
+                            '.jpeg': 'image/jpeg',
+                            '.webp': 'image/webp',
+                            '.gif': 'image/gif'
+                        }
+                        mime_type = mime_types.get(ext, 'image/png')
 
-                    return f'<img src="data:{mime_type};base64,{img_base64}" alt="{alt_text}">'
-            except Exception as e:
-                print(f"Error processing image {img_path}: {e}")
+                        return f'<img src="data:{mime_type};base64,{img_base64}" alt="{alt_text}">'
+                except Exception as e:
+                    print(f"Error processing image {img_path}: {e}")
+                    return f'<img src="{img_path}" alt="{alt_text}">'
+            else:
+                # Usar enlace relativo
                 return f'<img src="{img_path}" alt="{alt_text}">'
         else:
             print(f"Image not found: {full_path}")
@@ -213,28 +218,35 @@ def process_images(content, presentation_path):
 
     return re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', replace_image, content)
 
-def get_background_image_base64(img_path, presentation_path):
-    """Convierte imagen de fondo a base64"""
+def get_background_image_path(img_path, presentation_path, embed_images=True):
+    """Obtiene la ruta de imagen de fondo (base64 o relativa)"""
     full_path = os.path.join(presentation_path, img_path)
 
     if os.path.exists(full_path):
-        try:
-            with open(full_path, 'rb') as img_file:
-                img_data = img_file.read()
-                img_base64 = base64.b64encode(img_data).decode('utf-8')
+        if embed_images:
+            try:
+                with open(full_path, 'rb') as img_file:
+                    img_data = img_file.read()
+                    img_base64 = base64.b64encode(img_data).decode('utf-8')
 
-                ext = os.path.splitext(img_path)[1].lower()
-                mime_types = {
-                    '.png': 'image/png',
-                    '.jpg': 'image/jpeg',
-                    '.jpeg': 'image/jpeg',
-                    '.webp': 'image/webp'
-                }
-                mime_type = mime_types.get(ext, 'image/png')
+                    ext = os.path.splitext(img_path)[1].lower()
+                    mime_types = {
+                        '.png': 'image/png',
+                        '.jpg': 'image/jpeg',
+                        '.jpeg': 'image/jpeg',
+                        '.webp': 'image/webp'
+                    }
+                    mime_type = mime_types.get(ext, 'image/png')
 
-                return f'data:{mime_type};base64,{img_base64}'
-        except Exception as e:
-            print(f"Error processing background image {img_path}: {e}")
+                    return f'data:{mime_type};base64,{img_base64}'
+            except Exception as e:
+                print(f"Error processing background image {img_path}: {e}")
+                return img_path
+        else:
+            # Usar enlace relativo
+            return img_path
+    else:
+        print(f"Background image not found: {full_path}")
 
     return img_path
 
@@ -275,7 +287,7 @@ def generate_css_variables(metadata):
 
     return '\n'.join(css_vars)
 
-def generate_standalone_html(presentation_name, output_file=None):
+def generate_standalone_html(presentation_name, output_file=None, embed_images=None):
     """Genera HTML estático independiente de una presentación"""
 
     # Buscar la carpeta de la presentación
@@ -302,6 +314,23 @@ def generate_standalone_html(presentation_name, output_file=None):
     # Parsear metadatos y contenido
     metadata, markdown_content = parse_yaml_metadata(content)
 
+    # Decidir sobre embebido de imágenes
+    if embed_images is None:
+        print("\n¿Cómo quieres manejar las imágenes?")
+        print("1. Embebidas en HTML (base64) - Archivo 100% autónomo, más pesado")
+        print("2. Enlaces relativos - Archivo más liviano, requiere carpeta completa")
+
+        while True:
+            choice = input("Elige opción (1 o 2): ").strip()
+            if choice == "1":
+                embed_images = True
+                break
+            elif choice == "2":
+                embed_images = False
+                break
+            else:
+                print("Por favor, elige 1 o 2")
+
     # Extraer slides
     slides = extract_slides(markdown_content)
 
@@ -322,13 +351,13 @@ def generate_standalone_html(presentation_name, output_file=None):
 
             # Añadir imagen de fondo si existe
             if slide_data['background']:
-                bg_data = get_background_image_base64(slide_data['background'], presentation_path)
+                bg_data = get_background_image_path(slide_data['background'], presentation_path, embed_images)
                 slide_html += f' data-background-image="{bg_data}" data-background-size="cover" data-background-position="center"'
 
             slide_html += '>'
 
             # Procesar contenido
-            content_html = process_markdown_content(slide_data['content'], presentation_path)
+            content_html = process_markdown_content(slide_data['content'], presentation_path, embed_images)
             slide_html += content_html
 
             # Añadir notas si existen
@@ -353,6 +382,12 @@ def generate_standalone_html(presentation_name, output_file=None):
         'transitionSpeed': metadata.get('transitionSpeed', 'default'),
         'theme': metadata.get('theme', 'white')
     }
+
+    # Mostrar información sobre el tipo de archivo generado
+    if embed_images:
+        print(f"📦 Generando HTML con imágenes embebidas (archivo autónomo)")
+    else:
+        print(f"🔗 Generando HTML con enlaces relativos (requiere carpeta completa)")
 
     # Generar HTML completo
     html_template = f"""<!DOCTYPE html>
@@ -498,13 +533,27 @@ def generate_standalone_html(presentation_name, output_file=None):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python export_standalone.py <presentation_name> [output_file]")
+        print("Usage: python export_standalone.py <presentation_name> [output_file] [--embed|--link]")
         print("Example: python export_standalone.py refactoring-cultural")
+        print("Example: python export_standalone.py refactoring-cultural myfile.html --embed")
         print("By default, generates 'index.html' in the presentation folder")
+        print("Options:")
+        print("  --embed  Embed images as base64 (autonomous file)")
+        print("  --link   Use relative links to images (smaller file)")
         sys.exit(1)
 
     presentation_name = sys.argv[1]
-    output_file = sys.argv[2] if len(sys.argv) > 2 else None
+    output_file = None
+    embed_images = None
 
-    success = generate_standalone_html(presentation_name, output_file)
+    # Procesar argumentos
+    for arg in sys.argv[2:]:
+        if arg == "--embed":
+            embed_images = True
+        elif arg == "--link":
+            embed_images = False
+        elif not arg.startswith("--"):
+            output_file = arg
+
+    success = generate_standalone_html(presentation_name, output_file, embed_images)
     sys.exit(0 if success else 1)
