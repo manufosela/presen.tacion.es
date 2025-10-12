@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>equipazgo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="../reveal.js/dist/theme/simple.css">
+    <style>
+        :root {
+            --heading1-color: #000000;
+            --heading2-color: #000000;
+            --heading3-color: #FFB6C1;
+            --heading-fontsize: 4.2rem;
+        }
+        body {
+            font-family: Lato, sans-serif;
+            font-size: 32px;
+            background-color: #FFB6C1;
+        }
+        .reveal {
+            font-family: Lato, sans-serif;
+        }
+        .reveal h1 {
+            color: #000000 !important;
+            font-size: 4.2rem !important;
+            font-family: Lato, sans-serif;
+        }
+        .reveal h2 {
+            color: #000000 !important;
+            font-size: calc(4.2rem * 0.85) !important;
+            font-family: Lato, sans-serif;
+        }
+        .reveal h3 {
+            color: #FFB6C1 !important;
+            font-size: calc(4.2rem * 0.7) !important;
+            font-family: Lato, sans-serif;
+        }
+        .reveal .slides,
+        .reveal .slides section {
+            background: transparent !important;
+            color: #000000;
+        }
+
+        /* Columnas */
+        .columns {
+            display: flex;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+        .columns > div {
+            flex: 1 1 0;
+            min-width: 0;
+            padding: 0 1rem;
+        }
+
+        /* Grid */
+        .grid-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .grid-row {
+            display: flex;
+            gap: 2rem;
+        }
+        .grid-cell {
+            flex: 1 1 0;
+            min-width: 0;
+            padding: 1rem;
+            background: #f5f5f5;
+            border-radius: 0.5rem;
+            border: 1px solid #e0e0e0;
+        }
+
+        /* Slides invertidas */
+        .reveal .slides section[data-inverted="true"] h1,
+        .reveal .slides section[data-inverted="true"] h2,
+        .reveal .slides section[data-inverted="true"] h3,
+        .reveal .slides section[data-inverted="true"] p,
+        .reveal .slides section[data-inverted="true"] li,
+        .reveal .slides section[data-inverted="true"] strong {
+            color: #FFB6C1 !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+<section data-inverted="true" data-background-color="#000000">
+# Equipazgo
+
+## Liderazgo sin egos
+<aside class="notes">Presentación sobre el concepto de equipazgo: liderazgo concurrente sin egos.</aside></section>
+<section >
+## Mánu Fosela
+
+<div class="columns">
+<div data-markdown="%21%5BM%C3%A1nu%20Fosela%5D%28images/manufosela.png%29"></div>
+<div data-markdown="Developer%20de%20base%2C%20l%C3%ADder%20por%20accidente...%20y%20por%20vocaci%C3%B3n.%0A%0AMe%20di%20cuenta%20de%20que%20no%20quer%C3%ADa%20ser%20jefe%20de%20nadie%2C%20pero%20s%C3%AD%20quer%C3%ADa%20acompa%C3%B1ar%2C%20influir%2C%20cuidar.%0A%0ADe%20ah%C3%AD%20naci%C3%B3%20mi%20manera%20de%20ver%20el%20liderazgo%3A%20%2A%2Adesde%20el%20afecto%2A%2A."></div>
+</div>
+<aside class="notes">Presentación personal de Mánu Fosela, autor del concepto de liderazgo afectivo y equipazgo.</aside></section>
+<section>
+<section >
+## Sobre el liderazgo
+<aside class="notes">“¿Alguna vez habéis trabajado con un jefe que dirigía, pero no lideraba?”
+“¿Alguna vez os habéis sentido solos liderando?”
+Breve pausa. Si hay manos levantadas o alguien asiente, invítalos a compartir.
+Si no, rematas tú:
+“Vivimos en una sociedad donde quienes nos dirigen no nos lideran. Y quienes lideran, muchas veces lo hacen desde el ego”</aside></section>
+<section data-inverted="true" data-background-color="#000000">
+El modelo del líder solitario ha fracasado.
+</section>
+</section>
+<section>
+<section >
+## ¿Qué es el equipazgo?
+<aside class="notes">Cuando trabajamos en equipo como developers, ¿cada uno hace lo suyo o nos coordinamos?
+¿Qué pasa si alguien falta? ¿Su trabajo se queda sin hacer?
+¿La idea del equipo es que cada uno tenga su parcela, o el código es de todos y seguimos unas reglas comunes?
+
+“En un equipo técnico, si alguien deja su parte sin documentar, sin test, o sin explicar, ¿qué ocurre?”
+“¿Y si alguien decide hacer las cosas ‘a su manera’, sin seguir las convenciones del equipo?”
+“¿No genera más problemas que beneficios?”
+
+“Igual que en el código tenemos convenciones, estándares y code reviews, en el liderazgo necesitamos lo mismo: coherencia, cuidado mutuo y propósito compartido.”
+“El liderazgo tradicional pone a una persona sola decidiendo, enfrentada a todo… como si un solo developer pudiera llevar todo el backend, el frontend, los tests, los despliegues y además... ¡hacerlo perfecto!”
+“Eso no escala. Nunca lo ha hecho. Por eso nace el equipazgo.”
+“Equipazgo no es liderazgo compartido. Es liderazgo concurrente. Donde no hay parcelas, hay propósito común.”
+“Donde no hay egos, hay generosidad directiva. Donde no hay jefes, hay referentes que se apoyan y se cubren.”
+Analogía:
+“Como dos padres que lideran una familia: sin competir, repartiéndose tareas según fortalezas, y poniendo siempre por delante a ‘los hijos’.”</aside></section>
+<section >
+¿Conocéis algún ejemplo de esto en vuestra empresa o entorno?
+</section>
+</section>
+<section>
+<section >
+## Obstáculos reales al liderazgo sin ego
+</section>
+<section >
+### ¿Qué creeis que frena el liderazgo en vuestras empresas?
+<aside class="notes">“Los egos que confrontan en lugar de colaborar.”
+“La jerarquía mal entendida que impone en vez de guiar.”
+“El miedo a perder poder.”</aside></section>
+<section data-inverted="true" data-background-color="#000000">
+### Si no te gustan las personas, no lideres
+</section>
+</section>
+<section>
+<section >
+## Claves de un equipazgo
+</section>
+<section >
+### ¿Qué cualidades creéis que deben tener quienes lideran juntos?
+</section>
+<section >
+### Mis claves de equipazgo
+
+- **Afecto genuino**
+- **Coherencia**
+- **Humildad**
+- **Escucha Activa**
+<aside class="notes">Las cuatro claves fundamentales para un equipazgo efectivo.</aside></section>
+</section>
+<section >
+## Debate
+<aside class="notes">¿Qué barreras encontráis para aplicar el equipazgo?
+¿Creéis que los líderes actuales están preparados para liderar desde la generosidad?
+¿Qué pasaría si quitáramos los egos de las salas de dirección?
+¿Cómo podríamos generar afecto genuino entre líderes hoy?
+¿Habéis vivido la “soledad del liderazgo”? ¿Cómo la gestionasteis?</aside></section>
+<section data-inverted="true" data-background-color="#000000">
+**"Liderar una empresa es dirigirla teniendo en cuenta las emociones de las personas que la conforman. Y para eso hay que liderar desde el afecto."**
+</section>
+<section >
+## GRANCIAS
+
+![Grancias](images/grancias.png)
+</section>
+<section >
+presen.tacion.es/equipazgo
+
+<div class="columns">
+<div data-markdown="%21%5BM%C3%A1nu%20Fosela%5D%28images/manufosela.png%29%0A%0A%2A%2A%40manufosela%2A%2A%0A%0Amanufosela.es"></div>
+<div data-markdown="%21%5BLiderazgo%20Afectivo%5D%28images/liderazgo_afectivo.jpg%29%0A%0A%2A%2Asavvily.es%2A%2A"></div>
+</div>
+</section>
+        </div>
+    </div>
+
+    <script src="../reveal.js/dist/reveal.js"></script>
+    <script src="../reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="../reveal.js/plugin/notes/notes.js"></script>
+    <script src="../reveal.js/marked.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            controls: true,
+            progress: true,
+            center: true,
+            transition: 'fade',
+            transitionSpeed: 'slow',
+            plugins: [ RevealMarkdown, RevealNotes ],
+            markdown: {
+                smartypants: true,
+                gfm: true
+            }
+        });
+
+        // Procesar markdown en columnas y grids
+        document.querySelectorAll('.columns > div').forEach(cell => {
+            if (cell.hasAttribute('data-markdown')) {
+                const md = decodeURIComponent(cell.getAttribute('data-markdown'));
+                cell.innerHTML = marked.parse(md);
+            }
+        });
+
+        document.querySelectorAll('.grid-cell').forEach(cell => {
+            if (cell.hasAttribute('data-markdown')) {
+                const md = decodeURIComponent(cell.getAttribute('data-markdown'));
+                cell.innerHTML = marked.parse(md);
+            }
+        });
+    </script>
+</body>
+</html>

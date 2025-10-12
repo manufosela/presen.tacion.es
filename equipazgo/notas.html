@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notas: equipazgo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #000000;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .note-card {
+            background: white;
+            border: 2px solid #000000;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            break-inside: avoid;
+            page-break-inside: avoid;
+            height: 280px; /* Tamaño tarjeta postal ~A6 */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .note-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #000000;
+        }
+
+        .note-number {
+            background: #000000;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            padding: 6px 12px;
+            border-radius: 4px;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .note-title {
+            flex: 1;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #000000;
+            line-height: 1.3;
+        }
+
+        .note-content {
+            flex: 1;
+            color: #000000;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            overflow: auto;
+        }
+
+        .note-content strong {
+            color: #000000;
+        }
+
+        /* Estilos de impresión - Tamaño A6 (una tarjeta por página) */
+        @page {
+            size: A6;
+            margin: 10mm;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+            }
+
+            .container {
+                max-width: 100%;
+                margin: 0;
+            }
+
+            h1 {
+                display: none; /* Ocultar título en impresión */
+            }
+
+            .notes-grid {
+                display: block;
+                margin: 0;
+                padding: 0;
+            }
+
+            .note-card {
+                width: 128mm; /* A6 width - margins */
+                height: 85mm; /* A6 height - margins */
+                page-break-after: always;
+                page-break-inside: avoid;
+                break-inside: avoid;
+                box-shadow: none;
+                border: none;
+                margin: 0;
+                padding: 8mm;
+                border-radius: 0;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .note-card:last-child {
+                page-break-after: auto;
+            }
+
+            .note-header {
+                gap: 8px;
+                margin-bottom: 8px;
+                padding-bottom: 8px;
+                flex-shrink: 0;
+            }
+
+            .note-number {
+                font-size: 0.9rem;
+                padding: 4px 8px;
+                min-width: 40px;
+            }
+
+            .note-title {
+                font-size: 1rem;
+                line-height: 1.2;
+            }
+
+            .note-content {
+                font-size: 0.85rem;
+                line-height: 1.4;
+                overflow: hidden;
+            }
+        }
+
+        .print-info {
+            text-align: center;
+            color: #666;
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        @media print {
+            .print-info {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Notas: equipazgo</h1>
+
+        <div class="notes-grid">
+
+        <div class="note-card">
+            <div class="note-header">
+                <div class="note-number">#1</div>
+                <div class="note-title">Equipazgo</div>
+            </div>
+            <div class="note-content">
+                Presentación sobre el concepto de equipazgo: liderazgo concurrente sin egos.
+            </div>
+        </div>
+        
+
+        <div class="note-card">
+            <div class="note-header">
+                <div class="note-number">#2</div>
+                <div class="note-title">Mánu Fosela</div>
+            </div>
+            <div class="note-content">
+                Presentación personal de Mánu Fosela, autor del concepto de liderazgo afectivo y equipazgo.
+            </div>
+        </div>
+        
+
+        <div class="note-card">
+            <div class="note-header">
+                <div class="note-number">#3</div>
+                <div class="note-title">Sobre el liderazgo</div>
+            </div>
+            <div class="note-content">
+                - ¿Alguna vez habéis trabajado con un jefe que dirigía, pero no lideraba?<br>- ¿Alguna vez os habéis sentido solos liderando?<br><br>Vivimos en una sociedad donde quienes nos dirigen no nos lideran. Y quienes lideran, muchas veces lo hacen desde el ego
+            </div>
+        </div>
+        
+
+        <div class="note-card">
+            <div class="note-header">
+                <div class="note-number">#4</div>
+                <div class="note-title">¿Qué es el equipazgo?</div>
+            </div>
+            <div class="note-content">
+                - Cuando trabajamos en equipo como developers, ¿cada uno hace lo suyo o nos coordinamos?<br>- ¿Qué pasa si alguien falta? ¿Su trabajo se queda sin hacer?<br>- ¿La idea del equipo es que cada uno tenga su parcela, o el código es de todos y seguimos unas reglas comunes?<br><br>- En un equipo técnico, si alguien deja su parte sin documentar, sin test, o sin explicar, ¿qué ocurre?<br>- ¿Y si alguien decide hacer las cosas ‘a su manera’, sin seguir las convenciones del equipo?<br>- ¿No genera más problemas que beneficios?<br><br>Igual que en el código tenemos convenciones, estándares y code reviews, en el liderazgo necesitamos lo mismo: coherencia, cuidado mutuo y propósito compartido.<br><br>El liderazgo tradicional pone a una persona sola decidiendo, enfrentada a todo… como si un solo developer pudiera llevar todo el backend, el frontend, los tests, los despliegues y además... ¡hacerlo perfecto!<br><br>Eso no escala. Nunca lo ha hecho. Por eso nace el equipazgo.<br><br>Equipazgo no es liderazgo compartido. Es liderazgo concurrente. Donde no hay parcelas, hay propósito común.<br><br>Donde no hay egos, hay generosidad directiva. Donde no hay jefes, hay referentes que se apoyan y se cubren.<br><br>Analogía:<br>Como dos padres que lideran una familia: sin competir, repartiéndose tareas según fortalezas, y poniendo siempre por delante a ‘los hijos’.
+            </div>
+        </div>
+        
+
+        <div class="note-card">
+            <div class="note-header">
+                <div class="note-number">#4.1</div>
+                <div class="note-title">¿Qué creeis que frena el liderazgo en vuestras empresas?</div>
+            </div>
+            <div class="note-content">
+                Los egos que confrontan en lugar de colaborar.<br>La jerarquía mal entendida que impone en vez de guiar.<br>El miedo a perder poder.
+            </div>
+        </div>
+        
+
+        <div class="note-card">
+            <div class="note-header">
+                <div class="note-number">#4.2</div>
+                <div class="note-title">Mis claves de equipazgo</div>
+            </div>
+            <div class="note-content">
+                Las cuatro claves fundamentales para un equipazgo efectivo.
+            </div>
+        </div>
+        
+
+        <div class="note-card">
+            <div class="note-header">
+                <div class="note-number">#5</div>
+                <div class="note-title">Debate</div>
+            </div>
+            <div class="note-content">
+                ¿Qué barreras encontráis para aplicar el equipazgo?<br>¿Creéis que los líderes actuales están preparados para liderar desde la generosidad?<br>¿Qué pasaría si quitáramos los egos de las salas de dirección?<br>¿Cómo podríamos generar afecto genuino entre líderes hoy?<br>¿Habéis vivido la soledad del liderazgo? ¿Cómo la gestionasteis?
+            </div>
+        </div>
+        
+        </div>
+
+        <div class="print-info">
+            <p><strong>💡 Consejo de impresión:</strong></p>
+            <p>Usa Ctrl+P (Cmd+P en Mac) para imprimir. Recomendado: 2 tarjetas por página.</p>
+            <p>Total de notas: 7</p>
+        </div>
+    </div>
+</body>
+</html>
