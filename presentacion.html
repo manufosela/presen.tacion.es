@@ -1052,7 +1052,7 @@
       /**
        * Procesa el contenido markdown y crea las diapositivas y subdiapositivas
        */
-      function processSlides(markdownContent, presentationName) {
+      function processSlides(markdownContent, presentationName, metadata) {
         const slidesContainer = document.querySelector(
           SELECTORS.SLIDES_CONTAINER
         );
@@ -1067,7 +1067,8 @@
           if (subSlidesArr.length === 1) {
             const slideElement = createSlideElement(
               subSlidesArr[0],
-              presentationName
+              presentationName,
+              metadata
             );
             slidesContainer.appendChild(slideElement);
           } else {
@@ -1076,7 +1077,8 @@
             subSlidesArr.forEach((subSlideContent) => {
               const subSection = createSlideElement(
                 subSlideContent,
-                presentationName
+                presentationName,
+                metadata
               );
               section.appendChild(subSection);
             });
@@ -1088,8 +1090,8 @@
       /**
        * Crea un elemento de diapositiva
        */
-      function createSlideElement(slideContent, presentationName) {
-        const { mainContent, notes, backgroundImage, iframeUrl } =
+      function createSlideElement(slideContent, presentationName, metadata) {
+        const { mainContent, notes, backgroundImage, iframeUrl, isInverted } =
           extractSlideContent(slideContent);
 
         if (iframeUrl) {
@@ -1101,6 +1103,15 @@
         );
 
         const section = document.createElement("section");
+
+        // Aplicar colores invertidos si está marcado
+        if (isInverted && metadata?.colors) {
+          const bgColor = metadata.colors['text-color'] || '#000000';
+          const textColor = metadata.colors['background'] || '#FFFFFF';
+          section.setAttribute("data-background-color", bgColor);
+          section.setAttribute("data-inverted", "true");
+          section.setAttribute("data-inverted-text-color", textColor);
+        }
 
         // Añadir imagen de fondo personalizada si existe
         if (backgroundImage) {
@@ -1203,8 +1214,16 @@
         const iframeMatch = slideContent.match(/<!-- IFRAME: (.+?) -->/);
         const iframeUrl = iframeMatch ? iframeMatch[1].trim() : null;
 
+        // Buscar marcador de colores invertidos
+        const invertedMatch = slideContent.match(/<!-- INVERTED -->/);
+        const isInverted = invertedMatch !== null;
+
         if (iframeUrl) {
           console.log(`🔍 Iframe detectado: ${iframeUrl}`);
+        }
+
+        if (isInverted) {
+          console.log(`🎨 Slide con colores invertidos`);
         }
 
         // Buscar notas
@@ -1224,6 +1243,9 @@
         if (iframeMatch) {
           mainContent = mainContent.replace(/<!-- IFRAME: .+? -->/, "").trim();
         }
+        if (invertedMatch) {
+          mainContent = mainContent.replace(/<!-- INVERTED -->/, "").trim();
+        }
 
         if (notesMatch) {
           mainContent = mainContent.split("<!-- NOTES -->")[0].trim();
@@ -1231,6 +1253,9 @@
             mainContent = mainContent
               .replace(/<!-- BACKGROUND: [^\s]+ -->/, "")
               .trim();
+          }
+          if (invertedMatch) {
+            mainContent = mainContent.replace(/<!-- INVERTED -->/, "").trim();
           }
           notes = notesMatch[1].trim();
         }
@@ -1240,6 +1265,7 @@
           notes: notes,
           backgroundImage: backgroundImage,
           iframeUrl: iframeUrl,
+          isInverted: isInverted,
         };
       }
 
@@ -1370,15 +1396,15 @@ ${processedRows.join("\n")}
       /**
        * Procesa markdown en elementos especiales después de la inicialización
        */
-      function processSpecialElements() {
-        processGridCells();
-        processColumnCells();
+      function processSpecialElements(presentationName) {
+        processGridCells(presentationName);
+        processColumnCells(presentationName);
       }
 
       /**
        * Procesa markdown en celdas de grid
        */
-      function processGridCells() {
+      function processGridCells(presentationName) {
         const gridCells = document.querySelectorAll(
           ".grid-cell[data-markdown]"
         );
@@ -1386,14 +1412,16 @@ ${processedRows.join("\n")}
           const md = decodeURIComponent(
             cell.getAttribute("data-markdown") || ""
           );
-          cell.innerHTML = marked.parse(md);
+          let html = marked.parse(md);
+          html = processImagePaths(html, presentationName);
+          cell.innerHTML = html;
         });
       }
 
       /**
        * Procesa markdown en celdas de columnas
        */
-      function processColumnCells() {
+      function processColumnCells(presentationName) {
         const columnCells = document.querySelectorAll(
           ".columns div[data-markdown]"
         );
@@ -1401,7 +1429,9 @@ ${processedRows.join("\n")}
           const md = decodeURIComponent(
             cell.getAttribute("data-markdown") || ""
           );
-          cell.innerHTML = marked.parse(md);
+          let html = marked.parse(md);
+          html = processImagePaths(html, presentationName);
+          cell.innerHTML = html;
         });
       }
 
@@ -1434,7 +1464,7 @@ ${processedRows.join("\n")}
           const deck = new Reveal(revealConfig);
 
           // Procesar diapositivas
-          processSlides(markdownContent, presentationName);
+          processSlides(markdownContent, presentationName, metadata);
 
           // Configurar eventos y finalizar
           setupRevealEvents(deck, metadata);
@@ -1447,7 +1477,7 @@ ${processedRows.join("\n")}
           });
 
           // Procesar elementos especiales
-          processSpecialElements();
+          processSpecialElements(presentationName);
         } catch (error) {
           console.error("Error al cargar la presentación:", error);
 
@@ -1556,12 +1586,29 @@ ${processedRows.join("\n")}
       }
 
       /**
+       * Aplica estilos a slides invertidas
+       */
+      function applyInvertedSlidesStyles() {
+        const invertedSlides = document.querySelectorAll('.reveal .slides section[data-inverted="true"]');
+        invertedSlides.forEach((slide) => {
+          const textColor = slide.getAttribute('data-inverted-text-color');
+          if (textColor) {
+            // Aplicar color de texto a todos los elementos
+            slide.querySelectorAll('h1, h2, h3, h4, h5, h6, p, li, a, span, strong, em').forEach((el) => {
+              el.style.setProperty('color', textColor, 'important');
+            });
+          }
+        });
+      }
+
+      /**
        * Configura eventos de Reveal.js
        */
       function setupRevealEvents(deck, metadata) {
         deck.addEventListener("ready", () => {
           setTimeout(() => {
             setupHeadingStyles(metadata);
+            applyInvertedSlidesStyles();
             // Aplicar estilos nuevamente después de un breve retraso
             setTimeout(() => {
               const fontSize = metadata.fontSize || DEFAULT_FONT_SIZE;
@@ -1569,6 +1616,7 @@ ${processedRows.join("\n")}
                 metadata.fonts?.["heading-fontsize"] || "3rem";
               const colors = getHeadingColors(metadata);
               applyHeadingStyles(colors, fontSize, headingFontSize);
+              applyInvertedSlidesStyles();
             }, 100);
           }, 100);
         });

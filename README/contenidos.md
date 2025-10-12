@@ -100,6 +100,28 @@ Notas para el presentador...
 - `<!-- SUBSLIDE -->`: Marca el inicio de una nueva subdiapositiva
 - `<!-- NOTES -->`: Marca el inicio de las notas del presentador (solo visibles en la vista del presentador)
 - `<!-- BACKGROUND: ruta-imagen -->`: Aplica una imagen de fondo específica a la diapositiva
+- `<!-- INVERTED -->`: Invierte los colores de fondo y texto de la diapositiva
+
+<!-- SLIDE -->
+
+#### Slides con Colores Invertidos
+
+Usa `<!-- INVERTED -->` para invertir colores en slides específicas:
+
+```markdown
+<!-- SLIDE -->
+<!-- INVERTED -->
+
+**Frase impactante**
+
+Colores invertidos para destacar
+```
+
+**Cómo funciona:**
+- Fondo: usa `text-color` del YAML
+- Texto: usa `background` del YAML
+
+**Ideal para:** frases destacadas, transiciones, slides de cierre
 
 <!-- SLIDE -->
 

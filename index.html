@@ -1,369 +1,134 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Presentaciones</title>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css"
-    />
-    <style>
-      .local-presentation {
-        margin-top: 2rem;
-        padding: 1rem;
-        border: 1px solid var(--primary);
-        border-radius: 0.5rem;
-      }
-      .local-presentation h2 {
-        margin-top: 0;
-      }
-      .info-message {
-        margin: 1rem 0;
-        padding: 1rem;
-        background-color: var(--primary);
-        border-radius: 0.5rem;
-        font-size: 0.9rem;
-        color: white;
-      }
-      .info-message strong {
-        color: #000000;
-      }
-      .info-message-text {
-        color: white;
-      }
-      #submitButton {
-        display: none;
-      }
-      .folder-selected #submitButton {
-        display: block;
-      }
-
-      /* Modal styles */
-      .modal {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-      }
-
-      .modal-content {
-        background-color: #fefefe;
-        margin: 3% auto;
-        padding: 20px;
-        border-radius: 8px;
-        width: 90%;
-        max-width: 800px;
-        max-height: 85vh;
-        overflow-y: auto;
-      }
-
-      .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
-        line-height: 1;
-      }
-
-      .close:hover,
-      .close:focus {
-        color: black;
-      }
-
-      .info-icon {
-        display: inline-block;
-        margin-left: 8px;
-        width: 20px;
-        height: 20px;
-        background-color: #007bff;
-        color: white;
-        border-radius: 50%;
-        text-align: center;
-        line-height: 20px;
-        font-size: 14px;
-        cursor: pointer;
-        vertical-align: middle;
-      }
-
-      .info-icon:hover {
-        background-color: #0056b3;
-      }
-
-      .modal h2 {
-        color: #000;
-        margin-top: 0;
-        margin-bottom: 1rem;
-      }
-
-      .modal h3 {
-        color: #000;
-        margin-top: 1.5rem;
-        margin-bottom: 0.5rem;
-      }
-
-      .modal h3:first-child {
-        margin-top: 0;
-      }
-
-      .modal h4 {
-        color: #000;
-        margin-top: 1rem;
-        margin-bottom: 0.5rem;
-      }
-
-      .modal code {
-        background-color: #f5f5f5;
-        padding: 2px 4px;
-        border-radius: 3px;
-        font-family: monospace;
-      }
-
-      .modal pre {
-        background-color: #f5f5f5;
-        padding: 12px;
-        border-radius: 4px;
-        overflow-x: auto;
-        margin: 8px 0;
-      }
-    </style>
-  </head>
-  <body>
-    <main class="container">
-      <h1>Presentaciones</h1>
-
-      <div class="local-presentation">
-        <h2>Cargar Presentación Local</h2>
-        <div class="info-message">
-          <p class="info-message-text">
-            ⚠️ <strong>Importante:</strong> Los archivos se procesan localmente
-            en tu navegador y no se suben a ningún servidor. La presentación se
-            mostrará usando los archivos de tu carpeta local.
-          </p>
-        </div>
-        <form id="localForm">
-          <label for="localFolder">
-            Selecciona la carpeta de la presentación
-            <span
-              class="info-icon"
-              id="infoIcon"
-              title="Información sobre la estructura"
-              >i</span
-            >
-            <input
-              type="file"
-              id="localFolder"
-              webkitdirectory
-              directory
-              multiple
-            />
-          </label>
-          <button type="submit" id="submitButton">Cargar Presentación</button>
-        </form>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Presentaciones</title>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
+  <style>
+    .local-presentation {
+      margin-top: 2rem;
+      padding: 1rem;
+      border: 1px solid var(--primary);
+      border-radius: 0.5rem;
+    }
+    .local-presentation h2 {
+      margin-top: 0;
+    }
+    .info-message {
+      margin: 1rem 0;
+      padding: 1rem;
+      background-color: var(--primary);
+      border-radius: 0.5rem;
+      font-size: 0.9rem;
+      color: white;
+    }
+    .info-message strong {
+      color: #000000;
+    }
+    .info-message-text {
+      color: white;
+    }
+    #submitButton {
+      display: none;
+    }
+    .folder-selected #submitButton {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <h1>Presentaciones</h1>
+    
+    <div class="local-presentation">
+      <h2>Cargar Presentación Local</h2>
+      <div class="info-message">
+        <p class="info-message-text">⚠️ <strong>Importante:</strong> Los archivos se procesan localmente en tu navegador y no se suben a ningún servidor. La presentación se mostrará usando los archivos de tu carpeta local.</p>
       </div>
-
-      <h2>Presentaciones Disponibles</h2>
-      <ul id="presentationsList">
-        <li><a href="presentacion.html?presentacion=README">README</a></li>
-        <li>
-          <a href="presentacion.html?presentacion=mi-presentacion"
-            >mi-presentacion</a
-          >
-        </li>
-        <li>
-          <a href="/refactoring-cultural/index.html">refactoring-cultural</a>
-        </li>
-      </ul>
-    </main>
-
-    <!-- Modal de información -->
-    <div id="infoModal" class="modal">
-      <div class="modal-content">
-        <span class="close" id="closeModal">&times;</span>
-        <h2>📁 Estructura de la Presentación</h2>
-
-        <h3>🗂️ Organización de carpetas</h3>
-        <p>Tu carpeta debe tener esta estructura:</p>
-        <pre>
-mi-presentacion/
-├── contenidos.md      # Archivo principal (cualquier nombre .md)
-├── images/           # Carpeta para imágenes (opcional)
-│   ├── foto1.webp
-│   └── fondo.png
-└── template.webp     # Imagen de fondo global (opcional)</pre
-        >
-
-        <h3>📝 Formato del archivo .md</h3>
-        <p>
-          El archivo markdown debe incluir <strong>metadatos YAML</strong> y
-          <strong>comentarios especiales</strong>:
-        </p>
-
-        <h4>Metadatos YAML (al inicio del archivo):</h4>
-        <pre>
----
-fontSize: "30px"
-colors:
-  main-color: "#E91E63"
-  background: "#FFFFFF"
-theme: "white"
-transition: "fade"
-transitionSpeed: "default"
----</pre
-        >
-
-        <h4>Comentarios para organizar diapositivas:</h4>
-        <pre>
-&lt;!-- SLIDE --&gt;
-# Título de la diapositiva
-
-Contenido de la diapositiva...
-
-&lt;!-- NOTES --&gt;
-Notas del presentador (solo visibles en vista presentador)
-
-&lt;!-- SUBSLIDE --&gt;
-### Subdiapositiva
-
-Contenido de la subdiapositiva...
-
-&lt;!-- BACKGROUND: images/fondo.png --&gt;
-Diapositiva con imagen de fondo específica
-
-&lt;!-- IFRAME: https://ejemplo.com --&gt;
-Slide con iframe a pantalla completa</pre
-        >
-
-        <h3>🎨 Características especiales</h3>
-        <ul>
-          <li>
-            <strong>Columnas:</strong> Usa <code>$COLUMNS$</code>,
-            <code>$COL$</code>, <code>$END$</code>
-          </li>
-          <li>
-            <strong>Grid:</strong> Usa <code>$GRID$</code>, <code>$ROW$</code>,
-            <code>$CELL$</code>, <code>$END$</code>
-          </li>
-          <li>
-            <strong>Imágenes:</strong>
-            <code>![descripción](images/imagen.png)</code>
-          </li>
-          <li>
-            <strong>Iframe:</strong>
-            <code>&lt;!-- IFRAME: https://url --&gt;</code> (ocupa toda la
-            pantalla)
-          </li>
-          <li>
-            <strong>Transiciones:</strong> Configurables en YAML (fade, slide,
-            zoom, etc.)
-          </li>
-        </ul>
-
-        <h3>🚀 Navegación</h3>
-        <p>Una vez cargada la presentación:</p>
-        <ul>
-          <li>
-            <strong>← → (flechas)</strong> o <strong>Espacio:</strong> Navegar
-            entre slides
-          </li>
-          <li><strong>↑ ↓ (flechas):</strong> Navegar subslides</li>
-          <li><strong>S:</strong> Vista del presentador</li>
-          <li><strong>F:</strong> Pantalla completa</li>
-          <li><strong>Esc:</strong> Vista general</li>
-        </ul>
-      </div>
+      <form id="localForm">
+        <label for="localFolder">
+          Selecciona la carpeta de la presentación
+          <input type="file" id="localFolder" webkitdirectory directory multiple>
+        </label>
+        <button type="submit" id="submitButton">Cargar Presentación</button>
+      </form>
     </div>
-
-    <script>
-      // Manejar el modal de información
-      const infoIcon = document.getElementById("infoIcon");
-      const infoModal = document.getElementById("infoModal");
-      const closeModal = document.getElementById("closeModal");
-
-      infoIcon.addEventListener("click", (e) => {
-        e.preventDefault();
-        infoModal.style.display = "block";
-      });
-
-      closeModal.addEventListener("click", () => {
-        infoModal.style.display = "none";
-      });
-
-      window.addEventListener("click", (e) => {
-        if (e.target === infoModal) {
-          infoModal.style.display = "none";
+    
+    <h2>Presentaciones Disponibles</h2>
+    <ul id="presentationsList">
+      <li><a href="presentacion.html?presentacion=README">README</a></li>
+      <li><a href="presentacion.html?presentacion=equipazgo">equipazgo</a></li>
+      <li><a href="presentacion.html?presentacion=mi-presentacion">mi-presentacion</a></li>
+      <li><a href="presentacion.html?presentacion=refactoring-cultural">refactoring-cultural</a></li>
+    </ul>
+  </main>
+  
+  <script>
+    // Manejar el formulario de carga local
+    const form = document.getElementById("localForm");
+    const folderInput = document.getElementById("localFolder");
+    
+    folderInput.addEventListener("change", () => {
+      if (folderInput.files.length > 0) {
+        // Verificar si existe contenidos.md
+        let hasContents = false;
+        for (const file of folderInput.files) {
+          if (file.name === "contenidos.md") {
+            hasContents = true;
+            break;
+          }
         }
-      });
-
-      // Manejar el formulario de carga local
-      const form = document.getElementById("localForm");
-      const folderInput = document.getElementById("localFolder");
-
-      folderInput.addEventListener("change", () => {
-        if (folderInput.files.length > 0) {
-          // Verificar si existe al menos un archivo .md
-          let hasMarkdownFile = false;
-          for (const file of folderInput.files) {
-            if (file.name.endsWith(".md")) {
-              hasMarkdownFile = true;
-              break;
-            }
-          }
-
-          if (hasMarkdownFile) {
-            form.classList.add("folder-selected");
-          } else {
-            alert("La carpeta seleccionada no contiene ningún archivo .md");
-            folderInput.value = "";
-            form.classList.remove("folder-selected");
-          }
+        
+        if (hasContents) {
+          form.classList.add("folder-selected");
         } else {
+          alert("La carpeta seleccionada no contiene un archivo contenidos.md");
+          folderInput.value = "";
           form.classList.remove("folder-selected");
         }
-      });
-
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const files = folderInput.files;
-
-        if (files.length === 0) {
-          alert("Por favor, selecciona una carpeta");
-          return;
-        }
-
-        // Obtener el nombre de la carpeta seleccionada
-        const basePath = files[0].webkitRelativePath.split("/")[0];
-
-        // Guardar los archivos en sessionStorage
-        for (const file of files) {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            // Guardar la ruta relativa completa como clave
-            const relativePath = file.webkitRelativePath;
-            // Si es una imagen, usar readAsDataURL, si no, usar readAsText
-            if (file.type.startsWith("image/")) {
-              sessionStorage.setItem(`local_${relativePath}`, e.target.result);
-            } else {
-              sessionStorage.setItem(`local_${relativePath}`, e.target.result);
-            }
-            console.log("Guardado en sessionStorage:", `local_${relativePath}`);
-          };
-          // Usar readAsDataURL para imágenes y readAsText para el resto
+      } else {
+        form.classList.remove("folder-selected");
+      }
+    });
+    
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const files = folderInput.files;
+      
+      if (files.length === 0) {
+        alert("Por favor, selecciona una carpeta");
+        return;
+      }
+      
+      // Obtener el nombre de la carpeta seleccionada
+      const basePath = files[0].webkitRelativePath.split("/")[0];
+      
+      // Guardar los archivos en sessionStorage
+      for (const file of files) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          // Guardar la ruta relativa completa como clave
+          const relativePath = file.webkitRelativePath;
+          // Si es una imagen, usar readAsDataURL, si no, usar readAsText
           if (file.type.startsWith("image/")) {
-            reader.readAsDataURL(file);
+            sessionStorage.setItem(`local_${relativePath}`, e.target.result);
           } else {
-            reader.readAsText(file);
+            sessionStorage.setItem(`local_${relativePath}`, e.target.result);
           }
+          console.log("Guardado en sessionStorage:", `local_${relativePath}`);
+        };
+        // Usar readAsDataURL para imágenes y readAsText para el resto
+        if (file.type.startsWith("image/")) {
+          reader.readAsDataURL(file);
+        } else {
+          reader.readAsText(file);
         }
-
-        // Redirigir a la presentación
-        window.location.href = `presentacion.html?presentacion=local_${basePath}`;
-      });
-    </script>
-  </body>
+      }
+      
+      // Redirigir a la presentación
+      window.location.href = `presentacion.html?presentacion=local_${basePath}`;
+    });
+  </script>
+</body>
 </html>

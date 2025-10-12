@@ -64,6 +64,7 @@ Notas para el presentador...
 - `<!-- SUBSLIDE -->`: Marca el inicio de una subdiapositiva (navegación vertical)
 - `<!-- NOTES -->`: Marca el inicio de las notas del presentador (solo visibles en la vista del presentador)
 - `<!-- BACKGROUND: ruta-imagen -->`: Aplica una imagen de fondo específica a la diapositiva
+- `<!-- INVERTED -->`: Invierte los colores de fondo y texto de la diapositiva (usa `text-color` como fondo y `background` como color de texto)
 
 #### Imágenes de Fondo por Slide
 
@@ -144,6 +145,69 @@ mi-presentacion/
 - **Rendimiento**: Las imágenes se cargan automáticamente según el entorno (local/GitHub Pages)
 - **Tamaño recomendado**: 1920x1080 o proporción 16:9 para mejor visualización
 - **Optimización**: Usa formato `.webp` para mejor compresión sin pérdida de calidad
+
+#### Slides con Colores Invertidos
+
+Puedes invertir los colores de fondo y texto de slides específicas usando el marcador `<!-- INVERTED -->`. Esto es ideal para destacar frases impactantes o crear contraste visual en momentos clave de tu presentación.
+
+##### Cómo funciona
+
+El sistema toma los colores definidos en tu metadata YAML y los invierte:
+- **Fondo de la slide**: usa el color `text-color`
+- **Texto de la slide**: usa el color `background`
+
+##### Ejemplo de uso
+
+```markdown
+---
+fontSize: "32px"
+colors:
+  text-color: "#000000"      # Negro
+  background: "#FFB6C1"      # Rosa claro
+---
+
+<!-- SLIDE -->
+
+# Slide normal
+
+Fondo rosa, texto negro (colores por defecto)
+
+<!-- SLIDE -->
+<!-- INVERTED -->
+
+**Frase impactante con colores invertidos**
+
+Fondo negro, texto rosa (colores invertidos)
+
+<!-- SLIDE -->
+
+# Otra slide normal
+
+Vuelve a los colores por defecto
+```
+
+##### Casos de uso recomendados
+
+- **Frases destacadas**: Citas o mensajes clave que quieres resaltar
+- **Transiciones**: Crear impacto visual entre secciones
+- **Slides de cierre**: Llamadas a la acción o mensajes finales
+- **Contrastes temáticos**: Separar contenido positivo/negativo, antes/después, etc.
+
+##### Combinación con otras funcionalidades
+
+Puedes combinar `<!-- INVERTED -->` con otros marcadores:
+
+```markdown
+<!-- SLIDE -->
+<!-- INVERTED -->
+
+### Si no te gustan las personas, no lideres
+
+<!-- NOTES -->
+Nota sobre esta frase impactante con colores invertidos
+```
+
+**Nota**: Los colores invertidos son específicos de cada presentación según su configuración YAML, manteniendo la coherencia visual de tu diseño.
 
 #### Formato de Columnas
 
@@ -384,6 +448,281 @@ Para facilitar el desarrollo y ver los cambios en tiempo real al editar el archi
 1. Edita tu `contenidos.md` en la carpeta de la presentación.
 2. Deja abierto el navegador en `http://localhost:8000/presentacion.html?presentacion=local_mi-presentacion`.
 3. Cada vez que guardes, verás los cambios reflejados al instante.
+
+## Generar Presentación Standalone (Build)
+
+El sistema incluye un generador que crea una versión standalone de tu presentación en un único archivo HTML autónomo, ideal para compartir o publicar sin depender de `presentacion.html`.
+
+### ¿Qué hace el build?
+
+El comando de build genera un archivo `index.html` dentro de la carpeta de tu presentación que:
+- **Es completamente autónomo**: No depende de `presentacion.html`
+- **Usa Reveal.js local**: Referencias a `../reveal.js/` (no CDN)
+- **Mantiene imágenes externas**: Las imágenes permanecen en `images/` como archivos externos
+- **Incluye todos los estilos**: CSS inline basado en tu configuración YAML
+- **Soporta todas las funcionalidades**: columnas, grids, slides invertidas, imágenes de fondo, notas del presentador
+
+### Cómo usar el build
+
+```bash
+./build.sh nombre-presentacion
+```
+
+**Ejemplo:**
+```bash
+./build.sh equipazgo
+```
+
+Este comando:
+1. Lee el archivo `equipazgo/contenidos.md`
+2. Parsea los metadatos YAML y el contenido Markdown
+3. Procesa todos los marcadores especiales (SLIDE, SUBSLIDE, NOTES, INVERTED, COLUMNS, GRID, BACKGROUND)
+4. Genera `equipazgo/index.html` con todo integrado
+
+### Requisitos
+
+- **Python 3.x**
+- **PyYAML**: Instalar con `pip3 install pyyaml`
+- **Reveal.js local**: Debe estar en `reveal.js/` (ya incluido en el proyecto)
+
+### Estructura después del build
+
+```
+equipazgo/
+├── contenidos.md          # Fuente original
+├── index.html            # Presentación standalone generada
+└── images/               # Imágenes (externas, referenciadas por index.html)
+    ├── manufosela.png
+    └── grancias.png
+```
+
+### Abrir la presentación
+
+Después del build, puedes abrir la presentación de varias formas:
+
+**1. Directamente en el navegador:**
+```bash
+firefox equipazgo/index.html
+```
+
+**2. Servir con un servidor web simple:**
+```bash
+cd equipazgo
+python3 -m http.server 8080
+# Abre http://localhost:8080
+```
+
+**3. Subir a cualquier hosting estático:**
+- GitHub Pages
+- Netlify
+- Vercel
+- Servidor web propio
+
+### Ventajas del build
+
+- ✅ **Portabilidad**: Un solo archivo HTML + carpeta de imágenes
+- ✅ **Sin dependencias externas**: No necesita CDN ni conexión a internet
+- ✅ **Funciona offline**: Ideal para presentar sin conexión
+- ✅ **Fácil de compartir**: Solo envía la carpeta con el `index.html` e `images/`
+- ✅ **Control total**: Todos los estilos y configuración embebidos
+- ✅ **Rápido**: No depende de cargas externas
+
+### Cuándo usar el build
+
+**Usa el build cuando:**
+- Necesites compartir la presentación con otros
+- Vayas a presentar sin conexión a internet
+- Quieras publicar en hosting estático
+- Necesites una versión inmutable de la presentación
+
+**Usa el modo desarrollo cuando:**
+- Estés editando activamente el contenido
+- Quieras ver cambios en tiempo real
+- Necesites iterar rápidamente en el diseño
+
+### Funcionalidades soportadas
+
+El build procesa y genera correctamente:
+- ✅ Metadatos YAML (colores, fuentes, tema, transiciones)
+- ✅ Slides y subslides (`<!-- SLIDE -->`, `<!-- SUBSLIDE -->`)
+- ✅ Slides invertidas (`<!-- INVERTED -->`)
+- ✅ Imágenes de fondo por slide (`<!-- BACKGROUND: ruta -->`)
+- ✅ Notas del presentador (`<!-- NOTES -->`)
+- ✅ Columnas (`$COLUMNS$`, `$COL$`, `$END$`)
+- ✅ Grids (`$GRID$`, `$ROW$`, `$CELL$`, `$END$`)
+- ✅ Markdown completo (encabezados, listas, negritas, imágenes, etc.)
+
+### Ejemplo completo
+
+```bash
+# 1. Crear presentación
+mkdir mi-presentacion
+mkdir mi-presentacion/images
+
+# 2. Editar contenido
+nano mi-presentacion/contenidos.md
+
+# 3. Añadir imágenes
+cp foto.png mi-presentacion/images/
+
+# 4. Generar standalone
+./build.sh mi-presentacion
+
+# 5. Abrir en navegador
+firefox mi-presentacion/index.html
+
+# Output esperado:
+# 📦 Construyendo presentación: mi-presentacion
+#    ✓ Metadata parseada
+#    ✓ 5 slides procesadas
+#    ✓ Generado: mi-presentacion/index.html
+# ✅ Build completado exitosamente
+```
+
+## Generar Notas para Imprimir
+
+El sistema incluye un generador de notas que crea un documento HTML optimizado para imprimir en formato tarjeta postal, ideal para llevar tus notas del presentador en formato físico durante la presentación.
+
+### ¿Qué hace el generador de notas?
+
+El comando genera un archivo `notas.html` dentro de la carpeta de tu presentación que:
+- **Formato tarjeta postal**: Tamaño ~A6 (280px altura), perfecto para llevar en mano
+- **Información completa**: Número de slide, título extraído automáticamente y notas del presentador
+- **Colores de tu presentación**: Usa los colores definidos en tu YAML para mantener coherencia visual
+- **Optimizado para impresión**: Diseñado para imprimir 2 tarjetas por página
+- **Numeración inteligente**: Incluye subslides (ej: #1, #2, #4.1, #4.2)
+- **Solo slides con notas**: Genera tarjetas únicamente para las slides que tienen `<!-- NOTES -->`
+
+### Cómo usar el generador
+
+```bash
+./generate-notes.sh nombre-presentacion
+```
+
+**Ejemplo:**
+```bash
+./generate-notes.sh equipazgo
+```
+
+Este comando:
+1. Lee el archivo `equipazgo/contenidos.md`
+2. Extrae todas las slides que tienen notas (`<!-- NOTES -->`)
+3. Para cada slide, extrae el título automáticamente del contenido
+4. Genera `equipazgo/notas.html` con tarjetas listas para imprimir
+
+### Requisitos
+
+- **Python 3.x**
+- **PyYAML**: Instalar con `pip3 install pyyaml`
+
+### Estructura después de generar notas
+
+```
+equipazgo/
+├── contenidos.md          # Fuente original
+├── index.html            # Presentación standalone (si ejecutaste build)
+├── notas.html            # Notas para imprimir ✨ NUEVO
+└── images/               # Imágenes
+```
+
+### Cómo imprimir las notas
+
+**1. Abrir en navegador:**
+```bash
+firefox equipazgo/notas.html
+```
+
+**2. Imprimir (Ctrl+P / Cmd+P):**
+- **Recomendado**: Configurar impresión a "2 tarjetas por página"
+- **Orientación**: Vertical (portrait)
+- **Márgenes**: Normales o mínimos
+
+**3. Alternativa - Una tarjeta por página:**
+- Útil para tarjetas más grandes y legibles
+- Ideal si tienes muchas notas por slide
+
+### Características de las tarjetas
+
+Cada tarjeta incluye:
+
+```
+┌─────────────────────────────────┐
+│ #4.1  ¿Qué es el equipazgo?    │ ← Número y título
+├─────────────────────────────────┤
+│                                 │
+│ Cuando trabajamos en equipo    │
+│ como developers, ¿cada uno      │ ← Notas del presentador
+│ hace lo suyo o nos              │   formateadas
+│ coordinamos?                    │
+│                                 │
+│ ...                             │
+└─────────────────────────────────┘
+```
+
+### Ventajas de usar notas impresas
+
+- ✅ **No dependes de dispositivos**: No necesitas laptop o tablet durante la presentación
+- ✅ **Fácil consulta rápida**: Mira tus notas sin interrumpir el flujo visual
+- ✅ **Backup confiable**: Si falla la tecnología, tus notas siguen ahí
+- ✅ **Profesional**: Llevar tarjetas físicas se ve más natural que mirar un dispositivo
+- ✅ **Numeradas**: Sabes exactamente en qué slide estás (#1, #2.1, etc.)
+- ✅ **Portátiles**: Formato tarjeta postal fácil de llevar y consultar
+
+### Ejemplo de uso completo
+
+```bash
+# 1. Crear presentación con notas
+nano equipazgo/contenidos.md
+
+# Añadir notas a tus slides:
+# <!-- NOTES -->
+# Puntos clave a mencionar durante la presentación...
+
+# 2. Generar notas para imprimir
+./generate-notes.sh equipazgo
+
+# Output:
+# 📝 Generando notas para: equipazgo
+#    ✓ Metadata parseada
+#    ✓ 7 slides con notas encontradas
+#    ✓ Generado: equipazgo/notas.html
+# ✅ Notas generadas exitosamente
+#
+# 🖨️  Abre en navegador e imprime: equipazgo/notas.html
+# 💡 Tip: Configura impresión a 2 tarjetas por página
+
+# 3. Abrir y revisar
+firefox equipazgo/notas.html
+
+# 4. Imprimir (Ctrl+P)
+# - Selecciona impresora
+# - Configura 2 páginas por hoja (recomendado)
+# - Imprime
+
+# 5. Presentar con confianza 🎤
+```
+
+### Personalización del formato
+
+El documento generado incluye:
+- **Diseño responsive**: Se adapta a pantalla e impresión automáticamente
+- **Grid flexible**: 2 columnas en impresión, adaptable en pantalla
+- **Estilos de impresión**: Optimizados específicamente para papel
+- **Colores de tu presentación**: Mantiene la identidad visual
+
+### Cuándo usar notas impresas
+
+**Usa notas impresas cuando:**
+- Presentas en un lugar sin garantía de conectividad
+- Quieres tener un backup físico de seguridad
+- Prefieres no depender de dispositivos durante la presentación
+- Das una presentación importante y quieres máxima preparación
+- El venue no permite laptops/tablets en el escenario
+
+**Combina con vista del presentador cuando:**
+- Tienes dos pantallas disponibles
+- Quieres las notas también en digital (presiona `S` en la presentación)
+- Las notas impresas son el backup y la vista digital es primaria
 
 ## Guía de Diseño Visual
 
