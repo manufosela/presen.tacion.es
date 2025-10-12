@@ -6,8 +6,29 @@ Elimina los scripts de carga dinámica innecesarios
 import sys
 import re
 
-def clean_standalone_html(html_content):
+def clean_standalone_html(html_content, bg_color='#FFFFFF', presentation_name=''):
     """Elimina scripts innecesarios del HTML standalone y agrega inicialización de Reveal"""
+
+    # Agregar data-background-color a todas las <section> que no lo tengan
+    # Esto asegura que las slides normales mantengan el color de fondo correcto
+    def add_background_to_section(match):
+        section_tag = match.group(0)
+        # Si ya tiene data-background-color, no modificar (slides invertidas)
+        if 'data-background-color' in section_tag:
+            return section_tag
+        # Agregar data-background-color antes del primer >
+        return section_tag.replace('>', f' data-background-color="{bg_color}">', 1)
+
+    html_content = re.sub(r'<section[^>]*>', add_background_to_section, html_content)
+
+    # Corregir rutas de imágenes: eliminar prefijo del nombre de presentación
+    if presentation_name:
+        # Reemplazar src="presentacion/images/..." con src="images/..."
+        html_content = re.sub(
+            rf'src="{presentation_name}/images/',
+            'src="images/',
+            html_content
+        )
 
     # Eliminar el script type="module" completo (toda la lógica de carga dinámica)
     html_content = re.sub(
@@ -26,7 +47,6 @@ def clean_standalone_html(html_content):
     )
 
     # Agregar script de inicialización de Reveal.js antes del </body>
-    # Como el HTML ya está renderizado, solo necesitamos una inicialización básica
     init_script = '''
     <script>
         // Re-inicialización de Reveal.js para standalone
@@ -40,7 +60,8 @@ def clean_standalone_html(html_content):
                     center: true,
                     transition: 'fade',
                     transitionSpeed: 'slow',
-                    embedded: false
+                    embedded: false,
+                    backgroundTransition: 'none'
                 });
             }
         });
@@ -52,16 +73,18 @@ def clean_standalone_html(html_content):
     return html_content
 
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        print("Uso: python3 clean-standalone.py <archivo.html>")
+    if len(sys.argv) < 2:
+        print("Uso: python3 clean-standalone.py <archivo.html> [color-fondo] [nombre-presentacion]")
         sys.exit(1)
 
     file_path = sys.argv[1]
+    bg_color = sys.argv[2] if len(sys.argv) > 2 else '#FFFFFF'
+    presentation_name = sys.argv[3] if len(sys.argv) > 3 else ''
 
     with open(file_path, 'r', encoding='utf-8') as f:
         html = f.read()
 
-    cleaned_html = clean_standalone_html(html)
+    cleaned_html = clean_standalone_html(html, bg_color, presentation_name)
 
     with open(file_path, 'w', encoding='utf-8') as f:
         f.write(cleaned_html)

@@ -71,12 +71,40 @@ if [ ! -s "$TEMP_HTML" ]; then
     exit 1
 fi
 
+# Extraer color de fondo del YAML
+BG_COLOR=$(python3 -c "
+import yaml
+try:
+    with open('$PRESENTATION_PATH/contenidos.md', 'r') as f:
+        content = f.read()
+        if content.startswith('---'):
+            yaml_end = content.find('---', 3)
+            if yaml_end != -1:
+                yaml_content = content[3:yaml_end]
+                metadata = yaml.safe_load(yaml_content)
+                if metadata and 'colors' in metadata and 'background' in metadata['colors']:
+                    print(metadata['colors']['background'], end='')
+                else:
+                    print('#FFFFFF', end='')
+        else:
+            print('#FFFFFF', end='')
+except:
+    print('#FFFFFF', end='')
+" 2>/dev/null)
+
+# Si está vacío, usar default
+if [ -z "$BG_COLOR" ]; then
+    BG_COLOR="#FFFFFF"
+fi
+
+echo "   Color de fondo: $BG_COLOR"
+
 # Guardar temporalmente
 OUTPUT_PATH="$PRESENTATION_PATH/index.html"
 mv "$TEMP_HTML" "$OUTPUT_PATH"
 
-# Limpiar el HTML: eliminar scripts de carga dinámica innecesarios
-python3 clean-standalone.py "$OUTPUT_PATH"
+# Limpiar el HTML: eliminar scripts de carga dinámica innecesarios y corregir rutas de imágenes
+python3 clean-standalone.py "$OUTPUT_PATH" "$BG_COLOR" "$PRESENTATION_NAME"
 
 # Detener servidor
 kill $SERVER_PID 2>/dev/null
