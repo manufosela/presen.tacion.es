@@ -71,9 +71,12 @@ if [ ! -s "$TEMP_HTML" ]; then
     exit 1
 fi
 
-# Guardar en el destino
+# Guardar temporalmente
 OUTPUT_PATH="$PRESENTATION_PATH/index.html"
 mv "$TEMP_HTML" "$OUTPUT_PATH"
+
+# Limpiar el HTML: eliminar scripts de carga dinámica innecesarios
+python3 clean-standalone.py "$OUTPUT_PATH"
 
 # Detener servidor
 kill $SERVER_PID 2>/dev/null
