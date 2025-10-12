@@ -455,11 +455,12 @@ El sistema incluye un generador que crea una versión standalone de tu presentac
 
 ### ¿Qué hace el build?
 
-El comando de build genera un archivo `index.html` dentro de la carpeta de tu presentación que:
-- **Es completamente autónomo**: No depende de `presentacion.html`
-- **Usa Reveal.js local**: Referencias a `../reveal.js/` (no CDN)
-- **Mantiene imágenes externas**: Las imágenes permanecen en `images/` como archivos externos
-- **Incluye todos los estilos**: CSS inline basado en tu configuración YAML
+El comando de build captura el HTML renderizado de tu presentación usando Chrome headless, creando un archivo `index.html` completamente standalone:
+
+- **Generación automática**: Usa Chrome headless para renderizar y capturar el HTML final
+- **HTML completamente procesado**: Todo el JavaScript, CSS y markdown ya está renderizado
+- **Imágenes externas**: Las imágenes permanecen en `images/` como archivos externos
+- **Replica el proceso manual**: Automatiza lo que harías abriendo el navegador y copiando el código fuente
 - **Soporta todas las funcionalidades**: columnas, grids, slides invertidas, imágenes de fondo, notas del presentador
 
 ### Cómo usar el build
@@ -474,15 +475,17 @@ El comando de build genera un archivo `index.html` dentro de la carpeta de tu pr
 ```
 
 Este comando:
-1. Lee el archivo `equipazgo/contenidos.md`
-2. Parsea los metadatos YAML y el contenido Markdown
-3. Procesa todos los marcadores especiales (SLIDE, SUBSLIDE, NOTES, INVERTED, COLUMNS, GRID, BACKGROUND)
-4. Genera `equipazgo/index.html` con todo integrado
+1. Inicia un servidor HTTP temporal en el puerto 8765
+2. Abre la presentación con Chrome headless
+3. Espera 5 segundos para que todo cargue (Reveal.js, marked.js, imágenes)
+4. Captura el HTML completamente renderizado
+5. Guarda `equipazgo/index.html` con todo integrado
+6. Cierra el servidor automáticamente
 
 ### Requisitos
 
-- **Python 3.x**
-- **PyYAML**: Instalar con `pip3 install pyyaml`
+- **Python 3.x**: Para el servidor HTTP temporal
+- **Google Chrome**: Para renderizar la presentación en modo headless
 - **Reveal.js local**: Debe estar en `reveal.js/` (ya incluido en el proyecto)
 
 ### Estructura después del build

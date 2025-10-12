@@ -1,230 +1,1780 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
+<html lang="es" class="reveal-full-page" style="--custom-color: #000000; --r-main-color: #000000; --r-link-color: #000000; --r-link-color-hover: #000000; --r-selection-background-color: #000000; --r-main-secondary-color: #000000; --r-background-color: #FFB6C1; --r-main-text-color: #000000; --heading1-color: #000000; --heading2-color: #000000; --heading3-color: #FFB6C1; --heading-fontsize: 4.2rem; --font-size: 32px;"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>equipazgo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../reveal.js/dist/reveal.css">
-    <link rel="stylesheet" href="../reveal.js/dist/theme/simple.css">
+    <title>EQUIPAZGO</title>
+    <!-- Importar fuente Lato -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+    <!-- Cargar Pico CSS primero -->
+    <link rel="icon" type="image/svg+xml" href="mi-presentacion/images/favicon.svg">
     <style>
-        :root {
-            --heading1-color: #000000;
-            --heading2-color: #000000;
-            --heading3-color: #FFB6C1;
-            --heading-fontsize: 4.2rem;
-        }
-        body {
-            font-family: Lato, sans-serif;
-            font-size: 32px;
-            background-color: #FFB6C1;
-        }
-        .reveal {
-            font-family: Lato, sans-serif;
-        }
-        .reveal h1 {
-            color: #000000 !important;
-            font-size: 4.2rem !important;
-            font-family: Lato, sans-serif;
-        }
-        .reveal h2 {
-            color: #000000 !important;
-            font-size: calc(4.2rem * 0.85) !important;
-            font-family: Lato, sans-serif;
-        }
-        .reveal h3 {
-            color: #FFB6C1 !important;
-            font-size: calc(4.2rem * 0.7) !important;
-            font-family: Lato, sans-serif;
-        }
-        .reveal .slides,
-        .reveal .slides section {
-            background: transparent !important;
-            color: #000000;
-        }
+      /* RESET Y ESTILOS BÁSICOS */
+      * {
+        box-sizing: border-box;
+      }
 
-        /* Columnas */
-        .columns {
-            display: flex;
-            gap: 2rem;
-            margin: 1.5rem 0;
-        }
-        .columns > div {
-            flex: 1 1 0;
-            min-width: 0;
-            padding: 0 1rem;
-        }
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #fff;
+      }
 
-        /* Grid */
-        .grid-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            margin: 1.5rem 0;
-        }
-        .grid-row {
-            display: flex;
-            gap: 2rem;
-        }
-        .grid-cell {
-            flex: 1 1 0;
-            min-width: 0;
-            padding: 1rem;
-            background: #f5f5f5;
-            border-radius: 0.5rem;
-            border: 1px solid #e0e0e0;
-        }
+      /* LOADING */
+      .loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #f8f9fa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        color: #333;
+        z-index: 9999;
+      }
 
-        /* Slides invertidas */
-        .reveal .slides section[data-inverted="true"] h1,
-        .reveal .slides section[data-inverted="true"] h2,
-        .reveal .slides section[data-inverted="true"] h3,
-        .reveal .slides section[data-inverted="true"] p,
-        .reveal .slides section[data-inverted="true"] li,
-        .reveal .slides section[data-inverted="true"] strong {
-            color: #FFB6C1 !important;
-        }
+      :root {
+        --heading1-color: #df006e;
+        --heading2-color: #9b004d;
+        --heading3-color: #6b0035;
+        --heading-fontsize: 32px;
+      }
+      body {
+        font-family: "Lato", sans-serif;
+        min-height: 100vh;
+        min-width: 100vw;
+      }
+      .reveal {
+        font-family: "Lato", sans-serif;
+        min-height: 100vh;
+        min-width: 100vw;
+      }
+      .reveal h1 {
+        color: var(--heading1-color) !important;
+        font-size: var(--heading-fontsize) !important;
+      }
+      .reveal h2 {
+        color: var(--heading2-color) !important;
+        font-size: calc(var(--heading-fontsize) * 0.9) !important;
+      }
+      .reveal h3 {
+        color: var(--heading3-color) !important;
+        font-size: calc(var(--heading-fontsize) * 0.8) !important;
+      }
+      .reveal .slides,
+      .reveal .slides section {
+        background: transparent !important;
+      }
+
+      /* Sobrescribir la variable --color de Pico CSS */
+      :root {
+        --color: var(--custom-color, #0078d7) !important;
+      }
+
+      /* Sobrescribir estilos de Reveal.js para iframes de pantalla completa */
+      .reveal iframe.fullscreen-iframe {
+        max-width: 80vw;
+        max-height: 83vh;
+        width: 100vw !important;
+        height: 100vh !important;
+        border: none !important;
+        display: block !important;
+        padding: 0;
+        margin: 0;
+      }
+
+      /* Asegurar que la slide contenedora ocupe toda la pantalla */
+      .reveal .slides section.iframe-slide {
+        top: 0px !important;
+        display: flex !important;
+        margin: 0 !important;
+        font-size: 32px !important;
+        padding: 0 !important;
+        text-align: left !important;
+        justify-content: flex-start !important;
+        align-items: flex-start !important;
+      }
+
+      .reveal .controls {
+        right: 50px !important;
+      }
+
+      /* Añadir estilos para columnas */
+      .columns {
+        display: flex;
+        gap: 2rem;
+        margin: 1.5rem 0;
+      }
+      .columns > div[data-markdown] {
+        flex: 1 1 0;
+        min-width: 0;
+        padding: 0 1rem;
+        box-sizing: border-box;
+      }
+
+      /* Añadir estilos para grid */
+      .grid-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin: 1.5rem 0;
+      }
+      .grid-row {
+        display: flex;
+        gap: 2rem;
+      }
+      .grid-cell[data-markdown] {
+        flex: 1 1 0;
+        min-width: 0;
+        padding: 1rem;
+        background: #f5f5f5;
+        border-radius: 0.5rem;
+        box-sizing: border-box;
+        border: 1px solid #e0e0e0;
+      }
+
+      /* Estilos para el sistema de reporte de errores mejorado */
+      .error-message {
+        text-align: left;
+        color: #721c24;
+        font-size: 1em;
+        padding: 2rem;
+        background-color: #f8f8f8;
+        border: 2px solid #f5c6cb;
+        border-radius: 8px;
+        margin: 2rem;
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .error-message h2 {
+        color: #721c24;
+        margin-top: 0;
+        border-bottom: 2px solid #f5c6cb;
+        padding-bottom: 0.5rem;
+      }
+      .error-message h3 {
+        color: #495057;
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+      .error-main {
+        font-weight: bold;
+        font-size: 1.1em;
+        margin-bottom: 1.5rem;
+        padding: 1rem;
+        background-color: #f5c6cb;
+        border-radius: 4px;
+      }
+      .error-details,
+      .warning-details {
+        margin: 1rem 0;
+        padding: 1rem;
+        border-radius: 4px;
+      }
+      .error-details {
+        background-color: #f8d7da;
+        border-left: 4px solid #dc3545;
+      }
+      .warning-details {
+        background-color: #fff3cd;
+        border-left: 4px solid #ffc107;
+      }
+      .error-item {
+        color: #721c24;
+        margin: 0.5rem 0;
+      }
+      .warning-item {
+        color: #856404;
+        margin: 0.5rem 0;
+      }
+      .metadata-info {
+        margin: 1rem 0;
+        padding: 1rem;
+        background-color: #d1ecf1;
+        border-left: 4px solid #17a2b8;
+        border-radius: 4px;
+      }
+      .metadata-info pre {
+        background-color: #ffffff;
+        padding: 1rem;
+        border-radius: 4px;
+        overflow-x: auto;
+        max-height: 300px;
+        font-size: 0.9em;
+      }
+      .help-info {
+        margin-top: 2rem;
+        padding: 1rem;
+        background-color: #d4edda;
+        border-left: 4px solid #28a745;
+        border-radius: 4px;
+      }
+      .help-info ul {
+        margin: 0.5rem 0;
+      }
+      .help-info li {
+        margin: 0.3rem 0;
+        color: #155724;
+      }
     </style>
-</head>
-<body>
-    <div class="reveal">
-        <div class="slides">
-<section data-inverted="true" data-background-color="#000000">
-# Equipazgo
-
-## Liderazgo sin egos
-<aside class="notes">Presentación sobre el concepto de equipazgo: liderazgo concurrente sin egos.</aside></section>
-<section >
-## Mánu Fosela
-
+  <script type="text/javascript" data-name="TokenSigning" data-by="Web-eID extension" src="chrome-extension://ncibgoaomkmdpilpocfeponihegamlic/token-signing-page-script.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/simple.css"><style>
+                .reveal .slides section {
+                    font-size: 32px !important;
+                }
+                .reveal .slides section h1 {
+                    font-size: 4.2rem !important;
+                    color: #000000 !important;
+                }
+                .reveal .slides section h2 {
+                    font-size: calc(4.2rem * 0.85) !important;
+                    color: #000000 !important;
+                }
+                .reveal .slides section h3 {
+                    font-size: calc(4.2rem * 0.7) !important;
+                    color: #FFB6C1 !important;
+                }
+            </style></head>
+  <body class="reveal-viewport" style="font-size: 32px; background-color: rgb(255, 182, 193); --slide-width: 960px; --slide-height: 700px; --slide-scale: 0.6761142857142857;">
+    <div id="loading" class="loading" style="display: none;">Cargando presentación...</div>
+    <div class="reveal center focused has-vertical-slides has-horizontal-slides has-dark-background ready fade" role="application" data-transition-speed="slow" data-background-transition="none" style="font-size: 32px; background-color: rgb(255, 182, 193);">
+      <div class="slides" id="slides-container" style="width: 960px; height: 700px; inset: 50% auto auto 50%; transform: translate(-50%, -50%) scale(0.676114);">
+        <!-- Las diapositivas se cargarán dinámicamente -->
+      <section data-background-color="#000000" data-inverted="true" data-inverted-text-color="#FFB6C1" style="top: 257px; display: block; font-size: 32px !important;" class="present has-dark-background"><div><h1 style="color: rgb(255, 182, 193) !important; font-size: 4.2rem !important;">Equipazgo</h1>
+<h2 style="color: rgb(255, 182, 193) !important; font-size: calc(3.57rem) !important;">Liderazgo sin egos</h2>
+</div><aside class="notes" data-markdown="" data-markdown-parsed="true"><p style="color: rgb(255, 182, 193) !important;">Presentación sobre el concepto de equipazgo: liderazgo concurrente sin egos.</p>
+</aside></section><section style="top: 40px; display: block; font-size: 32px !important;" hidden="" aria-hidden="true" class="future"><div><h2 style="color: rgb(0, 0, 0) !important; font-size: calc(3.57rem) !important;">Mánu Fosela</h2>
 <div class="columns">
-<div data-markdown="%21%5BM%C3%A1nu%20Fosela%5D%28images/manufosela.png%29"></div>
-<div data-markdown="Developer%20de%20base%2C%20l%C3%ADder%20por%20accidente...%20y%20por%20vocaci%C3%B3n.%0A%0AMe%20di%20cuenta%20de%20que%20no%20quer%C3%ADa%20ser%20jefe%20de%20nadie%2C%20pero%20s%C3%AD%20quer%C3%ADa%20acompa%C3%B1ar%2C%20influir%2C%20cuidar.%0A%0ADe%20ah%C3%AD%20naci%C3%B3%20mi%20manera%20de%20ver%20el%20liderazgo%3A%20%2A%2Adesde%20el%20afecto%2A%2A."></div>
+              <div data-markdown="!%5BM%C3%A1nu%20Fosela%5D(images%2Fmanufosela.png)" data-markdown-parsed="true"><p><img src="equipazgo/images/manufosela.png" alt="Mánu Fosela"></p>
 </div>
-<aside class="notes">Presentación personal de Mánu Fosela, autor del concepto de liderazgo afectivo y equipazgo.</aside></section>
-<section>
-<section >
-## Sobre el liderazgo
-<aside class="notes">“¿Alguna vez habéis trabajado con un jefe que dirigía, pero no lideraba?”
-“¿Alguna vez os habéis sentido solos liderando?”
-Breve pausa. Si hay manos levantadas o alguien asiente, invítalos a compartir.
-Si no, rematas tú:
-“Vivimos en una sociedad donde quienes nos dirigen no nos lideran. Y quienes lideran, muchas veces lo hacen desde el ego”</aside></section>
-<section data-inverted="true" data-background-color="#000000">
-El modelo del líder solitario ha fracasado.
-</section>
-</section>
-<section>
-<section >
-## ¿Qué es el equipazgo?
-<aside class="notes">Cuando trabajamos en equipo como developers, ¿cada uno hace lo suyo o nos coordinamos?
-¿Qué pasa si alguien falta? ¿Su trabajo se queda sin hacer?
-¿La idea del equipo es que cada uno tenga su parcela, o el código es de todos y seguimos unas reglas comunes?
-
-“En un equipo técnico, si alguien deja su parte sin documentar, sin test, o sin explicar, ¿qué ocurre?”
-“¿Y si alguien decide hacer las cosas ‘a su manera’, sin seguir las convenciones del equipo?”
-“¿No genera más problemas que beneficios?”
-
-“Igual que en el código tenemos convenciones, estándares y code reviews, en el liderazgo necesitamos lo mismo: coherencia, cuidado mutuo y propósito compartido.”
-“El liderazgo tradicional pone a una persona sola decidiendo, enfrentada a todo… como si un solo developer pudiera llevar todo el backend, el frontend, los tests, los despliegues y además... ¡hacerlo perfecto!”
-“Eso no escala. Nunca lo ha hecho. Por eso nace el equipazgo.”
-“Equipazgo no es liderazgo compartido. Es liderazgo concurrente. Donde no hay parcelas, hay propósito común.”
-“Donde no hay egos, hay generosidad directiva. Donde no hay jefes, hay referentes que se apoyan y se cubren.”
-Analogía:
-“Como dos padres que lideran una familia: sin competir, repartiéndose tareas según fortalezas, y poniendo siempre por delante a ‘los hijos’.”</aside></section>
-<section >
-¿Conocéis algún ejemplo de esto en vuestra empresa o entorno?
-</section>
-</section>
-<section>
-<section >
-## Obstáculos reales al liderazgo sin ego
-</section>
-<section >
-### ¿Qué creeis que frena el liderazgo en vuestras empresas?
-<aside class="notes">“Los egos que confrontan en lugar de colaborar.”
-“La jerarquía mal entendida que impone en vez de guiar.”
-“El miedo a perder poder.”</aside></section>
-<section data-inverted="true" data-background-color="#000000">
-### Si no te gustan las personas, no lideres
-</section>
-</section>
-<section>
-<section >
-## Claves de un equipazgo
-</section>
-<section >
-### ¿Qué cualidades creéis que deben tener quienes lideran juntos?
-</section>
-<section >
-### Mis claves de equipazgo
-
-- **Afecto genuino**
-- **Coherencia**
-- **Humildad**
-- **Escucha Activa**
-<aside class="notes">Las cuatro claves fundamentales para un equipazgo efectivo.</aside></section>
-</section>
-<section >
-## Debate
-<aside class="notes">¿Qué barreras encontráis para aplicar el equipazgo?
+<div data-markdown="Developer%20de%20base%2C%20l%C3%ADder%20por%20accidente...%20y%20por%20vocaci%C3%B3n.%0A%0AMe%20di%20cuenta%20de%20que%20no%20quer%C3%ADa%20ser%20jefe%20de%20nadie%2C%20pero%20s%C3%AD%20quer%C3%ADa%20acompa%C3%B1ar%2C%20influir%2C%20cuidar.%0A%0ADe%20ah%C3%AD%20naci%C3%B3%20mi%20manera%20de%20ver%20el%20liderazgo%3A%20**desde%20el%20afecto**." data-markdown-parsed="true"><p>Developer de base, líder por accidente... y por vocación.</p>
+<p>Me di cuenta de que no quería ser jefe de nadie, pero sí quería acompañar, influir, cuidar.</p>
+<p>De ahí nació mi manera de ver el liderazgo: <strong>desde el afecto</strong>.</p>
+</div>
+            </div></div><aside class="notes" data-markdown="" data-markdown-parsed="true"><p>Presentación personal de Mánu Fosela, autor del concepto de liderazgo afectivo y equipazgo.</p>
+</aside></section><section style="top: 0px; display: block; font-size: 32px !important;" hidden="" aria-hidden="true" class="stack future"><section style="top: 307.5px; display: block; font-size: 32px !important;"><div><h2 style="color: rgb(0, 0, 0) !important; font-size: calc(3.57rem) !important;">Sobre el liderazgo</h2>
+</div><aside class="notes" data-markdown="" data-markdown-parsed="true"><ul>
+<li>¿Alguna vez habéis trabajado con un jefe que dirigía, pero no lideraba?</li>
+<li>¿Alguna vez os habéis sentido solos liderando?</li>
+</ul>
+<p>Vivimos en una sociedad donde quienes nos dirigen no nos lideran. Y quienes lideran, muchas veces lo hacen desde el ego</p>
+</aside></section><section data-background-color="#000000" data-inverted="true" data-inverted-text-color="#FFB6C1" class="future has-dark-background" aria-hidden="true" style="top: 350px; display: none; font-size: 32px !important;"><div><p style="color: rgb(255, 182, 193) !important;">El modelo del líder solitario ha fracasado.</p>
+</div></section></section><section style="top: 350px; display: none; font-size: 32px !important;" hidden="" aria-hidden="true" class="stack future"><section style="top: 350px; display: none; font-size: 32px !important;"><div><h2 style="color: rgb(0, 0, 0) !important; font-size: calc(3.57rem) !important;">¿Qué es el equipazgo?</h2>
+</div><aside class="notes" data-markdown="" data-markdown-parsed="true"><ul>
+<li><p>Cuando trabajamos en equipo como developers, ¿cada uno hace lo suyo o nos coordinamos?</p>
+</li>
+<li><p>¿Qué pasa si alguien falta? ¿Su trabajo se queda sin hacer?</p>
+</li>
+<li><p>¿La idea del equipo es que cada uno tenga su parcela, o el código es de todos y seguimos unas reglas comunes?</p>
+</li>
+<li><p>En un equipo técnico, si alguien deja su parte sin documentar, sin test, o sin explicar, ¿qué ocurre?</p>
+</li>
+<li><p>¿Y si alguien decide hacer las cosas ‘a su manera’, sin seguir las convenciones del equipo?</p>
+</li>
+<li><p>¿No genera más problemas que beneficios?</p>
+</li>
+</ul>
+<p>Igual que en el código tenemos convenciones, estándares y code reviews, en el liderazgo necesitamos lo mismo: coherencia, cuidado mutuo y propósito compartido.</p>
+<p>El liderazgo tradicional pone a una persona sola decidiendo, enfrentada a todo… como si un solo developer pudiera llevar todo el backend, el frontend, los tests, los despliegues y además… ¡hacerlo perfecto!</p>
+<p>Eso no escala. Nunca lo ha hecho. Por eso nace el equipazgo.</p>
+<p>Equipazgo no es liderazgo compartido. Es liderazgo concurrente. Donde no hay parcelas, hay propósito común.</p>
+<p>Donde no hay egos, hay generosidad directiva. Donde no hay jefes, hay referentes que se apoyan y se cubren.</p>
+<p>Analogía:
+Como dos padres que lideran una familia: sin competir, repartiéndose tareas según fortalezas, y poniendo siempre por delante a ‘los hijos’.</p>
+</aside></section><section class="future" aria-hidden="true" style="top: 350px; display: none; font-size: 32px !important;"><div><p>¿Conocéis algún ejemplo de esto en vuestra empresa o entorno?</p>
+</div></section></section><section style="top: 350px; display: none; font-size: 32px !important;" hidden="" aria-hidden="true" class="stack future"><section style="top: 350px; display: none; font-size: 32px !important;"><div><h2 style="color: rgb(0, 0, 0) !important; font-size: calc(3.57rem) !important;">Obstáculos reales al liderazgo sin ego</h2>
+</div></section><section class="future" aria-hidden="true" style="top: 350px; display: none; font-size: 32px !important;"><div><h3 style="color: rgb(255, 182, 193) !important; font-size: calc(2.94rem) !important;">¿Qué creeis que frena el liderazgo en vuestras empresas?</h3>
+</div><aside class="notes" data-markdown="" data-markdown-parsed="true"><p>Los egos que confrontan en lugar de colaborar.
+La jerarquía mal entendida que impone en vez de guiar.
+El miedo a perder poder.</p>
+</aside></section><section data-background-color="#000000" data-inverted="true" data-inverted-text-color="#FFB6C1" class="future has-dark-background" aria-hidden="true" style="top: 350px; display: none; font-size: 32px !important;"><div><h3 style="color: rgb(255, 182, 193) !important; font-size: calc(2.94rem) !important;">Si no te gustan las personas, no lideres</h3>
+</div></section></section><section style="top: 350px; display: none; font-size: 32px !important;" hidden="" aria-hidden="true" class="stack future"><section style="top: 350px; display: none; font-size: 32px !important;"><div><h2 style="color: rgb(0, 0, 0) !important; font-size: calc(3.57rem) !important;">Claves de un equipazgo</h2>
+</div></section><section class="future" aria-hidden="true" style="top: 350px; display: none; font-size: 32px !important;"><div><h3 style="color: rgb(255, 182, 193) !important; font-size: calc(2.94rem) !important;">¿Qué cualidades creéis que deben tener quienes lideran juntos?</h3>
+</div></section><section class="future" aria-hidden="true" style="top: 350px; display: none; font-size: 32px !important;"><div><h3 style="color: rgb(255, 182, 193) !important; font-size: calc(2.94rem) !important;">Mis claves de equipazgo</h3>
+<ul>
+<li><strong>Afecto genuino</strong></li>
+<li><strong>Coherencia</strong></li>
+<li><strong>Humildad</strong></li>
+<li><strong>Escucha Activa</strong></li>
+</ul>
+</div><aside class="notes" data-markdown="" data-markdown-parsed="true"><p>Las cuatro claves fundamentales para un equipazgo efectivo.</p>
+</aside></section></section><section style="top: 350px; display: none; font-size: 32px !important;" hidden="" aria-hidden="true" class="future"><div><h2 style="color: rgb(0, 0, 0) !important; font-size: calc(3.57rem) !important;">Debate</h2>
+</div><aside class="notes" data-markdown="" data-markdown-parsed="true"><p>¿Qué barreras encontráis para aplicar el equipazgo?
 ¿Creéis que los líderes actuales están preparados para liderar desde la generosidad?
 ¿Qué pasaría si quitáramos los egos de las salas de dirección?
 ¿Cómo podríamos generar afecto genuino entre líderes hoy?
-¿Habéis vivido la “soledad del liderazgo”? ¿Cómo la gestionasteis?</aside></section>
-<section data-inverted="true" data-background-color="#000000">
-**"Liderar una empresa es dirigirla teniendo en cuenta las emociones de las personas que la conforman. Y para eso hay que liderar desde el afecto."**
-</section>
-<section >
-## GRANCIAS
-
-![Grancias](images/grancias.png)
-</section>
-<section >
-presen.tacion.es/equipazgo
-
+¿Habéis vivido la soledad del liderazgo? ¿Cómo la gestionasteis?</p>
+</aside></section><section data-background-color="#000000" data-inverted="true" data-inverted-text-color="#FFB6C1" style="top: 350px; display: none; font-size: 32px !important;" class="future has-dark-background" hidden="" aria-hidden="true"><div><p style="color: rgb(255, 182, 193) !important;"><strong style="color: rgb(255, 182, 193) !important;">"Liderar una empresa es dirigirla teniendo en cuenta las emociones de las personas que la conforman. Y para eso hay que liderar desde el afecto."</strong></p>
+</div></section><section style="top: 350px; display: none; font-size: 32px !important;" hidden="" aria-hidden="true" class="future"><div><h2 style="color: rgb(0, 0, 0) !important; font-size: calc(3.57rem) !important;">GRANCIAS</h2>
+<p><img src="equipazgo/images/grancias.png" alt="Grancias"></p>
+</div></section><section style="top: 350px; display: none; font-size: 32px !important;" hidden="" aria-hidden="true" class="future"><div><p>presen.tacion.es/equipazgo</p>
 <div class="columns">
-<div data-markdown="%21%5BM%C3%A1nu%20Fosela%5D%28images/manufosela.png%29%0A%0A%2A%2A%40manufosela%2A%2A%0A%0Amanufosela.es"></div>
-<div data-markdown="%21%5BLiderazgo%20Afectivo%5D%28images/liderazgo_afectivo.jpg%29%0A%0A%2A%2Asavvily.es%2A%2A"></div>
+              <div data-markdown="!%5BM%C3%A1nu%20Fosela%5D(images%2Fmanufosela.png)%0A%0A**%40manufosela**%0A%0Amanufosela.es" data-markdown-parsed="true"><p><img src="equipazgo/images/manufosela.png" alt="Mánu Fosela"></p>
+<p><strong>@manufosela</strong></p>
+<p>manufosela.es</p>
 </div>
-</section>
-        </div>
-    </div>
+<div data-markdown="!%5BLiderazgo%20Afectivo%5D(images%2Fliderazgo_afectivo.jpg)%0A%0A**savvily.es**" data-markdown-parsed="true"><p><img src="equipazgo/images/liderazgo_afectivo.jpg" alt="Liderazgo Afectivo"></p>
+<p><strong>savvily.es</strong></p>
+</div>
+            </div></div></section></div>
+    <div class="backgrounds"><div class="slide-background has-dark-background present" data-background-hash="0#000000nullnullnullnullnull" data-loaded="true" style="background-color: rgb(0, 0, 0); display: block;"><div class="slide-background-content"></div></div><div class="slide-background future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background stack future" data-loaded="true" style="display: block;"><div class="slide-background-content"></div><div class="slide-background present" data-loaded="true" style="display: block;"><div class="slide-background-content"></div></div><div class="slide-background has-dark-background future" data-background-hash="0#000000nullnullnullnullnull" style="background-color: rgb(0, 0, 0); display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" style="display: none;"><div class="slide-background-content"></div><div class="slide-background present" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" style="display: none;"><div class="slide-background-content"></div><div class="slide-background present" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background has-dark-background future" data-background-hash="0#000000nullnullnullnullnull" style="background-color: rgb(0, 0, 0); display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background stack future" style="display: none;"><div class="slide-background-content"></div><div class="slide-background present" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-background future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background has-dark-background future" data-background-hash="0#000000nullnullnullnullnull" style="background-color: rgb(0, 0, 0); display: none;"><div class="slide-background-content"></div></div><div class="slide-background future" style="display: none;"><div class="slide-background-content"></div></div><div class="slide-background future" style="display: none;"><div class="slide-background-content"></div></div></div><div class="slide-number" style="display: block;"><a href="#/">
+					<span class="slide-number-a">1</span>
+					</a></div><aside class="controls" data-controls-layout="bottom-right" data-controls-back-arrows="faded" style="display: block;"><button class="navigate-left" aria-label="previous slide" disabled="disabled"><div class="controls-arrow"></div></button>
+			<button class="navigate-right highlight enabled" aria-label="next slide"><div class="controls-arrow"></div></button>
+			<button class="navigate-up" aria-label="above slide" disabled="disabled"><div class="controls-arrow"></div></button>
+			<button class="navigate-down" aria-label="below slide" disabled="disabled"><div class="controls-arrow"></div></button></aside><div class="progress" style="display: block;"><span style="transform: scaleX(0);"></span></div><div class="speaker-notes" data-prevent-swipe="" tabindex="0"></div><div class="pause-overlay"><button class="resume-button">Resume presentation</button></div><div class="aria-status" aria-live="polite" aria-atomic="true" style="position: absolute; height: 1px; width: 1px; overflow: hidden; clip: rect(1px, 1px, 1px, 1px);">Equipazgo Liderazgo sin egos </div></div>
 
-    <script src="../reveal.js/dist/reveal.js"></script>
-    <script src="../reveal.js/plugin/markdown/markdown.js"></script>
-    <script src="../reveal.js/plugin/notes/notes.js"></script>
-    <script src="../reveal.js/marked.min.js"></script>
-    <script>
-        Reveal.initialize({
-            hash: true,
-            slideNumber: true,
-            controls: true,
-            progress: true,
-            center: true,
-            transition: 'fade',
-            transitionSpeed: 'slow',
-            plugins: [ RevealMarkdown, RevealNotes ],
-            markdown: {
-                smartypants: true,
-                gfm: true
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script type="module">
+      import RevealMarkdown from "https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/markdown/markdown.esm.js";
+      import RevealNotes from "https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/notes/notes.esm.js";
+
+      // ==================== CONSTANTS ====================
+      const SELECTORS = {
+        LOADING: "#loading",
+        SLIDES_CONTAINER: ".slides",
+        REVEAL: ".reveal",
+      };
+
+      const DEFAULT_COLORS = {
+        h1: "#DF006E",
+        h2: "#0078D7",
+        h3: "#000035",
+      };
+
+      const DEFAULT_THEME = "white";
+      const DEFAULT_FONT_SIZE = "16px";
+
+      // ==================== UTILITY FUNCTIONS ====================
+
+      /**
+       * Obtiene el parámetro de presentación de la URL
+       */
+      function getPresentationName() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get("presentacion");
+      }
+
+      /**
+       * Obtiene la ruta base para los recursos
+       */
+      function getBasePath() {
+        // Siempre usar rutas absolutas desde la raíz del dominio
+        return window.location.origin + "/";
+      }
+
+      /**
+       * Detecta si la aplicación está corriendo en local o en GitHub Pages
+       */
+      function isRunningLocally() {
+        const hostname = window.location.hostname;
+        return (
+          hostname === "localhost" ||
+          hostname === "127.0.0.1" ||
+          hostname.includes("192.168.") ||
+          hostname.includes("10.0.")
+        );
+      }
+
+      /**
+       * Construye la URL correcta para cargar contenido según el entorno
+       */
+      function buildContentUrl(presentationName, filename = "contenidos.md") {
+        const isLocal = isRunningLocally();
+        const cleanName = presentationName.startsWith("local_")
+          ? presentationName.replace("local_", "")
+          : presentationName;
+
+        if (isLocal) {
+          // En entorno local, cargar desde la ruta relativa
+          return `${cleanName}/${filename}`;
+        } else {
+          // En GitHub Pages, cargar desde raw.githubusercontent.com
+          return `https://raw.githubusercontent.com/manufosela/presen.tacion.es/main/${cleanName}/${filename}`;
+        }
+      }
+
+      /**
+       * Construye la URL para imágenes según el entorno
+       */
+      function buildImageUrl(presentationName, imagePath) {
+        const isLocal = isRunningLocally();
+        const cleanName = presentationName.startsWith("local_")
+          ? presentationName.replace("local_", "")
+          : presentationName;
+
+        if (isLocal) {
+          // En entorno local, usar ruta relativa
+          return `${cleanName}/${imagePath}`;
+        } else {
+          // En GitHub Pages, usar raw.githubusercontent.com
+          return `https://raw.githubusercontent.com/manufosela/presen.tacion.es/main/${cleanName}/${imagePath}`;
+        }
+      }
+
+      /**
+       * Actualiza el título de la página con el nombre de la presentación
+       */
+      function updatePageTitle(presentationName) {
+        const title = presentationName
+          .split("/")
+          .pop()
+          .replace(/-/g, " ")
+          .toUpperCase();
+        document.title = title;
+      }
+
+      /**
+       * Muestra u oculta el elemento de carga
+       */
+      function toggleLoading(show = true) {
+        const loadingElement = document.getElementById("loading");
+        if (loadingElement) {
+          loadingElement.style.display = show ? "block" : "none";
+        }
+      }
+
+      /**
+       * Valida la estructura del contenido markdown y retorna errores encontrados
+       */
+      function validateMarkdownStructure(content) {
+        const errors = [];
+        const warnings = [];
+
+        // Validar que existe contenido después del YAML
+        const [metadata, markdownContent] = extractMetadata(content);
+
+        if (!markdownContent.trim()) {
+          errors.push(
+            "El archivo no contiene contenido markdown después de la metadata YAML."
+          );
+          return { errors, warnings, metadata };
+        }
+
+        // Validar slides
+        const slideMarkers = markdownContent.match(/<!-- SLIDE -->/g);
+        if (!slideMarkers || slideMarkers.length === 0) {
+          errors.push(
+            "No se encontraron marcadores '<!-- SLIDE -->' en el contenido."
+          );
+        } else {
+          console.log(
+            `✓ Encontrados ${slideMarkers.length} marcadores de slide`
+          );
+        }
+
+        // Validar estructura de columnas y grids
+        const columnStart = markdownContent.match(/\$COLUMNS\$/g);
+        const columnEnd = markdownContent.match(/\$END\$/g);
+        const gridStart = markdownContent.match(/\$GRID\$/g);
+
+        if (columnStart && columnEnd) {
+          if (columnStart.length !== columnEnd.length) {
+            errors.push(
+              `Estructura de columnas desbalanceada: ${columnStart.length} $COLUMNS$ pero ${columnEnd.length} $END$`
+            );
+          }
+        }
+
+        if (gridStart && columnEnd) {
+          if (gridStart.length > columnEnd.length) {
+            errors.push(
+              `Estructura de grid desbalanceada: ${gridStart.length} $GRID$ pero ${columnEnd.length} $END$`
+            );
+          }
+        }
+
+        // Validar marcadores huérfanos
+        const orphanCols = markdownContent.match(/\$COL\$/g);
+        if (
+          orphanCols &&
+          (!columnStart || orphanCols.length > columnStart.length * 3)
+        ) {
+          warnings.push(
+            `Posibles marcadores $COL$ huérfanos detectados (${
+              orphanCols?.length || 0
+            } encontrados)`
+          );
+        }
+
+        // Validar imágenes rotas
+        const imageRefs = markdownContent.match(/!\[.*?\]\(.*?\)/g);
+        if (imageRefs) {
+          imageRefs.forEach((img) => {
+            const match = img.match(/!\[.*?\]\((.*?)\)/);
+            if (match && match[1]) {
+              const imgPath = match[1];
+              if (!imgPath.startsWith("http") && !imgPath.startsWith("data:")) {
+                console.log(`📷 Imagen encontrada: ${imgPath}`);
+              }
             }
+          });
+        }
+
+        // Validar imágenes de fondo personalizadas
+        const backgroundRefs = markdownContent.match(
+          /<!-- BACKGROUND: ([^\s]+) -->/g
+        );
+        if (backgroundRefs) {
+          backgroundRefs.forEach((bg) => {
+            const match = bg.match(/<!-- BACKGROUND: ([^\s]+) -->/);
+            if (match && match[1]) {
+              const bgPath = match[1];
+              console.log(`🖼️ Imagen de fondo encontrada: ${bgPath}`);
+              if (!bgPath.includes("/") && !bgPath.startsWith("http")) {
+                warnings.push(
+                  `Imagen de fondo '${bgPath}' debería estar en la carpeta 'images/' para mejor organización`
+                );
+              }
+            }
+          });
+        }
+
+        return { errors, warnings, metadata };
+      }
+
+      /**
+       * Valida la metadata YAML
+       */
+      function validateYamlMetadata(metadata) {
+        const errors = [];
+        const warnings = [];
+
+        // Validar colores si existen
+        if (metadata.colors) {
+          Object.entries(metadata.colors).forEach(([key, value]) => {
+            if (typeof value === "string" && value.includes("#")) {
+              // Validar formato de color hexadecimal
+              const colorMatch = value.match(/#[0-9A-Fa-f]{3,6}/);
+              if (!colorMatch) {
+                warnings.push(
+                  `Color potencialmente inválido en '${key}': ${value}`
+                );
+              }
+            }
+          });
+        }
+
+        // Validar tema
+        const validThemes = [
+          "white",
+          "black",
+          "league",
+          "beige",
+          "sky",
+          "night",
+          "serif",
+          "simple",
+          "solarized",
+          "blood",
+          "moon",
+          "dracula",
+        ];
+        if (metadata.theme && !validThemes.includes(metadata.theme)) {
+          warnings.push(
+            `Tema '${
+              metadata.theme
+            }' no reconocido. Temas válidos: ${validThemes.join(", ")}`
+          );
+        }
+
+        return { errors, warnings };
+      }
+
+      /**
+       * Muestra un mensaje de error detallado en la presentación
+       */
+      function showError(message, details = null) {
+        const revealElement = document.querySelector(SELECTORS.REVEAL);
+        if (revealElement) {
+          let detailsHtml = "";
+          if (details) {
+            if (details.errors && details.errors.length > 0) {
+              detailsHtml +=
+                '<div class="error-details"><h3>🚨 Errores críticos:</h3><ul>';
+              details.errors.forEach((error) => {
+                detailsHtml += `<li class="error-item">${error}</li>`;
+              });
+              detailsHtml += "</ul></div>";
+            }
+
+            if (details.warnings && details.warnings.length > 0) {
+              detailsHtml +=
+                '<div class="warning-details"><h3>⚠️ Advertencias:</h3><ul>';
+              details.warnings.forEach((warning) => {
+                detailsHtml += `<li class="warning-item">${warning}</li>`;
+              });
+              detailsHtml += "</ul></div>";
+            }
+
+            if (details.metadata) {
+              detailsHtml +=
+                '<div class="metadata-info"><h3>📋 Metadata encontrada:</h3><pre>' +
+                JSON.stringify(details.metadata, null, 2) +
+                "</pre></div>";
+            }
+          }
+
+          revealElement.innerHTML = `
+                    <div class="error-message">
+                        <h2>🔧 Error en la presentación</h2>
+                        <p class="error-main">${message}</p>
+                        ${detailsHtml}
+                        <div class="help-info">
+                          <h3>💡 Ayuda:</h3>
+                          <p>Revisa la estructura de tu archivo contenidos.md:</p>
+                          <ul>
+                            <li>Debe comenzar con metadata YAML entre --- y ---</li>
+                            <li>Cada slide debe empezar con &lt;!-- SLIDE --&gt;</li>
+                            <li>Los marcadores $COLUMNS$ deben cerrarse con $END$</li>
+                            <li>Verifica que las rutas de las imágenes sean correctas</li>
+                          </ul>
+                        </div>
+                    </div>
+                `;
+        }
+      }
+
+      // ==================== METADATA PROCESSING ====================
+
+      /**
+       * Extrae metadatos YAML del contenido markdown
+       */
+      function extractMetadata(content) {
+        if (!content.startsWith("---")) {
+          return [{}, content];
+        }
+
+        const metadataEnd = content.indexOf("---", 3);
+        if (metadataEnd === -1) {
+          return [{}, content];
+        }
+
+        const metadataText = content.substring(3, metadataEnd);
+        const markdownContent = content.substring(metadataEnd + 3);
+
+        return [parseYamlMetadata(metadataText), markdownContent];
+      }
+
+      /**
+       * Elimina comentarios YAML pero preserva # en valores (como colores hexadecimales)
+       */
+      function removeYamlComment(value) {
+        if (!value.includes("#")) return value;
+
+        // Si el valor está entre comillas, busca el # fuera de las comillas
+        if (
+          (value.startsWith('"') && value.includes('"', 1)) ||
+          (value.startsWith("'") && value.includes("'", 1))
+        ) {
+          const quoteChar = value[0];
+          const endQuoteIndex = value.indexOf(quoteChar, 1);
+          if (endQuoteIndex !== -1) {
+            const quotedValue = value.substring(0, endQuoteIndex + 1);
+            const afterQuote = value.substring(endQuoteIndex + 1);
+            const commentIndex = afterQuote.indexOf("#");
+            if (commentIndex !== -1) {
+              return quotedValue.trim();
+            }
+          }
+          return value;
+        }
+
+        // Para valores sin comillas, busca # precedido por espacio (comentario)
+        const spaceHashIndex = value.indexOf(" #");
+        if (spaceHashIndex !== -1) {
+          return value.substring(0, spaceHashIndex).trim();
+        }
+
+        // Si # está al inicio o no precedido por espacio, probablemente es parte del valor
+        return value;
+      }
+
+      /**
+       * Parsea el texto YAML a objeto
+       */
+      function parseYamlMetadata(yamlText) {
+        const metadata = {};
+        const lines = yamlText.split("\n");
+        let currentSection = null;
+
+        for (const line of lines) {
+          if (!line.trim()) continue;
+
+          // Detecta indentación
+          const indentMatch = line.match(/^(\s*)/);
+          const indent = indentMatch ? indentMatch[1].length : 0;
+          const trimmedLine = line.trim();
+
+          // Ignora líneas que no contienen ':'
+          const colonIndex = trimmedLine.indexOf(":");
+          if (colonIndex === -1) continue;
+
+          const key = trimmedLine.slice(0, colonIndex).trim();
+          let value = trimmedLine.slice(colonIndex + 1).trim();
+
+          // Elimina comentarios (pero preserva # en valores como colores)
+          value = removeYamlComment(value);
+
+          if (indent === 0) {
+            // Línea de nivel superior
+            if (!value) {
+              // Es una sección (objeto anidado)
+              currentSection = key;
+              metadata[currentSection] = {};
+            } else {
+              // Es un valor directo
+              metadata[key] = cleanYamlValue(value);
+              currentSection = null;
+            }
+          } else if (indent > 0 && currentSection) {
+            // Línea anidada dentro de una sección
+            if (value) {
+              metadata[currentSection][key] = cleanYamlValue(value);
+            }
+          }
+        }
+
+        return metadata;
+      }
+
+      /**
+       * Limpia y convierte valores YAML a tipos JavaScript apropiados
+       */
+      function cleanYamlValue(value) {
+        if (!value) return "";
+
+        // Elimina comillas al inicio y final
+        if (
+          (value.startsWith('"') && value.endsWith('"')) ||
+          (value.startsWith("'") && value.endsWith("'"))
+        ) {
+          return value.slice(1, -1);
+        }
+
+        // Convierte booleanos
+        if (value === "true") return true;
+        if (value === "false") return false;
+
+        // Convierte números
+        if (!isNaN(value) && !isNaN(parseFloat(value))) {
+          return parseFloat(value);
+        }
+
+        return value;
+      }
+
+      // Función para extraer y parsear el frontmatter YAML de un archivo markdown
+      function parseFrontmatter(markdownContent) {
+        const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---/;
+        const match = markdownContent.match(frontmatterRegex);
+
+        if (match && match[1]) {
+          return parseYamlMetadata(match[1]);
+        }
+
+        return {};
+      }
+
+      // ==================== CSS STYLING ====================
+
+      /**
+       * Aplica variables CSS basadas en metadatos
+       */
+      function applyCSSVariables(metadata) {
+        applyColorVariables(metadata.colors);
+        applyFontVariables(metadata.fonts);
+        applyBaseFontSize(metadata.fontSize);
+      }
+
+      /**
+       * Aplica variables de color
+       */
+      function applyColorVariables(colors) {
+        if (!colors) return;
+
+        // DEPURACIÓN: Mostrar los colores que se van a aplicar
+        console.log("applyColorVariables colors:", colors);
+
+        const colorMappings = {
+          color: [
+            "--custom-color",
+            "--r-main-color",
+            "--r-link-color",
+            "--r-link-color-hover",
+            "--r-selection-background-color",
+          ],
+          "main-color": ["--r-main-secondary-color"],
+          background: ["--r-background-color"],
+          "text-color": ["--r-main-text-color"],
+          "heading1-color": ["--heading1-color"],
+          "heading-color": ["--heading1-color"],
+          "heading2-color": ["--heading2-color"],
+          "heading3-color": ["--heading3-color"],
+        };
+
+        Object.entries(colorMappings).forEach(([colorKey, cssVars]) => {
+          if (colors[colorKey]) {
+            cssVars.forEach((cssVar) => {
+              document.documentElement.style.setProperty(
+                cssVar,
+                colors[colorKey]
+              );
+            });
+          }
+        });
+      }
+
+      /**
+       * Aplica variables de fuente
+       */
+      function applyFontVariables(fonts) {
+        if (fonts?.["heading-fontsize"]) {
+          document.documentElement.style.setProperty(
+            "--heading-fontsize",
+            fonts["heading-fontsize"]
+          );
+        }
+      }
+
+      /**
+       * Aplica el tamaño de fuente base
+       */
+      function applyBaseFontSize(fontSize) {
+        if (fontSize) {
+          // Aplicar a la variable CSS de Pico
+          document.documentElement.style.setProperty("--font-size", fontSize);
+          // Aplicar al body y reveal como respaldo
+          document.body.style.fontSize = fontSize;
+          const reveal = document.querySelector(SELECTORS.REVEAL);
+          if (reveal) {
+            reveal.style.fontSize = fontSize;
+          }
+          // Aplicar a los encabezados
+          const headings = document.querySelectorAll(
+            ".reveal .slides section h1, .reveal .slides section h2, .reveal .slides section h3"
+          );
+          headings.forEach((heading) => {
+            const level = heading.tagName[1];
+            const size =
+              level === "1"
+                ? fontSize
+                : level === "2"
+                ? `calc(${fontSize} * 0.85)`
+                : `calc(${fontSize} * 0.7)`;
+            heading.style.setProperty("font-size", size, "important");
+          });
+        }
+      }
+
+      // ==================== BACKGROUND HANDLING ====================
+
+      /**
+       * Configura el fondo de la presentación
+       */
+      async function setupBackground(presentationName, metadata) {
+        await applyBackgroundColor(metadata.colors?.background);
+        await applyBackgroundImage(presentationName);
+        toggleLoading(false);
+      }
+
+      /**
+       * Aplica color de fondo si está definido
+       */
+      async function applyBackgroundColor(backgroundColor) {
+        if (!backgroundColor) return;
+
+        document.documentElement.style.setProperty(
+          "--r-background-color",
+          backgroundColor
+        );
+        document.querySelector(SELECTORS.REVEAL).style.backgroundColor =
+          backgroundColor;
+        document.body.style.backgroundColor = backgroundColor;
+      }
+
+      /**
+       * Aplica imagen de fondo si existe
+       */
+      async function applyBackgroundImage(presentationName) {
+        try {
+          if (presentationName) {
+            let imageUrl;
+            if (presentationName.startsWith("local_")) {
+              // Para presentaciones locales, obtener la imagen del sessionStorage
+              const basePath = presentationName.replace("local_", "");
+              const imageContent = sessionStorage.getItem(
+                `local_${basePath}/template.webp`
+              );
+              if (imageContent) {
+                // La imagen ya está en formato data URL
+                imageUrl = imageContent;
+              }
+            } else {
+              // Para presentaciones remotas o locales no cargadas por sessionStorage
+              imageUrl = buildImageUrl(presentationName, "template.webp");
+            }
+
+            if (imageUrl) {
+              const img = new Image();
+              img.onload = () => {
+                // Aplica el color de fondo primero (ya hecho en applyBackgroundColor)
+                // Aplica la imagen de fondo encima, ajustada a la vista
+                document.body.style.backgroundImage = `url('${imageUrl}')`;
+                document.body.style.backgroundSize = "cover";
+                document.body.style.backgroundPosition = "center";
+                document.body.style.backgroundRepeat = "no-repeat";
+                document.body.style.backgroundAttachment = "fixed";
+
+                const reveal = document.querySelector(".reveal");
+                if (reveal) {
+                  reveal.style.backgroundImage = `url('${imageUrl}')`;
+                  reveal.style.backgroundSize = "cover";
+                  reveal.style.backgroundPosition = "center";
+                  reveal.style.backgroundRepeat = "no-repeat";
+                  reveal.style.backgroundAttachment = "fixed";
+                }
+
+                // Asegura que el contenedor de slides y las secciones sean transparentes
+                const slides = document.querySelector(".slides");
+                if (slides) {
+                  slides.style.background = "transparent";
+                }
+                const sections = document.querySelectorAll(".slides section");
+                sections.forEach((section) => {
+                  section.style.background = "transparent";
+                });
+              };
+              img.onerror = () => {
+                console.warn("No se pudo cargar la imagen de fondo");
+              };
+              img.src = imageUrl;
+            }
+          }
+        } catch (error) {
+          console.warn("No se pudo cargar la imagen de fondo:", error);
+        }
+      }
+
+      /**
+       * Crea estilos para la imagen de fondo
+       */
+      function createBackgroundImageStyles(imageUrl) {
+        const style = document.createElement("style");
+        style.textContent = `
+                .reveal {
+                    background-image: url('${imageUrl}') !important;
+                    background-size: contain !important;
+                    background-position: center !important;
+                    background-repeat: no-repeat !important;
+                }
+                .reveal .slides {
+                    background: transparent !important;
+                }
+                .reveal .slides section {
+                    background: transparent !important;
+                }
+                .reveal .viewport {
+                    width: 100vw !important;
+                    height: 100vh !important;
+                    overflow: hidden !important;
+                }
+            `;
+        document.head.appendChild(style);
+      }
+
+      // ==================== THEME LOADING ====================
+
+      /**
+       * Carga el tema CSS de Reveal.js
+       */
+      async function loadTheme(themeName = DEFAULT_THEME) {
+        return new Promise((resolve) => {
+          const themeLink = document.createElement("link");
+          themeLink.rel = "stylesheet";
+          themeLink.href = `https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/${themeName}.css`;
+          themeLink.onload = resolve;
+          document.head.appendChild(themeLink);
+        });
+      }
+
+      // ==================== REVEAL.JS CONFIGURATION ====================
+
+      /**
+       * Crea la configuración para Reveal.js
+       */
+      function createRevealConfig(metadata) {
+        return {
+          ...metadata,
+          hash: true,
+          slideNumber: true,
+          controls: true,
+          progress: true,
+          center: true,
+          transition: metadata.transition || "slide",
+          transitionSpeed: metadata.transitionSpeed || "default",
+          theme: metadata.theme || DEFAULT_THEME,
+          backgroundTransition: "none",
+          plugins: [RevealMarkdown, RevealNotes],
+          markdown: {
+            smartypants: true,
+            gfm: true,
+          },
+        };
+      }
+
+      /**
+       * Configura los estilos de encabezados después de la inicialización
+       */
+      function setupHeadingStyles(metadata) {
+        const colors = getHeadingColors(metadata);
+        const fontSize = metadata.fontSize || DEFAULT_FONT_SIZE;
+        const headingFontSize = metadata.fonts?.["heading-fontsize"] || "3rem";
+
+        createHeadingStyles(colors, fontSize, headingFontSize);
+        applyHeadingStyles(colors, fontSize, headingFontSize);
+      }
+
+      /**
+       * Obtiene los colores de encabezados con fallbacks
+       */
+      function getHeadingColors(metadata) {
+        return {
+          h1:
+            metadata.colors?.["heading1-color"] ||
+            metadata.colors?.["main-color"] ||
+            DEFAULT_COLORS.h1,
+          h2: metadata.colors?.["heading2-color"] || DEFAULT_COLORS.h2,
+          h3: metadata.colors?.["heading3-color"] || DEFAULT_COLORS.h3,
+        };
+      }
+
+      /**
+       * Crea estilos CSS para los encabezados
+       */
+      function createHeadingStyles(colors, fontSize, headingFontSize) {
+        const style = document.createElement("style");
+        style.textContent = `
+                .reveal .slides section {
+                    font-size: ${fontSize} !important;
+                }
+                .reveal .slides section h1 {
+                    font-size: ${headingFontSize} !important;
+                    color: ${colors.h1} !important;
+                }
+                .reveal .slides section h2 {
+                    font-size: calc(${headingFontSize} * 0.85) !important;
+                    color: ${colors.h2} !important;
+                }
+                .reveal .slides section h3 {
+                    font-size: calc(${headingFontSize} * 0.7) !important;
+                    color: ${colors.h3} !important;
+                }
+            `;
+        document.head.appendChild(style);
+      }
+
+      /**
+       * Aplica estilos directamente a elementos existentes
+       */
+      function applyHeadingStyles(colors, fontSize, headingFontSize) {
+        // Aplicar tamaño base a las secciones
+        const sections = document.querySelectorAll(".reveal .slides section");
+        sections.forEach((section) => {
+          section.style.setProperty("font-size", fontSize, "important");
         });
 
-        // Procesar markdown en columnas y grids
-        document.querySelectorAll('.columns > div').forEach(cell => {
-            if (cell.hasAttribute('data-markdown')) {
-                const md = decodeURIComponent(cell.getAttribute('data-markdown'));
-                cell.innerHTML = marked.parse(md);
+        // Aplicar tamaños a los encabezados
+        const headings = document.querySelectorAll(
+          ".reveal .slides section h1, .reveal .slides section h2, .reveal .slides section h3"
+        );
+        headings.forEach((heading) => {
+          const level = heading.tagName[1];
+          const color = colors[`h${level}`];
+          const size =
+            level === "1"
+              ? headingFontSize
+              : level === "2"
+              ? `calc(${headingFontSize} * 0.85)`
+              : `calc(${headingFontSize} * 0.7)`;
+
+          heading.style.setProperty("color", color, "important");
+          heading.style.setProperty("font-size", size, "important");
+        });
+      }
+
+      // ==================== SLIDE PROCESSING ====================
+
+      /**
+       * Divide el contenido en diapositivas principales y subdiapositivas
+       * @param {string} content - Markdown completo
+       * @returns {Array} Array de slides, cada uno puede tener subslides
+       */
+      function splitIntoSlides(content) {
+        // Separa por SLIDE
+        const mainSlides = content
+          .split("<!-- SLIDE -->")
+          .filter((s) => s.trim());
+        return mainSlides.map((slideBlock) => {
+          // Separa por SUBSLIDE
+          const subSlides = slideBlock
+            .split("<!-- SUBSLIDE -->")
+            .map((s) => s.trim())
+            .filter(Boolean);
+          return subSlides;
+        });
+      }
+
+      /**
+       * Procesa el contenido markdown y crea las diapositivas y subdiapositivas
+       */
+      function processSlides(markdownContent, presentationName, metadata) {
+        const slidesContainer = document.querySelector(
+          SELECTORS.SLIDES_CONTAINER
+        );
+        if (!slidesContainer) {
+          throw new Error("No se encontró el contenedor de diapositivas");
+        }
+
+        // Ahora cada elemento de slides es un array: [principal, sub1, sub2...]
+        const slides = splitIntoSlides(markdownContent);
+        slides.forEach((subSlidesArr) => {
+          // Si solo hay una, es una slide normal
+          if (subSlidesArr.length === 1) {
+            const slideElement = createSlideElement(
+              subSlidesArr[0],
+              presentationName,
+              metadata
+            );
+            slidesContainer.appendChild(slideElement);
+          } else {
+            // Si hay varias, la primera es la principal, el resto subslides
+            const section = document.createElement("section");
+            subSlidesArr.forEach((subSlideContent) => {
+              const subSection = createSlideElement(
+                subSlideContent,
+                presentationName,
+                metadata
+              );
+              section.appendChild(subSection);
+            });
+            slidesContainer.appendChild(section);
+          }
+        });
+      }
+
+      /**
+       * Crea un elemento de diapositiva
+       */
+      function createSlideElement(slideContent, presentationName, metadata) {
+        const { mainContent, notes, backgroundImage, iframeUrl, isInverted } =
+          extractSlideContent(slideContent);
+
+        if (iframeUrl) {
+          console.log(`📋 Creando slide IFRAME: ${iframeUrl}`);
+        }
+        const htmlContent = processMarkdownContent(
+          mainContent,
+          presentationName
+        );
+
+        const section = document.createElement("section");
+
+        // Aplicar colores invertidos si está marcado
+        if (isInverted && metadata?.colors) {
+          const bgColor = metadata.colors['text-color'] || '#000000';
+          const textColor = metadata.colors['background'] || '#FFFFFF';
+          section.setAttribute("data-background-color", bgColor);
+          section.setAttribute("data-inverted", "true");
+          section.setAttribute("data-inverted-text-color", textColor);
+        }
+
+        // Añadir imagen de fondo personalizada si existe
+        if (backgroundImage) {
+          let imageUrl;
+
+          // Manejar imágenes para presentaciones locales
+          if (presentationName.startsWith("local_")) {
+            const basePath = presentationName.replace("local_", "");
+            const imageContent = sessionStorage.getItem(
+              `local_${basePath}/${backgroundImage}`
+            );
+            if (imageContent) {
+              imageUrl = imageContent; // Ya es data URL
+            } else {
+              imageUrl = buildImageUrl(presentationName, backgroundImage);
             }
+          } else {
+            imageUrl = buildImageUrl(presentationName, backgroundImage);
+          }
+
+          section.setAttribute("data-background-image", imageUrl);
+          section.setAttribute("data-background-size", "cover");
+          section.setAttribute("data-background-position", "center");
+          section.setAttribute("data-background-repeat", "no-repeat");
+          console.log(`🖼️ Aplicando imagen de fondo: ${backgroundImage}`);
+        }
+
+        // Si hay iframe, crear slide especial para iframe
+        if (iframeUrl) {
+          // Añadir clase especial a la sección para iframes
+          section.classList.add("iframe-slide");
+          console.log(`🔧 Creando slide para iframe: ${iframeUrl}`);
+
+          // Crear iframe que ocupe todo el viewport
+          const iframe = document.createElement("iframe");
+          iframe.src = iframeUrl;
+          iframe.className = "fullscreen-iframe"; // Añadir clase CSS específica
+          iframe.id = `iframe-${Date.now()}-${Math.random()
+            .toString(36)
+            .substr(2, 9)}`; // ID único
+          iframe.setAttribute("allowfullscreen", "true");
+          iframe.setAttribute("loading", "eager");
+
+          // Debug: eventos para verificar qué pasa
+          iframe.onload = () => {
+            console.log(`✅ Iframe cargado exitosamente: ${iframeUrl}`);
+          };
+          iframe.onerror = (e) => {
+            console.error(`❌ Error cargando iframe: ${iframeUrl}`, e);
+          };
+
+          // Probar sin sandbox primero
+          // iframe.setAttribute("sandbox", "allow-scripts allow-same-origin allow-forms allow-popups allow-presentation");
+
+          section.appendChild(iframe);
+
+          // Si hay contenido adicional, añadirlo como overlay opcional
+          if (mainContent.trim()) {
+            const overlayDiv = document.createElement("div");
+            overlayDiv.innerHTML = htmlContent;
+            overlayDiv.style.position = "absolute";
+            overlayDiv.style.top = "10px";
+            overlayDiv.style.left = "10px";
+            overlayDiv.style.background = "rgba(0,0,0,0.7)";
+            overlayDiv.style.color = "white";
+            overlayDiv.style.padding = "10px";
+            overlayDiv.style.borderRadius = "5px";
+            overlayDiv.style.zIndex = "2";
+            overlayDiv.style.maxWidth = "300px";
+            section.appendChild(overlayDiv);
+          }
+
+          console.log(`🖼️ Iframe añadido: ${iframeUrl}`);
+        } else {
+          // Añadir contenido principal normal
+          const mainDiv = document.createElement("div");
+          mainDiv.innerHTML = htmlContent;
+          section.appendChild(mainDiv);
+        }
+
+        // Añadir notas si existen
+        if (notes) {
+          section.appendChild(createNotesElement(notes));
+        }
+
+        return section;
+      }
+
+      /**
+       * Extrae contenido principal y notas de una diapositiva
+       */
+      function extractSlideContent(slideContent) {
+        // Buscar imagen de fondo personalizada
+        const backgroundMatch = slideContent.match(
+          /<!-- BACKGROUND: ([^\s]+) -->/
+        );
+        const backgroundImage = backgroundMatch ? backgroundMatch[1] : null;
+
+        // Buscar iframe (permite URLs con parámetros)
+        const iframeMatch = slideContent.match(/<!-- IFRAME: (.+?) -->/);
+        const iframeUrl = iframeMatch ? iframeMatch[1].trim() : null;
+
+        // Buscar marcador de colores invertidos
+        const invertedMatch = slideContent.match(/<!-- INVERTED -->/);
+        const isInverted = invertedMatch !== null;
+
+        if (iframeUrl) {
+          console.log(`🔍 Iframe detectado: ${iframeUrl}`);
+        }
+
+        if (isInverted) {
+          console.log(`🎨 Slide con colores invertidos`);
+        }
+
+        // Buscar notas
+        const notesMatch = slideContent.match(
+          /<!-- NOTES -->([\s\S]*?)(?=<!-- SLIDE -->|$)/
+        );
+
+        let mainContent = slideContent;
+        let notes = "";
+
+        // Remover comentarios especiales del contenido principal
+        if (backgroundMatch) {
+          mainContent = mainContent
+            .replace(/<!-- BACKGROUND: [^\s]+ -->/, "")
+            .trim();
+        }
+        if (iframeMatch) {
+          mainContent = mainContent.replace(/<!-- IFRAME: .+? -->/, "").trim();
+        }
+        if (invertedMatch) {
+          mainContent = mainContent.replace(/<!-- INVERTED -->/, "").trim();
+        }
+
+        if (notesMatch) {
+          mainContent = mainContent.split("<!-- NOTES -->")[0].trim();
+          if (backgroundMatch) {
+            mainContent = mainContent
+              .replace(/<!-- BACKGROUND: [^\s]+ -->/, "")
+              .trim();
+          }
+          if (invertedMatch) {
+            mainContent = mainContent.replace(/<!-- INVERTED -->/, "").trim();
+          }
+          notes = notesMatch[1].trim();
+        }
+
+        return {
+          mainContent: mainContent,
+          notes: notes,
+          backgroundImage: backgroundImage,
+          iframeUrl: iframeUrl,
+          isInverted: isInverted,
+        };
+      }
+
+      /**
+       * Procesa el contenido markdown de una diapositiva
+       */
+      function processMarkdownContent(content, presentationName) {
+        // Primero procesa columnas y grids en el texto plano
+        let processedContent = processColumns(content);
+        processedContent = processGrids(processedContent);
+        // Luego parsea el markdown
+        let htmlContent = marked.parse(processedContent);
+        // Finalmente procesa rutas de imágenes
+        htmlContent = processImagePaths(htmlContent, presentationName);
+        return htmlContent;
+      }
+
+      /**
+       * Procesa formato de columnas
+       */
+      function processColumns(content) {
+        return content.replace(
+          /\$COLUMNS\$(.*?)\$END\$/gs,
+          (match, columnsContent) => {
+            const columns = columnsContent
+              .split("$COL$")
+              .map((col) => col.trim())
+              .filter(Boolean);
+            return `<div class="columns">
+              ${columns
+                .map(
+                  (col) =>
+                    `<div data-markdown="${encodeURIComponent(col)}"></div>`
+                )
+                .join("\n")}
+            </div>`;
+          }
+        );
+      }
+
+      /**
+       * Procesa formato de grids
+       */
+      function processGrids(content) {
+        return content.replace(
+          /\$GRID\$(.*?)\$END\$/gs,
+          (match, gridContent) => {
+            const rows = gridContent
+              .split("$ROW$")
+              .map((row) => row.trim())
+              .filter((row) => row);
+
+            const processedRows = rows.map((row) => {
+              const cells = row
+                .split("$CELL$")
+                .map((cell) => cell.trim())
+                .filter((cell) => cell);
+
+              return `<div class="grid-row">
+${cells
+  .map(
+    (cell) =>
+      `<div class="grid-cell" data-markdown="${encodeURIComponent(
+        cell
+      )}"></div>`
+  )
+  .join("\n")}
+</div>`;
+            });
+
+            return `<div class="grid-container">
+${processedRows.join("\n")}
+</div>`;
+          }
+        );
+      }
+
+      /**
+       * Procesa rutas de imágenes
+       */
+      function processImagePaths(htmlContent, presentationName) {
+        // Si es una presentación local
+        if (presentationName.startsWith("local_")) {
+          return htmlContent
+            .replace(/src="images\/([^"]+)"/g, (match, filename) => {
+              const content = sessionStorage.getItem(
+                `${presentationName}/images/${filename}`
+              );
+              if (content) {
+                return `src="data:image/webp;base64,${btoa(content)}"`;
+              }
+              return match;
+            })
+            .replace(/src='images\/([^']+)'/g, (match, filename) => {
+              const content = sessionStorage.getItem(
+                `${presentationName}/images/${filename}`
+              );
+              if (content) {
+                return `src='data:image/webp;base64,${btoa(content)}'`;
+              }
+              return match;
+            });
+        }
+
+        // Reemplazar rutas de imágenes según el entorno
+        const imageBasePath = buildImageUrl(presentationName, "images/");
+        return htmlContent
+          .replace(/src="images\//g, `src="${imageBasePath}`)
+          .replace(/src='images\//g, `src='${imageBasePath}'`);
+      }
+
+      /**
+       * Crea elemento de notas para Speaker Notes
+       */
+      function createNotesElement(notes) {
+        const aside = document.createElement("aside");
+        aside.setAttribute("class", "notes");
+        aside.setAttribute("data-markdown", "");
+
+        const notesTemplate = document.createElement("script");
+        notesTemplate.type = "text/template";
+        notesTemplate.textContent = notes;
+        aside.appendChild(notesTemplate);
+
+        return aside;
+      }
+
+      /**
+       * Procesa markdown en elementos especiales después de la inicialización
+       */
+      function processSpecialElements(presentationName) {
+        processGridCells(presentationName);
+        processColumnCells(presentationName);
+      }
+
+      /**
+       * Procesa markdown en celdas de grid
+       */
+      function processGridCells(presentationName) {
+        const gridCells = document.querySelectorAll(
+          ".grid-cell[data-markdown]"
+        );
+        gridCells.forEach((cell) => {
+          const md = decodeURIComponent(
+            cell.getAttribute("data-markdown") || ""
+          );
+          let html = marked.parse(md);
+          html = processImagePaths(html, presentationName);
+          cell.innerHTML = html;
+        });
+      }
+
+      /**
+       * Procesa markdown en celdas de columnas
+       */
+      function processColumnCells(presentationName) {
+        const columnCells = document.querySelectorAll(
+          ".columns div[data-markdown]"
+        );
+        columnCells.forEach((cell) => {
+          const md = decodeURIComponent(
+            cell.getAttribute("data-markdown") || ""
+          );
+          let html = marked.parse(md);
+          html = processImagePaths(html, presentationName);
+          cell.innerHTML = html;
+        });
+      }
+
+      // ==================== MAIN PRESENTATION LOADER ====================
+
+      /**
+       * Carga y configura la presentación completa
+       */
+      async function loadPresentation(presentationName) {
+        try {
+          toggleLoading(true);
+
+          // Actualizar título de la página
+          updatePageTitle(presentationName);
+
+          // Cargar contenido
+          const content = await fetchPresentationContent(presentationName);
+          const [metadata, markdownContent] = extractMetadata(content);
+
+          // DEPURACIÓN: Mostrar metadatos leídos del YAML
+          console.log("metadata:", metadata);
+
+          // Aplicar configuración
+          applyCSSVariables(metadata);
+          await setupBackground(presentationName, metadata);
+          await loadTheme(metadata.theme);
+
+          // Configurar Reveal.js
+          const revealConfig = createRevealConfig(metadata);
+          const deck = new Reveal(revealConfig);
+
+          // Procesar diapositivas
+          processSlides(markdownContent, presentationName, metadata);
+
+          // Configurar eventos y finalizar
+          setupRevealEvents(deck, metadata);
+          await deck.initialize();
+
+          // Aplicar transición después de initialize
+          deck.configure({
+            transition: metadata.transition || "slide",
+            transitionSpeed: metadata.transitionSpeed || "default",
+          });
+
+          // Procesar elementos especiales
+          processSpecialElements(presentationName);
+        } catch (error) {
+          console.error("Error al cargar la presentación:", error);
+
+          // Intentar obtener más detalles del error
+          let errorDetails = null;
+
+          // Si hay contenido disponible, validarlo para dar más información
+          if (typeof content !== "undefined" && content) {
+            try {
+              const validation = validateMarkdownStructure(content);
+              const yamlValidation = validateYamlMetadata(validation.metadata);
+
+              errorDetails = {
+                errors: [...validation.errors, ...yamlValidation.errors],
+                warnings: [...validation.warnings, ...yamlValidation.warnings],
+                metadata: validation.metadata,
+              };
+
+              console.log("Validación completa:", errorDetails);
+
+              if (errorDetails.errors.length === 0) {
+                // Si no hay errores estructurales, el problema es de otro tipo
+                errorDetails.errors.push(`Error técnico: ${error.message}`);
+              }
+            } catch (validationError) {
+              console.error("Error en la validación:", validationError);
+              errorDetails = {
+                errors: [
+                  `Error de validación: ${validationError.message}`,
+                  `Error original: ${error.message}`,
+                ],
+                warnings: [],
+                metadata: null,
+              };
+            }
+          }
+
+          showError(
+            `Error al cargar la presentación: ${error.message}`,
+            errorDetails
+          );
+        }
+      }
+
+      /**
+       * Obtiene el contenido de la presentación desde el servidor
+       */
+      function findMarkdownFileInStorage(presentationName) {
+        if (presentationName.startsWith("local_")) {
+          const basePath = presentationName.replace("local_", "");
+          // Buscar cualquier archivo .md en sessionStorage
+          for (let i = 0; i < sessionStorage.length; i++) {
+            const key = sessionStorage.key(i);
+            if (key.startsWith(`local_${basePath}/`) && key.endsWith(".md")) {
+              return key.replace(`local_${basePath}/`, "");
+            }
+          }
+        }
+        return "contenidos.md"; // fallback
+      }
+
+      async function fetchPresentationContent(presentationName) {
+        if (presentationName.startsWith("local_")) {
+          const basePath = presentationName.replace("local_", "");
+          const mdFileName = findMarkdownFileInStorage(presentationName);
+
+          // En entorno de desarrollo local, cargar directamente del filesystem
+          if (isRunningLocally()) {
+            const mdPath = `${basePath}/${mdFileName}`;
+            const response = await fetch(mdPath + "?t=" + Date.now(), {
+              cache: "no-store",
+            });
+            if (!response.ok)
+              throw new Error(
+                "No se pudo cargar el contenido de la presentación local"
+              );
+            return await response.text();
+          }
+          // Producción (GitHub Pages): usa sessionStorage
+          const content = sessionStorage.getItem(
+            `local_${basePath}/${mdFileName}`
+          );
+          if (!content) {
+            throw new Error(
+              "No se pudo cargar el contenido de la presentación local desde sessionStorage"
+            );
+          }
+          return content;
+        }
+
+        // Construir la URL correcta según el entorno
+        const url = buildContentUrl(presentationName);
+        console.log(
+          "Intentando cargar desde:",
+          isRunningLocally() ? "LOCAL" : "GITHUB",
+          url
+        );
+        const response = await fetch(url + "?t=" + Date.now(), {
+          cache: "no-store",
+        });
+        if (!response.ok) {
+          console.error("Error al cargar:", url, "Status:", response.status);
+          throw new Error("No se pudo cargar el contenido de la presentación");
+        }
+        return await response.text();
+      }
+
+      /**
+       * Aplica estilos a slides invertidas
+       */
+      function applyInvertedSlidesStyles() {
+        const invertedSlides = document.querySelectorAll('.reveal .slides section[data-inverted="true"]');
+        invertedSlides.forEach((slide) => {
+          const textColor = slide.getAttribute('data-inverted-text-color');
+          if (textColor) {
+            // Aplicar color de texto a todos los elementos
+            slide.querySelectorAll('h1, h2, h3, h4, h5, h6, p, li, a, span, strong, em').forEach((el) => {
+              el.style.setProperty('color', textColor, 'important');
+            });
+          }
+        });
+      }
+
+      /**
+       * Configura eventos de Reveal.js
+       */
+      function setupRevealEvents(deck, metadata) {
+        deck.addEventListener("ready", () => {
+          setTimeout(() => {
+            setupHeadingStyles(metadata);
+            applyInvertedSlidesStyles();
+            // Aplicar estilos nuevamente después de un breve retraso
+            setTimeout(() => {
+              const fontSize = metadata.fontSize || DEFAULT_FONT_SIZE;
+              const headingFontSize =
+                metadata.fonts?.["heading-fontsize"] || "3rem";
+              const colors = getHeadingColors(metadata);
+              applyHeadingStyles(colors, fontSize, headingFontSize);
+              applyInvertedSlidesStyles();
+            }, 100);
+          }, 100);
         });
 
-        document.querySelectorAll('.grid-cell').forEach(cell => {
-            if (cell.hasAttribute('data-markdown')) {
-                const md = decodeURIComponent(cell.getAttribute('data-markdown'));
-                cell.innerHTML = marked.parse(md);
-            }
+        // Aplicar estilos cuando cambia la diapositiva
+        deck.addEventListener("slidechanged", () => {
+          const fontSize = metadata.fontSize || DEFAULT_FONT_SIZE;
+          const headingFontSize =
+            metadata.fonts?.["heading-fontsize"] || "3rem";
+          const colors = getHeadingColors(metadata);
+          applyHeadingStyles(colors, fontSize, headingFontSize);
         });
+      }
+
+      // ==================== APPLICATION ENTRY POINT ====================
+
+      /**
+       * Inicializa la aplicación
+       */
+      function initializeApp() {
+        const presentationName = getPresentationName();
+
+        if (presentationName) {
+          console.log("Cargando presentación:", presentationName);
+          loadPresentation(presentationName);
+        } else {
+          showError("No se especificó ninguna presentación");
+        }
+      }
+
+      // Inicializar la aplicación
+      initializeApp();
     </script>
-</body>
-</html>
+    <script>
+      // Recarga automática solo en desarrollo (localhost)
+      if (
+        location.hostname === "localhost" ||
+        location.hostname === "127.0.0.1"
+      ) {
+        let lastMdContent = null;
+        let presentationName = null;
+        // Extrae el nombre de la presentación de la URL
+        function getPresentationName() {
+          const urlParams = new URLSearchParams(window.location.search);
+          return urlParams.get("presentacion");
+        }
+        async function checkMdUpdate() {
+          try {
+            if (!presentationName) {
+              presentationName = getPresentationName();
+            }
+            if (!presentationName) return;
+            let mdPath = `${presentationName}/contenidos.md`;
+            if (presentationName.startsWith("local_")) {
+              mdPath = `${presentationName.replace(
+                "local_",
+                ""
+              )}/contenidos.md`;
+            }
+            const res = await fetch(mdPath, { cache: "no-store" });
+            const text = await res.text();
+            if (lastMdContent !== null && lastMdContent !== text) {
+              location.reload();
+            }
+            lastMdContent = text;
+          } catch (e) {
+            // Silenciar errores si el archivo no existe
+          }
+        }
+        setInterval(checkMdUpdate, 2000);
+      }
+    </script>
+  
+
+</body></html>
