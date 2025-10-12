@@ -7,7 +7,7 @@ import sys
 import re
 
 def clean_standalone_html(html_content):
-    """Elimina scripts innecesarios del HTML standalone"""
+    """Elimina scripts innecesarios del HTML standalone y agrega inicialización de Reveal"""
 
     # Eliminar el script type="module" completo (toda la lógica de carga dinámica)
     html_content = re.sub(
@@ -24,6 +24,30 @@ def clean_standalone_html(html_content):
         html_content,
         flags=re.DOTALL
     )
+
+    # Agregar script de inicialización de Reveal.js antes del </body>
+    # Como el HTML ya está renderizado, solo necesitamos una inicialización básica
+    init_script = '''
+    <script>
+        // Re-inicialización de Reveal.js para standalone
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof Reveal !== 'undefined') {
+                Reveal.initialize({
+                    hash: true,
+                    slideNumber: true,
+                    controls: true,
+                    progress: true,
+                    center: true,
+                    transition: 'fade',
+                    transitionSpeed: 'slow',
+                    embedded: false
+                });
+            }
+        });
+    </script>
+</body>'''
+
+    html_content = html_content.replace('</body>', init_script)
 
     return html_content
 

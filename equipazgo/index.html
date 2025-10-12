@@ -339,4 +339,22 @@ El miedo a perder poder.</p>
     
   
 
+
+    <script>
+        // Re-inicialización de Reveal.js para standalone
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof Reveal !== 'undefined') {
+                Reveal.initialize({
+                    hash: true,
+                    slideNumber: true,
+                    controls: true,
+                    progress: true,
+                    center: true,
+                    transition: 'fade',
+                    transitionSpeed: 'slow',
+                    embedded: false
+                });
+            }
+        });
+    </script>
 </body></html>
