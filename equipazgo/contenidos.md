@@ -4,9 +4,9 @@ colors:
   color: "#000000"           # Color general para enlaces y elementos interactivos (negro tirantes)
   main-color: "#000000"      # Color principal (negro tirantes)
   background: "#FFB6C1"      # Color de fondo (rosa claro camisa)
-  heading-color: "#000000"   # Color de títulos principales (negro tirantes)
-  heading2-color: "#000000"  # Color de subtítulos (negro tirantes)
-  heading3-color: "#FFB6C1"  # Color de títulos terciarios (rosa)
+  heading-color: "#DF006f"   # Color de títulos principales (negro tirantes)
+  heading2-color: "#DF006f"  # Color de subtítulos (negro tirantes)
+  heading3-color: "#DF006f"  # Color de títulos terciarios (rosa)
   accent-color: "#FF69B4"    # Color de acentos (rosa más intenso)
   text-color: "#000000"      # Color del texto (negro tirantes)
   light-gray: "#F5F5F5"      # Gris claro
@@ -115,7 +115,7 @@ Como dos padres que lideran una familia: sin competir, repartiéndose tareas seg
 
 <!-- SLIDE -->
 
-### ¿Qué cualidades creéis que deben tener quienes lideren concurrentemente, en Equipazgo?
+## ¿Qué cualidades creéis que deben tener quienes lideren concurrentemente, en Equipazgo?
 
 <!-- SLIDE -->
 
@@ -152,7 +152,7 @@ No es solo guiar, es cuidar. Es hacer que las personas te importen de verdad.
 <!-- SLIDE -->
 <!-- INVERTED -->
 
-# Para ello es necesario
+## Para ello es necesario
 
 - ## Que te importen las personas
 
