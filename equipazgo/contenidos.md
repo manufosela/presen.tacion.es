@@ -66,10 +66,20 @@ Presentación personal de Mánu Fosela, autor del concepto de liderazgo afectivo
 
 Vivimos en una sociedad donde quienes nos dirigen no nos lideran. Y quienes lideran, muchas veces lo hacen desde el ego
 
-<!-- SUBSLIDE -->
+<!-- SLIDE -->
 <!-- INVERTED -->
 
-El modelo del líder solitario ha fracasado.
+## El modelo del líder solitario ha fracasado
+
+<!-- SLIDE -->
+
+## ¿Qué creeis que frena el liderazgo en vuestras empresas?
+
+<!-- NOTES -->
+
+Los egos que confrontan en lugar de colaborar.
+La jerarquía mal entendida que impone en vez de guiar.
+El miedo a perder poder.
 
 <!-- SLIDE -->
 
@@ -95,55 +105,64 @@ Equipazgo no es liderazgo compartido. Es liderazgo concurrente. Donde no hay par
 
 Donde no hay egos, hay generosidad directiva. Donde no hay jefes, hay referentes que se apoyan y se cubren.
 
+<!-- SLIDE -->
+
+## ¿Conocéis algún ejemplo de esto en vuestra empresa o entorno?
+
+<!-- NOTES -->
 Analogía:
 Como dos padres que lideran una familia: sin competir, repartiéndose tareas según fortalezas, y poniendo siempre por delante a ‘los hijos’.
 
-<!-- SUBSLIDE -->
+<!-- SLIDE -->
 
-¿Conocéis algún ejemplo de esto en vuestra empresa o entorno?
+### ¿Qué cualidades creéis que deben tener quienes lideren concurrentemente, en Equipazgo?
 
 <!-- SLIDE -->
 
-## Obstáculos reales al liderazgo sin ego
+## Mis claves de equipazgo
 
-<!-- SUBSLIDE -->
+- ## **Afecto genuino**
 
-### ¿Qué creeis que frena el liderazgo en vuestras empresas?
+- ## **Coherencia**
 
-<!-- NOTES -->
+- ## **Humildad**
 
-Los egos que confrontan en lugar de colaborar.
-La jerarquía mal entendida que impone en vez de guiar.
-El miedo a perder poder.
-
-<!-- SUBSLIDE -->
-<!-- INVERTED -->
-
-### Si no te gustan las personas, no lideres
-
-<!-- SLIDE -->
-
-## Claves de un equipazgo
-
-<!-- SUBSLIDE -->
-
-### ¿Qué cualidades creéis que deben tener quienes lideran juntos?
-
-<!-- SUBSLIDE -->
-
-### Mis claves de equipazgo
-
-- **Afecto genuino**
-- **Coherencia**
-- **Humildad**
-- **Escucha Activa**
+- ## **Escucha Activa**
 
 <!-- NOTES -->
 Las cuatro claves fundamentales para un equipazgo efectivo.
 
+- Afecto genuino -  Entre las personas que ejercen ese liderazgo concurrente
+- Coherencia - entre lo decimos y hacemos, actuar de acuerdo a tus principios
+- Humildad - y aqui entra se capaz de mostrar vulnerabilidad, valorar tus exitos sin creerte superior, alegrarte de los exitos de otros, admitir errores, que no lo sabes todo...
+- Escucha Activa - prestar atención completa a lo que otro dice, sin juzgar. Escuchar para entender no para responder.
+
+<!-- SLIDE -->
+## ¿Y como se consigue esto?
+
+<!-- SLIDE -->
+## Con un
+
+# LIDERAZGO AFECTIVO
+
+<!-- NOTES -->
+Liderar desde el afecto, la humanidad y la conexión emocional.
+No es solo guiar, es cuidar. Es hacer que las personas te importen de verdad.
+
+<!-- SLIDE -->
+<!-- INVERTED -->
+
+# Para ello es necesario
+
+- ## Que te importen las personas
+
+- ## Marcar límites
+
+- ## Dar ejemplo
+
 <!-- SLIDE -->
 
-## Debate
+# ¿Qué opinais?
 
 <!-- NOTES -->
 ¿Qué barreras encontráis para aplicar el equipazgo?
@@ -155,11 +174,11 @@ Las cuatro claves fundamentales para un equipazgo efectivo.
 <!-- SLIDE -->
 <!-- INVERTED -->
 
-**"Liderar una empresa es dirigirla teniendo en cuenta las emociones de las personas que la conforman. Y para eso hay que liderar desde el afecto."**
+# **"Liderar una empresa es dirigirla teniendo en cuenta las emociones de las personas que la conforman"**
 
 <!-- SLIDE -->
 
-## GRANCIAS
+# GRANCIAS
 
 ![Grancias](images/grancias.png)
 

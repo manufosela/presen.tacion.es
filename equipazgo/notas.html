@@ -90,13 +90,18 @@
             color: #000000;
         }
 
-        /* Estilos de impresión - Tamaño A6 (una tarjeta por página) */
+        /* Estilos de impresión - 1 tarjeta A6 por página */
         @page {
-            size: A6;
-            margin: 10mm;
+            size: A6 landscape;
+            margin: 8mm;
         }
 
         @media print {
+            html, body {
+                width: 148mm;
+                height: 105mm;
+            }
+
             body {
                 background: white;
                 padding: 0;
@@ -104,12 +109,14 @@
             }
 
             .container {
-                max-width: 100%;
+                width: 100%;
+                height: 100%;
                 margin: 0;
+                padding: 0;
             }
 
             h1 {
-                display: none; /* Ocultar título en impresión */
+                display: none;
             }
 
             .notes-grid {
@@ -119,18 +126,20 @@
             }
 
             .note-card {
-                width: 128mm; /* A6 width - margins */
-                height: 85mm; /* A6 height - margins */
+                width: 132mm;
+                height: 89mm;
                 page-break-after: always;
                 page-break-inside: avoid;
                 break-inside: avoid;
                 box-shadow: none;
-                border: none;
+                border: 2px solid #000000;
                 margin: 0;
-                padding: 8mm;
+                padding: 6mm;
                 border-radius: 0;
                 display: flex;
                 flex-direction: column;
+                box-sizing: border-box;
+                background: white;
             }
 
             .note-card:last-child {
@@ -138,26 +147,32 @@
             }
 
             .note-header {
-                gap: 8px;
-                margin-bottom: 8px;
-                padding-bottom: 8px;
+                gap: 6px;
+                margin-bottom: 6px;
+                padding-bottom: 6px;
                 flex-shrink: 0;
+                border-bottom: 2px solid #000000;
             }
 
             .note-number {
-                font-size: 0.9rem;
-                padding: 4px 8px;
-                min-width: 40px;
+                font-size: 0.85rem;
+                padding: 3px 6px;
+                min-width: 35px;
+                background: #000000;
+                color: white;
+                font-weight: bold;
+                border-radius: 3px;
             }
 
             .note-title {
-                font-size: 1rem;
+                font-size: 0.95rem;
                 line-height: 1.2;
+                font-weight: bold;
             }
 
             .note-content {
-                font-size: 0.85rem;
-                line-height: 1.4;
+                font-size: 0.75rem;
+                line-height: 1.3;
                 overflow: hidden;
             }
         }
