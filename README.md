@@ -346,6 +346,59 @@ Las imágenes deben colocarse en el directorio `images/` de la presentación y r
 ![Descripción de la imagen](images/nombre-imagen.webp)
 ```
 
+#### Control de Tamaño de Imágenes
+
+Puedes controlar el tamaño de las imágenes usando comentarios HTML con la sintaxis `<!-- IMG: -->`:
+
+##### Sintaxis
+
+```markdown
+<!-- IMG: ruta-imagen | alt: texto alternativo | propiedad: valor -->
+```
+
+La sintaxis es coherente con otros marcadores del sistema (`<!-- SLIDE -->`, `<!-- BACKGROUND: -->`, etc.)
+
+##### Ejemplos
+
+**Imagen básica:**
+```markdown
+<!-- IMG: images/logo.png | alt: Logo de la empresa -->
+```
+
+**Con ancho fijo:**
+```markdown
+<!-- IMG: images/logo.png | alt: Logo | width: 200px -->
+```
+
+**Con altura máxima (responsive):**
+```markdown
+<!-- IMG: images/diagrama.png | alt: Diagrama de arquitectura | max-height: 50vh -->
+```
+
+**Múltiples propiedades:**
+```markdown
+<!-- IMG: images/foto.jpg | alt: Foto del equipo | max-width: 80% | height: auto -->
+<!-- IMG: images/banner.webp | alt: Banner | width: 100% | max-height: 400px -->
+```
+
+**Sin texto alternativo (solo estilos):**
+```markdown
+<!-- IMG: images/grafico.png | max-width: 600px | height: auto -->
+```
+
+##### Propiedades soportadas
+
+- **`alt:`** - Texto alternativo de la imagen (accesibilidad)
+- Cualquier propiedad CSS de tamaño/dimensión:
+  - `width`, `max-width`, `min-width`
+  - `height`, `max-height`, `min-height`
+  - También funcionan valores relativos: `%`, `rem`, `em`, `vw`, `vh`
+
+##### Cuándo usar
+
+- **Imagen estándar:** `![alt](url)` - Tamaño natural de la imagen
+- **Imagen con control de tamaño:** `<!-- IMG: url | alt: ... | max-height: 50vh -->` - Control preciso del tamaño
+
 ## Desarrollo y Pruebas
 
 ### Requisitos

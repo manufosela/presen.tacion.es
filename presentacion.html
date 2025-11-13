@@ -144,11 +144,7 @@
       .grid-cell[data-markdown] {
         flex: 1 1 0;
         min-width: 0;
-        padding: 1rem;
-        background: #f5f5f5;
-        border-radius: 0.5rem;
         box-sizing: border-box;
-        border: 1px solid #e0e0e0;
       }
 
       /* Estilos para el sistema de reporte de errores mejorado */
@@ -1335,8 +1331,10 @@
        * Procesa el contenido markdown de una diapositiva
        */
       function processMarkdownContent(content, presentationName) {
-        // Primero procesa columnas y grids en el texto plano
-        let processedContent = processColumns(content);
+        // PRIMERO procesar imágenes con estilos (antes de que se codifiquen en grids/columnas)
+        let processedContent = processImageSizeSyntax(content);
+        // Luego procesa columnas y grids en el texto plano
+        processedContent = processColumns(processedContent);
         processedContent = processGrids(processedContent);
         // Procesa marcadores <!-- SHOW --> para fragments
         processedContent = processShowMarkers(processedContent);
@@ -1345,6 +1343,57 @@
         // Finalmente procesa rutas de imágenes
         htmlContent = processImagePaths(htmlContent, presentationName);
         return htmlContent;
+      }
+
+      /**
+       * Procesa sintaxis extendida para imágenes con estilos
+       * Convierte: <!-- IMG: url | alt: descripción | max-height: 50vh -->
+       * A HTML: <img src="url" alt="descripción" style="max-height: 50vh;">
+       * Sintaxis: <!-- IMG: ruta | propiedad: valor | propiedad: valor -->
+       */
+      function processImageSizeSyntax(content) {
+        // Patrón para capturar: <!-- IMG: ... -->
+        const imagePattern = /<!--\s*IMG:\s*(.+?)\s*-->/g;
+
+        const result = content.replace(imagePattern, (match, params) => {
+          // Dividir por | para obtener todos los parámetros
+          const parts = params.split('|').map(p => p.trim()).filter(p => p);
+
+          if (parts.length === 0) return match; // Si no hay parámetros, devolver el original
+
+          // El primer parámetro es siempre la URL de la imagen
+          const url = parts[0];
+
+          // Valores por defecto
+          let alt = '';
+          const styleAttributes = [];
+
+          // Procesar el resto de parámetros
+          for (let i = 1; i < parts.length; i++) {
+            const param = parts[i];
+            const colonIndex = param.indexOf(':');
+
+            if (colonIndex !== -1) {
+              const key = param.substring(0, colonIndex).trim();
+              const value = param.substring(colonIndex + 1).trim();
+
+              if (key === 'alt') {
+                alt = value;
+              } else {
+                // Cualquier otra propiedad se considera un estilo CSS
+                styleAttributes.push(`${key}: ${value}`);
+              }
+            }
+          }
+
+          const styleAttr = styleAttributes.length > 0
+            ? ` style="${styleAttributes.join('; ')}"`
+            : '';
+
+          return `<img src="${url}" alt="${alt}"${styleAttr}>`;
+        });
+
+        return result;
       }
 
       /**

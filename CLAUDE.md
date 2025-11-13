@@ -27,6 +27,7 @@ Presentations use special Markdown comments for structuring:
 - `<!-- BACKGROUND-CONTAIN: path -->` - Applies a background image with contain mode (shows complete image, no cropping)
 - `<!-- INVERTED -->` - Inverts background and text colors for the slide
 - `<!-- SHOW -->` and `<!-- /SHOW -->` - Creates progressive reveal fragments (fade-in effects)
+- `<!-- IMG: url | alt: text | property: value -->` - Images with custom sizing/styling
 - YAML frontmatter for configuration (colors, fonts, theme, fontSize)
 - Special layout syntax: `$COLUMNS$`, `$COL$`, `$GRID$`, `$ROW$`, `$CELL$`, `$END$`
 
@@ -40,11 +41,12 @@ Presentations use special Markdown comments for structuring:
    - Processes fragment markers (`<!-- SHOW -->`) before markdown parsing
 
 2. **Content Processing Pipeline** (in `processMarkdownContent` function):
-   - Step 1: Process columns (`$COLUMNS$`)
-   - Step 2: Process grids (`$GRID$`)
-   - Step 3: Process fragment markers (`<!-- SHOW -->` / `<!-- /SHOW -->`)
-   - Step 4: Parse markdown with `marked.parse()`
-   - Step 5: Process image paths
+   - Step 1: Process image sizing (`<!-- IMG: url | property: value -->`) - MUST be first to avoid URL encoding in grids
+   - Step 2: Process columns (`$COLUMNS$`)
+   - Step 3: Process grids (`$GRID$`)
+   - Step 4: Process fragment markers (`<!-- SHOW -->` / `<!-- /SHOW -->`)
+   - Step 5: Parse markdown with `marked.parse()`
+   - Step 6: Process image paths
 
 3. **Server Architecture** - Two server modes:
    - Production (`server.py`): Finds free ports (3000-3010), serves static files

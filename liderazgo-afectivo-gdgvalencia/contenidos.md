@@ -234,26 +234,26 @@ Termina con energía emocional, dejando claro que el alma del equipo es lo que l
 <!-- BACKGROUND: images/vacio.png -->
 <!-- INVERTED -->
 
-presen.tacion.es/liderazgo-afectivo-gdg-valencia-2025
+$GRID$
+$ROW$
+$CELL$
 
-$COLUMNS$
+<!-- IMG: images/manufosela.png | alt:Mánu Fosela | max-height:40vh -->
 
-$COL$
+$CELL$
+<!-- IMG: images/liderazgo_afectivo.jpg | alt:Liderazgo Afectivo | max-height:40vh -->
 
-![Mánu Fosela](images/manufosela.png)
+$ROW$
+$CELL$
 
-**@manufosela**
+![QR linkedin](images/qrs/linkedin_peq.png)
+![QR x](images/qrs/x_peq.png)
+![QR web](images/qrs/manufosela_peq.png)
+![QR web-liderazgoafectivo](images/qrs/liderazgoafectivo_peq.png)
+![QR savvily-liderazgoafectivo](images/qrs/savvily-liderazgoafectivo_peq.png)
+![QR-presentacion](images/qrs/presentacion_peq.png)
 
-$COL$
-
-![Liderazgo Afectivo](images/liderazgo_afectivo.jpg)
-
-$COL$
-
-![QR linkedin](images/qrs/linkedin.gif)
-![QR x](images/qrs/x.gif)
-![QR web](images/qrs/manufosela.gif)
-![QR web-liderazgoafectivo](images/qrs/liderazgoafectivo.gif)
-![QR web-savvily-libro](images/qrs/savvily-libro.gif)
+$ROW$
+$CELL$
 
 $END$

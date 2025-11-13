@@ -210,6 +210,26 @@ Las imágenes deben colocarse en el directorio `images/` de la presentación y r
 
 <!-- SLIDE -->
 
+#### Control de Tamaño de Imágenes
+
+Usa comentarios HTML con sintaxis `<!-- IMG: -->`:
+
+**Sintaxis:**
+```markdown
+<!-- IMG: ruta | alt: texto | propiedad: valor -->
+```
+
+**Ejemplos:**
+```markdown
+<!-- IMG: images/logo.png | alt: Logo | width: 200px -->
+<!-- IMG: images/diagrama.png | alt: Diagrama | max-height: 50vh -->
+<!-- IMG: images/foto.jpg | max-width: 80% | height: auto -->
+```
+
+**Propiedades:** `alt:`, `width:`, `max-width:`, `height:`, `max-height:`, etc.
+
+<!-- SLIDE -->
+
 ## Desarrollo y Pruebas
 
 <!-- SLIDE -->
