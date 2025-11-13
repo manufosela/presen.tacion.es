@@ -1753,6 +1753,10 @@ ${processedRows.join("\n")}
           if (textColor) {
             // Aplicar color de texto a todos los elementos
             slide.querySelectorAll('h1, h2, h3, h4, h5, h6, p, li, a, span, strong, em').forEach((el) => {
+              // Evitar afectar el contenido de las notas del presentador (fondo blanco)
+              if (el.closest('aside.notes')) {
+                return;
+              }
               el.style.setProperty('color', textColor, 'important');
             });
           }

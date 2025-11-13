@@ -18,7 +18,7 @@ transitionSpeed: "default"
 ---
 
 <!-- SLIDE -->
-<!-- BACKGROUND: images/slide1.png -->
+<!-- BACKGROUND-CONTAIN: images/slide1.png -->
 
 <!-- NOTES -->
 Presentación inicial. Título y enfoque: mostrar que vamos a hablar de liderazgo desde lo humano, no desde la gestión ni los KPI.
@@ -55,7 +55,7 @@ $END$
 ---
 
 <!-- SLIDE -->
-<!-- BACKGROUND: images/vacio.png -->
+<!-- BACKGROUND-CONTAIN: images/vacio.png -->
 <!-- INVERTED -->
 
 ## ¿Liderar es gestionar ?
@@ -64,7 +64,7 @@ $END$
 Siguiente slide despues de preguntar al publico
 
 <!-- SLIDE -->
-<!-- BACKGROUND: images/slide2.png -->
+<!-- BACKGROUND-CONTAIN: images/slide2.png -->
 <!-- INVERTED -->
 
 <!-- NOTES -->
@@ -74,7 +74,7 @@ Liderar no es lo mismo que gestionar. Igual que el amor no es lo mismo que el se
 ---
 
 <!-- SLIDE -->
-<!-- BACKGROUND: images/slide3.png -->
+<!-- BACKGROUND-CONTAIN: images/slide3.png -->
 <!-- INVERTED -->
 
 <!-- NOTES -->
@@ -86,7 +86,7 @@ Querer estar al día con cada persona del equipo, saber cómo están, cómo se s
 ---
 
 <!-- SLIDE -->
-<!-- BACKGROUND: images/slide4.png -->
+<!-- BACKGROUND-CONTAIN: images/slide4.png -->
 <!-- INVERTED -->
 
 <!-- NOTES -->
@@ -96,42 +96,32 @@ Siguiente slide para aclararlo.
 ---
 
 <!-- SLIDE -->
-
-## Las relaciones lo son todo
-
-**<!-- SHOW -->Primero cultivar las relaciones.<!-- /SHOW -->**
-
-**<!-- SHOW -->Después, los objetivos llegan solos.<!-- /SHOW -->**
+<!-- BACKGROUND-CONTAIN: images/slide5.png -->
+<!-- INVERTED -->
 
 <!-- NOTES -->
+Las relaciones lo son todo
 Cuando hay relaciones reales, profundas, no de postureo ni de café de máquina, la empatia surge sola, los objetivos se cumplen casi solos.
 Porque el equipo se cuida. Porque como líder, mediante el ejemplo y la coherencia, has creado un entorno donde hay comunicación real, donde se puede fallar y donde se marcan límites. Y cuando toca remar, el equipo rema sin que lo pidas. Porque sienten que ese barco también es suyo.
 
 ---
 
 <!-- SLIDE -->
-
-## ¿Qué significa generar relación?
-
-**<!-- SHOW -->No implica ser amigos<!-- /SHOW -->**
-
-**<!-- SHOW -->Es que te importe la otra persona<!-- /SHOW -->**
+<!-- BACKGROUND-CONTAIN: images/slide6.png -->
+<!-- INVERTED -->
 
 <!-- NOTES -->
+¿Qué significa generar relación?
 No se trata de ser colegas, ni de compartir cañas. Se trata de que durante el tiempo compartido en el trabajo, genuinamente te importe el otro. De saber si duerme bien, si tiene un mal día, si necesita apoyo. Con el tiempo, eso genera afecto. Y el afecto no falla. Fallan los sistemas. Fallan las personas. Pero el afecto, no.
 
 ---
 
 <!-- SLIDE -->
-<!-- BACKGROUND: images/remoto.webp -->
-
-## El reto del teletrabajo
-
-**<!-- SHOW -->El remoto ralentiza la generación de relaciones.<!-- /SHOW -->**
-
-**<!-- SHOW -->La presencialidad las enciende.<!-- /SHOW -->**
+<!-- BACKGROUND-CONTAIN: images/slide7.png -->
+<!-- INVERTED -->
 
 <!-- NOTES -->
+El reto del teletrabajo
 No digo que no sea posible, digo que puede ser un freno.
 
 Depende mucho del tamaño de la empresa y de su cultura.
@@ -146,20 +136,17 @@ Y sobre todo para los JUNIORS, el remoto los remata.
 ---
 
 <!-- SLIDE -->
-
-## Conexiones ≠ Relaciones
-
-**<!-- SHOW -->Tener followers no es tener relaciones.<!-- /SHOW -->**
-
-**<!-- SHOW -->Conectar es fácil.<!-- /SHOW --><!-- SHOW --> Relacionarse, no.**<!-- /SHOW -->
+<!-- BACKGROUND-CONTAIN: images/slide8.png -->
+<!-- INVERTED -->
 
 <!-- NOTES -->
+Conexiones ≠ Relaciones
 Hoy confundimos tener likes con tener relaciones. Confundimos estar conectados con estar vinculados.
 
 ---
 
 <!-- SLIDE -->
-<!-- BACKGROUND: images/slide9.png -->
+<!-- BACKGROUND-CONTAIN: images/slide9.png -->
 <!-- INVERTED -->
 
 <!-- NOTES -->
@@ -170,7 +157,7 @@ Cuando lideramos desde el afecto, creamos vínculos que no se rompen fácilmente
 ---
 
 <!-- SLIDE -->
-<!-- BACKGROUND: images/slide10.png -->
+<!-- BACKGROUND-CONTAIN: images/slide10.png -->
 <!-- INVERTED -->
 
 <!-- NOTES -->
@@ -184,7 +171,7 @@ Porque siente. Porque forma parte de algo más grande que una lista de tareas o 
 ---
 
 <!-- SLIDE -->
-<!-- BACKGROUND: images/slide11.png -->
+<!-- BACKGROUND-CONTAIN: images/slide11.png -->
 <!-- INVERTED -->
 
 <!-- NOTES -->
@@ -200,7 +187,7 @@ Comentar el "lider es prescindible".
 ---
 
 <!-- SLIDE -->
-<!-- BACKGROUND: images/slide12.png -->
+<!-- BACKGROUND-CONTAIN: images/slide12.png -->
 <!-- INVERTED -->
 
 <!-- NOTES -->
@@ -214,7 +201,7 @@ Termina con energía emocional, dejando claro que el alma del equipo es lo que l
 ---
 
 <!-- SLIDE -->
-<!-- BACKGROUND: images/grancias.png -->
+<!-- BACKGROUND-CONTAIN: images/grancias.png -->
 <!-- INVERTED -->
 
 <!-- NOTES -->

@@ -243,22 +243,6 @@ Termina con energía emocional, dejando claro que el alma del equipo es lo que l
 
 <!-- SLIDE -->
 
-> Liderar desde el afecto no es ser blando.  
-Es poner el foco donde importa: en las personas.  
-Son ellas quienes consiguen los objetivos,  
-quienes se quedan cuando hay tormenta,  
-quienes remarían contigo sin que se lo pidas.  
-
-**Si solo gestionas, el equipo funciona.**  
-**Si lideras desde el afecto, el equipo vuela.**
-
-<!-- NOTES -->
-Momento cumbre. Hablar desde la emoción y cerrar con fuerza antes del agradecimiento.
-
----
-
-<!-- SLIDE -->
-
 ## GRANCIAS
 
 ![Grancias](images/grancias.png)
