@@ -246,12 +246,11 @@ $CELL$
 $ROW$
 $CELL$
 
-![QR linkedin](images/qrs/linkedin_peq.png)
-![QR x](images/qrs/x_peq.png)
-![QR web](images/qrs/manufosela_peq.png)
-![QR web-liderazgoafectivo](images/qrs/liderazgoafectivo_peq.png)
-![QR savvily-liderazgoafectivo](images/qrs/savvily-liderazgoafectivo_peq.png)
-![QR-presentacion](images/qrs/presentacion_peq.png)
+<!-- IMG: images/qrs/linkedin_peq.png | alt: QR linkedin | caption: Linkedin | max-width:16vw | margin-right:4rem-->
+<!-- IMG: images/qrs/x_peq.png | alt: QR x | caption: X | max-width:16vw | margin-right:4rem -->
+<!-- IMG: images/qrs/manufosela_peq.png | alt: QR web | caption: Web | max-width:16vw | margin-right:4rem -->
+<!-- IMG: images/qrs/savvily-liderazgoafectivo_peq.png | alt: QR compra libro | caption: Compra Libro | max-width:16vw | margin-right:4rem -->
+<!-- IMG: images/qrs/presentacion_peq.png | alt: QR presentacion | caption: Presentación | max-width:16vw -->
 
 $ROW$
 $CELL$
