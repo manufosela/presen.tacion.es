@@ -435,7 +435,7 @@
           });
         }
 
-        // Validar imágenes de fondo personalizadas
+        // Validar imágenes de fondo personalizadas (BACKGROUND)
         const backgroundRefs = markdownContent.match(
           /<!-- BACKGROUND: ([^\s]+) -->/g
         );
@@ -444,7 +444,26 @@
             const match = bg.match(/<!-- BACKGROUND: ([^\s]+) -->/);
             if (match && match[1]) {
               const bgPath = match[1];
-              console.log(`🖼️ Imagen de fondo encontrada: ${bgPath}`);
+              console.log(`🖼️ Imagen de fondo (cover) encontrada: ${bgPath}`);
+              if (!bgPath.includes("/") && !bgPath.startsWith("http")) {
+                warnings.push(
+                  `Imagen de fondo '${bgPath}' debería estar en la carpeta 'images/' para mejor organización`
+                );
+              }
+            }
+          });
+        }
+
+        // Validar imágenes de fondo con contain (BACKGROUND-CONTAIN)
+        const backgroundContainRefs = markdownContent.match(
+          /<!-- BACKGROUND-CONTAIN: ([^\s]+) -->/g
+        );
+        if (backgroundContainRefs) {
+          backgroundContainRefs.forEach((bg) => {
+            const match = bg.match(/<!-- BACKGROUND-CONTAIN: ([^\s]+) -->/);
+            if (match && match[1]) {
+              const bgPath = match[1];
+              console.log(`🖼️ Imagen de fondo (contain) encontrada: ${bgPath}`);
               if (!bgPath.includes("/") && !bgPath.startsWith("http")) {
                 warnings.push(
                   `Imagen de fondo '${bgPath}' debería estar en la carpeta 'images/' para mejor organización`
@@ -1091,7 +1110,7 @@
        * Crea un elemento de diapositiva
        */
       function createSlideElement(slideContent, presentationName, metadata) {
-        const { mainContent, notes, backgroundImage, iframeUrl, isInverted } =
+        const { mainContent, notes, backgroundImage, backgroundContainImage, iframeUrl, isInverted } =
           extractSlideContent(slideContent);
 
         if (iframeUrl) {
@@ -1113,7 +1132,7 @@
           section.setAttribute("data-inverted-text-color", textColor);
         }
 
-        // Añadir imagen de fondo personalizada si existe
+        // Añadir imagen de fondo personalizada si existe (cover - llena todo)
         if (backgroundImage) {
           let imageUrl;
 
@@ -1136,7 +1155,33 @@
           section.setAttribute("data-background-size", "cover");
           section.setAttribute("data-background-position", "center");
           section.setAttribute("data-background-repeat", "no-repeat");
-          console.log(`🖼️ Aplicando imagen de fondo: ${backgroundImage}`);
+          console.log(`🖼️ Aplicando imagen de fondo (cover): ${backgroundImage}`);
+        }
+
+        // Añadir imagen de fondo con contain (muestra imagen completa)
+        if (backgroundContainImage) {
+          let imageUrl;
+
+          // Manejar imágenes para presentaciones locales
+          if (presentationName.startsWith("local_")) {
+            const basePath = presentationName.replace("local_", "");
+            const imageContent = sessionStorage.getItem(
+              `local_${basePath}/${backgroundContainImage}`
+            );
+            if (imageContent) {
+              imageUrl = imageContent; // Ya es data URL
+            } else {
+              imageUrl = buildImageUrl(presentationName, backgroundContainImage);
+            }
+          } else {
+            imageUrl = buildImageUrl(presentationName, backgroundContainImage);
+          }
+
+          section.setAttribute("data-background-image", imageUrl);
+          section.setAttribute("data-background-size", "contain");
+          section.setAttribute("data-background-position", "center");
+          section.setAttribute("data-background-repeat", "no-repeat");
+          console.log(`🖼️ Aplicando imagen de fondo (contain): ${backgroundContainImage}`);
         }
 
         // Si hay iframe, crear slide especial para iframe
@@ -1204,11 +1249,17 @@
        * Extrae contenido principal y notas de una diapositiva
        */
       function extractSlideContent(slideContent) {
-        // Buscar imagen de fondo personalizada
+        // Buscar imagen de fondo personalizada (cover - llena todo el espacio)
         const backgroundMatch = slideContent.match(
           /<!-- BACKGROUND: ([^\s]+) -->/
         );
         const backgroundImage = backgroundMatch ? backgroundMatch[1] : null;
+
+        // Buscar imagen de fondo con contain (muestra la imagen completa)
+        const backgroundContainMatch = slideContent.match(
+          /<!-- BACKGROUND-CONTAIN: ([^\s]+) -->/
+        );
+        const backgroundContainImage = backgroundContainMatch ? backgroundContainMatch[1] : null;
 
         // Buscar iframe (permite URLs con parámetros)
         const iframeMatch = slideContent.match(/<!-- IFRAME: (.+?) -->/);
@@ -1240,6 +1291,11 @@
             .replace(/<!-- BACKGROUND: [^\s]+ -->/, "")
             .trim();
         }
+        if (backgroundContainMatch) {
+          mainContent = mainContent
+            .replace(/<!-- BACKGROUND-CONTAIN: [^\s]+ -->/, "")
+            .trim();
+        }
         if (iframeMatch) {
           mainContent = mainContent.replace(/<!-- IFRAME: .+? -->/, "").trim();
         }
@@ -1254,6 +1310,11 @@
               .replace(/<!-- BACKGROUND: [^\s]+ -->/, "")
               .trim();
           }
+          if (backgroundContainMatch) {
+            mainContent = mainContent
+              .replace(/<!-- BACKGROUND-CONTAIN: [^\s]+ -->/, "")
+              .trim();
+          }
           if (invertedMatch) {
             mainContent = mainContent.replace(/<!-- INVERTED -->/, "").trim();
           }
@@ -1264,6 +1325,7 @@
           mainContent: mainContent,
           notes: notes,
           backgroundImage: backgroundImage,
+          backgroundContainImage: backgroundContainImage,
           iframeUrl: iframeUrl,
           isInverted: isInverted,
         };
@@ -1276,11 +1338,30 @@
         // Primero procesa columnas y grids en el texto plano
         let processedContent = processColumns(content);
         processedContent = processGrids(processedContent);
+        // Procesa marcadores <!-- SHOW --> para fragments
+        processedContent = processShowMarkers(processedContent);
         // Luego parsea el markdown
         let htmlContent = marked.parse(processedContent);
         // Finalmente procesa rutas de imágenes
         htmlContent = processImagePaths(htmlContent, presentationName);
         return htmlContent;
+      }
+
+      /**
+       * Procesa marcadores <!-- SHOW --> y <!-- /SHOW --> para crear fragments de Reveal.js
+       * Ejemplo: "<!-- SHOW -->Hola<!-- /SHOW -->, <!-- SHOW -->me llamo<!-- /SHOW --> <!-- SHOW -->Manu<!-- /SHOW -->"
+       * Se convierte en: "<span class="fragment fade-in">Hola</span>, <span class="fragment fade-in">me llamo</span> <span class="fragment fade-in">Manu</span>"
+       */
+      function processShowMarkers(content) {
+        // Patrón para capturar contenido entre <!-- SHOW --> y <!-- /SHOW -->
+        const showPattern = /<!--\s*SHOW\s*-->([\s\S]*?)<!--\s*\/SHOW\s*-->/g;
+
+        // Reemplazar cada par de marcadores con el span fragment
+        let processedContent = content.replace(showPattern, (match, innerContent) => {
+          return `<span class="fragment fade-in">${innerContent}</span>`;
+        });
+
+        return processedContent;
       }
 
       /**

@@ -99,8 +99,48 @@ Notas para el presentador...
 - `<!-- SLIDE -->`: Marca el inicio de una nueva diapositiva
 - `<!-- SUBSLIDE -->`: Marca el inicio de una nueva subdiapositiva
 - `<!-- NOTES -->`: Marca el inicio de las notas del presentador (solo visibles en la vista del presentador)
-- `<!-- BACKGROUND: ruta-imagen -->`: Aplica una imagen de fondo específica a la diapositiva
+- `<!-- BACKGROUND: ruta-imagen -->`: Imagen de fondo que cubre todo el slide (cover)
+- `<!-- BACKGROUND-CONTAIN: ruta-imagen -->`: Imagen de fondo completa sin recortes (contain)
 - `<!-- INVERTED -->`: Invierte los colores de fondo y texto de la diapositiva
+- `<!-- SHOW -->` y `<!-- /SHOW -->`: Crea efectos de aparición progresiva (fragments)
+
+<!-- SLIDE -->
+
+#### Efectos de Aparición Progresiva (Fragments)
+
+Usa `<!-- SHOW -->` y `<!-- /SHOW -->` para hacer que el contenido aparezca progresivamente:
+
+**Sintaxis:**
+```markdown
+<!-- SHOW -->contenido<!-- /SHOW -->
+```
+
+**Ejemplo:**
+```markdown
+<!-- SHOW -->Hola<!-- /SHOW -->, <!-- SHOW -->me llamo<!-- /SHOW --> <!-- SHOW -->Manu<!-- /SHOW -->
+```
+
+<!-- SLIDE -->
+
+#### Ejemplos de SHOW
+
+**Con formato:**
+```markdown
+<!-- SHOW -->**Característica 1**<!-- /SHOW -->
+<!-- SHOW -->**Característica 2**<!-- /SHOW -->
+```
+
+**En listas:**
+```markdown
+- <!-- SHOW -->Introducción<!-- /SHOW -->
+- <!-- SHOW -->Desarrollo<!-- /SHOW -->
+```
+
+**Mixto:**
+```markdown
+Texto visible desde el inicio.
+<!-- SHOW -->Texto que aparece después<!-- /SHOW -->.
+```
 
 <!-- SLIDE -->
 

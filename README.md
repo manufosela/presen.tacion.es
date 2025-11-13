@@ -63,16 +63,103 @@ Notas para el presentador...
 - `<!-- SLIDE -->`: Marca el inicio de una nueva diapositiva
 - `<!-- SUBSLIDE -->`: Marca el inicio de una subdiapositiva (navegación vertical)
 - `<!-- NOTES -->`: Marca el inicio de las notas del presentador (solo visibles en la vista del presentador)
-- `<!-- BACKGROUND: ruta-imagen -->`: Aplica una imagen de fondo específica a la diapositiva
+- `<!-- BACKGROUND: ruta-imagen -->`: Aplica una imagen de fondo que cubre todo el slide (mode: cover)
+- `<!-- BACKGROUND-CONTAIN: ruta-imagen -->`: Aplica una imagen de fondo que se muestra completa dentro del slide (mode: contain)
 - `<!-- INVERTED -->`: Invierte los colores de fondo y texto de la diapositiva (usa `text-color` como fondo y `background` como color de texto)
+- `<!-- SHOW -->` y `<!-- /SHOW -->`: Crea efectos de aparición progresiva (fragments) en el contenido
+
+#### Efectos de Aparición Progresiva (Fragments)
+
+Puedes hacer que partes del contenido aparezcan progresivamente usando los marcadores `<!-- SHOW -->` y `<!-- /SHOW -->`. Esto es útil para revelar información paso a paso durante la presentación.
+
+##### Sintaxis
+
+```markdown
+<!-- SHOW -->contenido a mostrar con efecto<!-- /SHOW -->
+```
+
+##### Ejemplos de uso
+
+**Texto simple:**
+```markdown
+<!-- SLIDE -->
+
+## Mi Slide
+
+<!-- SHOW -->Hola<!-- /SHOW -->, <!-- SHOW -->me llamo<!-- /SHOW --> <!-- SHOW -->Manu<!-- /SHOW -->
+```
+
+En este ejemplo:
+1. Primero aparece "Hola"
+2. Luego ", me llamo"
+3. Finalmente " Manu"
+
+**Con formato markdown:**
+```markdown
+<!-- SLIDE -->
+
+## Características
+
+<!-- SHOW -->**Característica 1**: Primera funcionalidad<!-- /SHOW -->
+
+<!-- SHOW -->**Característica 2**: Segunda funcionalidad<!-- /SHOW -->
+
+<!-- SHOW -->**Característica 3**: Tercera funcionalidad<!-- /SHOW -->
+```
+
+**En listas:**
+```markdown
+<!-- SLIDE -->
+
+## Agenda
+
+- <!-- SHOW -->Introducción<!-- /SHOW -->
+- <!-- SHOW -->Desarrollo<!-- /SHOW -->
+- <!-- SHOW -->Conclusiones<!-- /SHOW -->
+```
+
+**Texto mixto:**
+```markdown
+<!-- SLIDE -->
+
+## Presentación
+
+Este texto se ve desde el inicio.
+
+<!-- SHOW -->Este texto aparece al avanzar<!-- /SHOW -->.
+
+<!-- SHOW -->Y este aparece después<!-- /SHOW -->.
+```
+
+##### Navegación
+
+- Usa las **flechas** o **espacio** para avanzar entre fragments
+- Cada `<!-- SHOW -->...<!-- /SHOW -->` es un paso independiente
+- El texto sin marcadores se muestra desde el principio
+
+##### Notas importantes
+
+- El contenido entre `<!-- SHOW -->` y `<!-- /SHOW -->` puede incluir cualquier markdown válido
+- Puedes combinar fragments con otros elementos como imágenes, listas, negritas, etc.
+- Los fragments funcionan en slides normales y en columnas/grids
 
 #### Imágenes de Fondo por Slide
 
-Puedes aplicar imágenes de fondo específicas a cada diapositiva usando el comentario `<!-- BACKGROUND: ruta-imagen -->`. Esto te permite tener diferentes fondos para diferentes slides dentro de la misma presentación.
+Puedes aplicar imágenes de fondo específicas a cada diapositiva usando dos tipos de marcadores:
+
+- **`<!-- BACKGROUND: ruta-imagen -->`**: La imagen cubre todo el slide (puede recortarse para llenar el espacio)
+- **`<!-- BACKGROUND-CONTAIN: ruta-imagen -->`**: La imagen se muestra completa dentro del slide (sin recortes)
+
+##### Diferencias entre BACKGROUND y BACKGROUND-CONTAIN
+
+| Marcador | Comportamiento | Cuándo usar |
+|----------|---------------|-------------|
+| `<!-- BACKGROUND: -->` | **Cover** - Cubre todo el slide, puede recortarse | Fondos decorativos, texturas, imágenes que no necesitan verse completas |
+| `<!-- BACKGROUND-CONTAIN: -->` | **Contain** - Se muestra completa, puede dejar espacios | Diagramas, logos, imágenes con información importante que no debe recortarse |
 
 ##### Sintaxis y Ejemplos
 
-**Imagen de fondo básica:**
+**Imagen de fondo básica (cover):**
 ```markdown
 <!-- SLIDE -->
 <!-- BACKGROUND: images/fondo-slide1.webp -->
@@ -90,6 +177,16 @@ Contenido de la slide...
 ## Frase Motivacional
 
 **Con un fondo visual impactante**
+```
+
+**Imagen de fondo completa (contain) - ideal para diagramas:**
+```markdown
+<!-- SLIDE -->
+<!-- BACKGROUND-CONTAIN: images/diagrama-arquitectura.webp -->
+
+## Arquitectura del Sistema
+
+El diagrama se muestra completo sin recortes
 ```
 
 **Diferentes fondos para diferentes tipos de contenido:**

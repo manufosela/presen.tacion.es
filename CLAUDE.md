@@ -21,7 +21,12 @@ This is a Markdown-based presentation system that converts Markdown files to int
 ### Presentation Content Structure
 Presentations use special Markdown comments for structuring:
 - `<!-- SLIDE -->` - Marks the start of a new slide
+- `<!-- SUBSLIDE -->` - Marks the start of a vertical subslide
 - `<!-- NOTES -->` - Marks speaker notes (only visible in presenter view)
+- `<!-- BACKGROUND: path -->` - Applies a background image with cover mode (fills entire slide, may crop)
+- `<!-- BACKGROUND-CONTAIN: path -->` - Applies a background image with contain mode (shows complete image, no cropping)
+- `<!-- INVERTED -->` - Inverts background and text colors for the slide
+- `<!-- SHOW -->` and `<!-- /SHOW -->` - Creates progressive reveal fragments (fade-in effects)
 - YAML frontmatter for configuration (colors, fonts, theme, fontSize)
 - Special layout syntax: `$COLUMNS$`, `$COL$`, `$GRID$`, `$ROW$`, `$CELL$`, `$END$`
 
@@ -32,8 +37,16 @@ Presentations use special Markdown comments for structuring:
    - Applies custom colors and styling
    - Handles local file loading via sessionStorage
    - Supports both server-hosted and local presentations
+   - Processes fragment markers (`<!-- SHOW -->`) before markdown parsing
 
-2. **Server Architecture** - Two server modes:
+2. **Content Processing Pipeline** (in `processMarkdownContent` function):
+   - Step 1: Process columns (`$COLUMNS$`)
+   - Step 2: Process grids (`$GRID$`)
+   - Step 3: Process fragment markers (`<!-- SHOW -->` / `<!-- /SHOW -->`)
+   - Step 4: Parse markdown with `marked.parse()`
+   - Step 5: Process image paths
+
+3. **Server Architecture** - Two server modes:
    - Production (`server.py`): Finds free ports (3000-3010), serves static files
    - Development (`server_dev.py`): Fixed port 8000, auto-reload, cache-busting
 
